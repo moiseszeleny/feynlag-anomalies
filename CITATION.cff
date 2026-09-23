@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+title: "feynlag-anomalies: a verifiable, pedagogical library of BSM anomalies"
+message: "If you use this repository, please cite it as below."
+type: software
+authors:
+  - family-names: "Zeleny"
+    given-names: "Moises"
+    email: moiseszeleny@gmail.com
+version: 0.1.0
+license: MIT
+references:
+  - type: software
+    title: "feynlag-models: a verified library of minimal Standard Model extensions"
+    repository-code: "https://github.com/moiseszeleny/feynlag-models"
+    authors:
+      - family-names: "Zeleny"
+        given-names: "Moises"
+  - type: software
+    title: "feynlag"
+    repository-code: "https://github.com/moiseszeleny/feynlag"
+    authors:
+      - family-names: "Zeleny"
+        given-names: "Moises"

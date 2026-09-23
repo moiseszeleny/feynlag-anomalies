@@ -1,0 +1,50 @@
+id: emu_146gev
+title: "~146 GeV e-mu resonance excess"
+sector: collider
+
+observables:
+  - name: "local significance (e-mu channel)"
+    value: TODO_VERIFY
+    stat_uncertainty: TODO_VERIFY
+    sys_uncertainty: TODO_VERIFY
+    units: "sigma"
+
+sm_prediction:
+  value: TODO_VERIFY
+  uncertainty: TODO_VERIFY
+  provenance: cited
+  reference: TODO_VERIFY
+
+experiments: []
+# TODO_VERIFY: likely CMS -- not listed until confirmed against a primary source, per CLAUDE.md's
+# verifiability discipline.
+
+sources: []
+# TODO_VERIFY: no primary source consulted this session. This is an A0 stub only: it exists so
+# the anomaly is tracked in anomalies/INDEX.md, not because any claim in it has been verified.
+
+status: hint
+status_date: TODO_VERIFY
+status_rationale: >
+  TODO_VERIFY: placeholder status only. This is a stub created without a literature pass; needs a
+  fresh check of significance and current status before any claim is made about it.
+
+tensions_with_other_data: []
+
+sm_failure_type: resonance
+sm_protection: []
+
+eft_operators: []
+candidate_models: []
+
+maturity: A0
+
+falsifiers: []
+
+changelog:
+  - date: "2026-09-22"
+    note: "A0 stub created (session 1). No literature pass performed. Needs: primary sources
+      (arXiv/HEPData) for the e-mu channel, current significance and status, sm_protection
+      assignment (likely lepton-flavor-violation related), and candidate_models once an
+      SM-failure argument exists."
+    author: "Moises Zeleny (with Claude)"

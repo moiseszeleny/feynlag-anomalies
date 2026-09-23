@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "feynlag-anomalies"
+version = "0.1.0"
+description = "A verifiable, pedagogical library of BSM anomalies built on feynlag and feynlag-models"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Moises Zeleny", email = "moiseszeleny@gmail.com" }]
+dependencies = [
+    "feynlag-models @ git+https://github.com/moiseszeleny/feynlag-models.git@2197f429a635733beb2fbcf7b33bcdf7a78eb5c1",
+    "feynlag @ git+https://github.com/moiseszeleny/feynlag.git@efffdb0d22be88ecabb5636037703d844c63d0d4",
+    "sympy==1.14.0",
+    "pyyaml==6.0.2",
+    "numpy",
+    "scipy",
+    "pydantic>=2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==8.3.5", "pytest-timeout==2.3.1", "nbmake"]
+
+[tool.setuptools.packages.find]
+include = ["checkpoints*", "fit*", "feynlag_anomalies*", "anomalies*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "anomalies"]
+markers = ["slow: MadGraph or otherwise long-running checks (manual / release only)"]
+timeout = 1800

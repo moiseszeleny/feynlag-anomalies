@@ -1,0 +1,34 @@
+"""Feed the canonical solutions through checkpoints_def's Checkpoint objects.
+
+Runs the same assertions ladder.ipynb's checkpoints make, without executing the notebook -- so
+CI catches a feynlag/feynlag-models API drift even if nbmake is skipped.
+"""
+
+from anomalies.neutrino_mass import checkpoints_def as cd
+from anomalies.neutrino_mass.solutions import peldano_0, peldano_1, peldano_2
+
+
+def test_check_0_passes_with_canonical_solution():
+    answer = peldano_0.m_nu_estimate(cd._P0_Y, cd._P0_V, cd._P0_M)
+    assert cd.check_0(answer) is True
+
+
+def test_check_1_passes_with_canonical_solution():
+    assert cd.check_1(peldano_1.count_dim4_yukawa_terms()) is True
+
+
+def test_check_2_passes_with_canonical_solution():
+    assert cd.check_2(peldano_2.weinberg_operator_present()) is True
+
+
+def test_check_3_passes_with_canonical_answer():
+    assert cd.check_3("seesaw_type1") is True
+
+
+def test_check_4_passes_with_canonical_answer(seesaw_bundle):
+    check_4 = cd.make_check_4(seesaw_bundle)
+    assert check_4(len(seesaw_bundle.extra["masses"])) is True
+
+
+def test_check_5_passes_with_canonical_answer():
+    assert cd.check_5(True) is True

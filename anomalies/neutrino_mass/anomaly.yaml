@@ -1,0 +1,110 @@
+id: neutrino_mass
+title: "Neutrino mass and oscillations"
+sector: neutrinos
+
+observables:
+  - name: "Delta m^2_21 (solar)"
+    value: TODO_VERIFY
+    stat_uncertainty: TODO_VERIFY
+    sys_uncertainty: TODO_VERIFY
+    units: "eV^2"
+  - name: "Delta m^2_31 (atmospheric, normal ordering)"
+    value: TODO_VERIFY
+    stat_uncertainty: TODO_VERIFY
+    sys_uncertainty: TODO_VERIFY
+    units: "eV^2"
+  - name: "theta_12"
+    value: TODO_VERIFY
+    stat_uncertainty: TODO_VERIFY
+    sys_uncertainty: TODO_VERIFY
+    units: "degrees"
+  - name: "theta_13"
+    value: TODO_VERIFY
+    stat_uncertainty: TODO_VERIFY
+    sys_uncertainty: TODO_VERIFY
+    units: "degrees"
+  - name: "theta_23"
+    value: TODO_VERIFY
+    stat_uncertainty: TODO_VERIFY
+    sys_uncertainty: TODO_VERIFY
+    units: "degrees"
+  - name: "delta_CP"
+    value: TODO_VERIFY
+    stat_uncertainty: TODO_VERIFY
+    sys_uncertainty: TODO_VERIFY
+    units: "degrees"
+
+sm_prediction:
+  value: 0.0
+  uncertainty: 0.0
+  provenance: computed
+  reference: "anomalies/neutrino_mass/tests/test_sm_structural.py::test_no_dim4_neutrino_mass_term (peldano 1: feynlag.suggest.suggest_yukawa on minimal SM leptons, no nu_R, returns exactly the charged-lepton Yukawa at max_dim=4)"
+
+experiments:
+  - name: "Super-Kamiokande"
+    notes: "TODO_VERIFY: confirm specific role/current status against a primary source before citing a number."
+  - name: "SNO"
+    notes: "TODO_VERIFY: confirm specific role/current status against a primary source before citing a number."
+  - name: "KamLAND"
+    notes: "TODO_VERIFY: confirm specific role/current status against a primary source before citing a number."
+  - name: "Daya Bay"
+    notes: "TODO_VERIFY: confirm specific role/current status against a primary source before citing a number."
+  - name: "T2K"
+    notes: "TODO_VERIFY: confirm specific role/current status against a primary source before citing a number."
+  - name: "NOvA"
+    notes: "TODO_VERIFY: confirm specific role/current status against a primary source before citing a number."
+
+sources: []
+# TODO_VERIFY: no primary source (arXiv / PDG / NuFIT with version+date) has been consulted this
+# session. Every observable above must be sourced from a real global-fit reference (e.g. NuFIT,
+# with its version number and consultation date) before any of it is used in fit/stage1.py.
+
+status: established
+status_date: TODO_VERIFY
+status_rationale: >
+  Neutrino oscillations, and hence nonzero neutrino mass, are a well-established result confirmed
+  by multiple independent experiments (solar, atmospheric, reactor, accelerator).
+  TODO_VERIFY: pin the exact global-fit reference/version this status is anchored to, and a real
+  status_date, before treating this as more than a placeholder.
+
+tensions_with_other_data:
+  - "TODO_VERIFY: interaction with cosmological Sigma m_nu bounds (Planck / DESI) and with
+    0-neutrinoless-double-beta-decay limits on the effective Majorana mass -- not yet checked
+    against a primary source."
+
+sm_failure_type: structural
+sm_protection:
+  - field_content
+  - accidental_symmetry
+
+eft_operators:
+  - name: "Weinberg operator"
+    dimension: 5
+    expression: "(L H)(L H) / Lambda"
+
+candidate_models:
+  - model_id: seesaw_type1
+    notes: >
+      Single-generation (nflavors=1) in feynlag-models as of this session -- gives only one
+      physical light-neutrino mass. A genuine fit against two independent measured Delta m^2
+      values needs the n-generation variant requested in
+      model_requests/seesaw_type1_nN.md (not yet approved or built).
+
+maturity: A2
+
+falsifiers:
+  - "Discovery of a renormalizable, dimension<=4 SM-only mechanism generating neutrino mass
+    without new fields would contradict the peldano-1 structural test -- not expected, listed as
+    a sanity falsifier for the A1 claim itself."
+
+changelog:
+  - date: "2026-09-22"
+    note: >
+      A0-A2 ficha created: schema populated (all measured observables TODO_VERIFY, no literature
+      search performed this session); peldano 1 structural SM test (no dim<=4 neutrino-mass term)
+      and peldano 2 Weinberg-operator enumeration implemented and passing; peldano 3-4 import
+      feynlag-models' seesaw_type1 bundle; peldano 5 files model_requests/seesaw_type1_nN.md
+      (n-generation variant needed for a real fit); peldano 6 (stage-1 chi2 against two measured
+      Delta m^2) is blocked on that model request and explicitly skipped this session, capping
+      maturity at A2 rather than A3.
+    author: "Moises Zeleny (with Claude)"
