@@ -1,4 +1,4 @@
-"""Peldano 3-4: importing feynlag-models' seesaw_type1 and reading off its mass spectrum.
+"""Step 3-4: importing feynlag-models' seesaw_type1 and reading off its mass spectrum.
 
 The order-of-magnitude checks below use seesaw_type1's own benchmark (yv=1e-6, MR=1000 GeV,
 chosen in feynlag-models/models/seesaw_type1/metadata.yaml so that m_nu ~ 0.03 eV) -- this is

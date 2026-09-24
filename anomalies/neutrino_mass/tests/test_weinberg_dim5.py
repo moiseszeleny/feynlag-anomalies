@@ -1,6 +1,6 @@
-"""Peldano 2: the dimension-5 Weinberg operator appears only once max_dim is raised to 5."""
+"""Step 2: the dimension-5 Weinberg operator appears only once max_dim is raised to 5."""
 
-from anomalies.neutrino_mass.solutions.peldano_2 import weinberg_operator_present
+from anomalies.neutrino_mass.solutions.step_2 import weinberg_operator_present
 
 
 def test_weinberg_operator_absent_at_dim4():

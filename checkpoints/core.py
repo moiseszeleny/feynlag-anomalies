@@ -24,8 +24,8 @@ class Checkpoint:
     hints: list[str] = field(default_factory=list)
     _hint_level: int = field(default=0, init=False, repr=False)
 
-    def __call__(self, respuesta: Any) -> bool:
-        ok, message = self.check_fn(respuesta)
+    def __call__(self, answer: Any) -> bool:
+        ok, message = self.check_fn(answer)
         suffix = f" -- {message}" if message else ""
         if ok:
             print(f"[{self.name}] correct{suffix}")
@@ -52,13 +52,13 @@ class Checkpoint:
 def numeric_tolerance(
     name: str, expected: float, rel_tol: float = 1e-2, hints: list[str] | None = None
 ) -> Checkpoint:
-    """Checkpoint factory: passes if ``respuesta`` is within ``rel_tol`` of ``expected``."""
+    """Checkpoint factory: passes if ``answer`` is within ``rel_tol`` of ``expected``."""
 
-    def check_fn(respuesta: Any) -> tuple[bool, str]:
+    def check_fn(answer: Any) -> tuple[bool, str]:
         try:
-            value = float(respuesta)
+            value = float(answer)
         except (TypeError, ValueError):
-            return False, f"expected a number, got {respuesta!r}"
+            return False, f"expected a number, got {answer!r}"
         ok = abs(value) <= rel_tol if expected == 0 else abs(value - expected) / abs(expected) <= rel_tol
         return ok, f"got {value:.6g}"
 
@@ -66,9 +66,9 @@ def numeric_tolerance(
 
 
 def exact_match(name: str, expected: Any, hints: list[str] | None = None) -> Checkpoint:
-    """Checkpoint factory: passes iff ``respuesta == expected``."""
+    """Checkpoint factory: passes iff ``answer == expected``."""
 
-    def check_fn(respuesta: Any) -> tuple[bool, str]:
-        return respuesta == expected, f"got {respuesta!r}"
+    def check_fn(answer: Any) -> tuple[bool, str]:
+        return answer == expected, f"got {answer!r}"
 
     return Checkpoint(name=name, check_fn=check_fn, hints=list(hints or []))

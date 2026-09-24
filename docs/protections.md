@@ -2,7 +2,7 @@
 
 Every anomaly's `sm_protection[]` field must reference one or more rows of this table. This is a
 skeleton for session 1 — most rows are not yet populated with worked examples/citations; that is
-deferred to the session that builds the corresponding anomaly ficha.
+deferred to the session that builds the corresponding anomaly record.
 
 | protection | mechanism (one line) | example anomaly | status |
 |---|---|---|---|

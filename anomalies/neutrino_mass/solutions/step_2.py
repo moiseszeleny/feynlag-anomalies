@@ -1,8 +1,8 @@
-"""Peldano 2 -- lowest-dimension EFT operator: the Weinberg operator."""
+"""Step 2 -- lowest-dimension EFT operator: the Weinberg operator."""
 
 from __future__ import annotations
 
-from .peldano_1 import build_sm_lepton_fields
+from .step_1 import build_sm_lepton_fields
 
 
 def weinberg_operator_present(max_dim: int = 5) -> bool:

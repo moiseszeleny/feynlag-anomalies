@@ -1,4 +1,4 @@
-"""Discover anomaly fichas and load their ``anomaly.yaml``. Mirrors the shape of
+"""Discover anomaly records and load their ``anomaly.yaml``. Mirrors the shape of
 ``feynlag_models.registry`` on the sibling repo (a deliberate convention match, not a shared
 package — the two are not coupled)."""
 

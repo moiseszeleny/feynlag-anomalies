@@ -1,43 +1,43 @@
 """Checkpoint objects for ``ladder.ipynb``.
 
 Builds ``check_0`` .. ``check_5`` from :mod:`checkpoints.core` plus
-:mod:`anomalies.neutrino_mass.solutions` and, for peldano 4, a live ``feynlag-models``
+:mod:`anomalies.neutrino_mass.solutions` and, for step 4, a live ``feynlag-models``
 ``seesaw_type1`` bundle. ``ladder.ipynb`` imports from this module only -- never from
 ``solutions/`` directly -- keeping exercises and worked solutions separated (kickoff spec §4).
 
-Peldano 6 has no checkpoint: it is explicitly skipped/blocked this session, see ``decisions.md``.
+Step 6 has no checkpoint: it is explicitly skipped/blocked this session, see ``decisions.md``.
 """
 
 from __future__ import annotations
 
 from checkpoints import Checkpoint, exact_match, numeric_tolerance
 
-from anomalies.neutrino_mass.solutions import peldano_0, peldano_1, peldano_2
+from anomalies.neutrino_mass.solutions import step_0, step_1, step_2
 
-# --- peldano 0: dimensional estimate ---------------------------------------
+# --- step 0: dimensional estimate -------------------------------------------
 # Illustrative parameters for the exercise (not measured anomaly data, so not subject to the
 # TODO_VERIFY sourcing rule): an O(1) Yukawa, the electroweak scale (as in feynlag's own test
 # fixtures, e.g. tests/test_majorana.py), and a GUT-ish heavy scale.
 _P0_Y, _P0_V, _P0_M = 1.0, 246.0, 1e14
-_p0_expected = peldano_0.m_nu_estimate(_P0_Y, _P0_V, _P0_M)
+_p0_expected = step_0.m_nu_estimate(_P0_Y, _P0_V, _P0_M)
 
 check_0 = numeric_tolerance(
-    "peldano_0",
+    "step_0",
     expected=_p0_expected,
     rel_tol=0.2,
     hints=[
         "m_nu should come from a Yukawa coupling y, the electroweak scale v, and a heavy mass M.",
-        "Try m_nu ~ y^2 v^2 / M (see solutions/peldano_0.py's docstring for the shape).",
+        "Try m_nu ~ y^2 v^2 / M (see solutions/step_0.py's docstring for the shape).",
         f"With y={_P0_Y}, v={_P0_V} GeV, M={_P0_M:.0e} GeV, m_nu should come out around "
         f"{_p0_expected:.3g} GeV.",
     ],
 )
 
-# --- peldano 1: SM structural test ("does a dim<=4 term exist?") -----------
-_p1_expected = peldano_1.count_dim4_yukawa_terms()
+# --- step 1: SM structural test ("does a dim<=4 term exist?") --------------
+_p1_expected = step_1.count_dim4_yukawa_terms()
 
 check_1 = exact_match(
-    "peldano_1",
+    "step_1",
     expected=_p1_expected,
     hints=[
         "Call feynlag.suggest.suggest_yukawa on the minimal SM lepton content (Ll, eR, H, no "
@@ -48,22 +48,22 @@ check_1 = exact_match(
     ],
 )
 
-# --- peldano 2: lowest-dimension EFT operator -------------------------------
-_p2_expected = peldano_2.weinberg_operator_present()
+# --- step 2: lowest-dimension EFT operator ----------------------------------
+_p2_expected = step_2.weinberg_operator_present()
 
 check_2 = exact_match(
-    "peldano_2",
+    "step_2",
     expected=_p2_expected,
     hints=[
-        "Repeat the peldano-1 call but raise max_dim to 5.",
+        "Repeat the step-1 call but raise max_dim to 5.",
         "Look at the .label of each returned SuggestedTerm.",
         "One new term appears, labeled with 'Weinberg' in it -- that's the dimension-5 operator.",
     ],
 )
 
-# --- peldano 3: minimal tree-level UV completion ----------------------------
+# --- step 3: minimal tree-level UV completion -------------------------------
 check_3 = exact_match(
-    "peldano_3",
+    "step_3",
     expected="seesaw_type1",
     hints=[
         "Which feynlag-models model_id extends the SM with exactly one gauge-singlet fermion?",
@@ -75,16 +75,16 @@ check_3 = exact_match(
 
 
 def make_check_4(bundle) -> Checkpoint:
-    """Build peldano 4's checkpoint from a live ``seesaw_type1`` ``ModelBundle``.
+    """Build step 4's checkpoint from a live ``seesaw_type1`` ``ModelBundle``.
 
     Asks how many Majorana mass eigenstates the (single-generation) bundle produces -- the part
     directly instantiated by this model. The general 3-flavour rank-counting argument (why 2
     heavy states are needed once 2 Delta m^2 are measured) is left as the reader's own derivation
-    feeding into peldano 5 -- see ``decisions.md``.
+    feeding into step 5 -- see ``decisions.md``.
     """
     expected = len(bundle.extra["masses"])
     return exact_match(
-        "peldano_4",
+        "step_4",
         expected=expected,
         hints=[
             "Look at bundle.extra['masses'] (or ['U'], ['D']) -- how many entries does it have?",
@@ -95,9 +95,9 @@ def make_check_4(bundle) -> Checkpoint:
     )
 
 
-# --- peldano 5: minimal extension needed for a real fit ---------------------
+# --- step 5: minimal extension needed for a real fit ------------------------
 check_5 = exact_match(
-    "peldano_5",
+    "step_5",
     expected=True,
     hints=[
         "Two independently measured Delta m^2 require rank >= 2 in the light-neutrino mass "

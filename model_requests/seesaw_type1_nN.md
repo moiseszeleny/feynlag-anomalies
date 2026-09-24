@@ -1,6 +1,6 @@
 # Model request: `seesaw_type1_nN` (n-generation type-I seesaw)
 
-**Requested by**: `anomalies/neutrino_mass` (peldaño 5 of `ladder.ipynb`)
+**Requested by**: `anomalies/neutrino_mass` (step 5 of `ladder.ipynb`)
 **Status**: open, not yet approved for building in `feynlag-models`
 **Minimum level requested**: L2 (literature-checked masses/mixings/vertices — matching what the
 existing single-generation `seesaw_type1` already reaches; UFO/L3 is blocked upstream by
@@ -13,11 +13,11 @@ realistic ceiling for this variant too).
 right-handed neutrino `ν_R` (`nflavors=1`), giving a single physical light-neutrino mass. Neutrino
 oscillation experiments measure **two independent** mass-squared splittings (Δm²₂₁ and
 Δm²₃₁/Δm²₃₂ — solar and atmospheric), which is only possible with at least **two** massive light
-states. A rank argument on the seesaw mass matrix (peldaño 5 of the `neutrino_mass` ladder) shows
+states. A rank argument on the seesaw mass matrix (step 5 of the `neutrino_mass` ladder) shows
 that reproducing two independent Δm² values requires **at least two** right-handed neutrinos.
 
 Without this variant, `neutrino_mass` cannot progress past maturity A2 in `feynlag-anomalies`: a
-real stage-1 χ² fit (peldaño 6, A3) against two measured Δm² values is not possible against a
+real stage-1 χ² fit (step 6, A3) against two measured Δm² values is not possible against a
 single-light-mass model without either overclaiming (fitting one observable and calling it a
 global fit) or leaving one Δm² unconstrained.
 
@@ -46,9 +46,9 @@ instead of `1`.
 
 ## What calculation requires it
 
-Peldaño 6 of `anomalies/neutrino_mass/ladder.ipynb`: a diagonal Gaussian χ² (via `fit/stage1.py`)
+Step 6 of `anomalies/neutrino_mass/ladder.ipynb`: a diagonal Gaussian χ² (via `fit/stage1.py`)
 against two independently measured Δm² values from a global neutrino-oscillation fit (e.g. NuFIT —
-version and consultation date to be sourced when this ficha's `TODO_VERIFY` values are resolved).
+version and consultation date to be sourced when this record's `TODO_VERIFY` values are resolved).
 This is not implementable against a model whose light-neutrino sector has rank 1.
 
 ## Notes

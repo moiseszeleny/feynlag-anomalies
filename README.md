@@ -16,7 +16,7 @@ EFT-operator enumeration.
 
 | Lives in `feynlag-anomalies` | Lives in `feynlag-models` |
 |---|---|
-| Anomaly fichas: data, sources, status | Model declaration and `Model.validate()` |
+| Anomaly records: data, sources, status | Model declaration and `Model.validate()` |
 | Tests for "why the SM can't" | Spectrum, vertices, UFO, round-trip |
 | Minimal candidates (referenced by `model_id`) | Tests against the literature (L2) |
 | Benchmark points, scans, fits, χ² | `GENEALOGY.md` |

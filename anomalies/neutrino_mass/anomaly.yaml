@@ -38,7 +38,7 @@ sm_prediction:
   value: 0.0
   uncertainty: 0.0
   provenance: computed
-  reference: "anomalies/neutrino_mass/tests/test_sm_structural.py::test_no_dim4_neutrino_mass_term (peldano 1: feynlag.suggest.suggest_yukawa on minimal SM leptons, no nu_R, returns exactly the charged-lepton Yukawa at max_dim=4)"
+  reference: "anomalies/neutrino_mass/tests/test_sm_structural.py::test_no_dim4_neutrino_mass_term (step 1: feynlag.suggest.suggest_yukawa on minimal SM leptons, no nu_R, returns exactly the charged-lepton Yukawa at max_dim=4)"
 
 experiments:
   - name: "Super-Kamiokande"
@@ -94,17 +94,17 @@ maturity: A2
 
 falsifiers:
   - "Discovery of a renormalizable, dimension<=4 SM-only mechanism generating neutrino mass
-    without new fields would contradict the peldano-1 structural test -- not expected, listed as
+    without new fields would contradict the step-1 structural test -- not expected, listed as
     a sanity falsifier for the A1 claim itself."
 
 changelog:
   - date: "2026-09-22"
     note: >
-      A0-A2 ficha created: schema populated (all measured observables TODO_VERIFY, no literature
-      search performed this session); peldano 1 structural SM test (no dim<=4 neutrino-mass term)
-      and peldano 2 Weinberg-operator enumeration implemented and passing; peldano 3-4 import
-      feynlag-models' seesaw_type1 bundle; peldano 5 files model_requests/seesaw_type1_nN.md
-      (n-generation variant needed for a real fit); peldano 6 (stage-1 chi2 against two measured
+      A0-A2 record created: schema populated (all measured observables TODO_VERIFY, no literature
+      search performed this session); step 1 structural SM test (no dim<=4 neutrino-mass term)
+      and step 2 Weinberg-operator enumeration implemented and passing; step 3-4 import
+      feynlag-models' seesaw_type1 bundle; step 5 files model_requests/seesaw_type1_nN.md
+      (n-generation variant needed for a real fit); step 6 (stage-1 chi2 against two measured
       Delta m^2) is blocked on that model request and explicitly skipped this session, capping
       maturity at A2 rather than A3.
     author: "Moises Zeleny (with Claude)"

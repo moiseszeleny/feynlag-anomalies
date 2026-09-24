@@ -1,4 +1,4 @@
-"""Peldano 1 -- SM structural test: no dim<=4 neutrino-mass term.
+"""Step 1 -- SM structural test: no dim<=4 neutrino-mass term.
 
 Reproduces, for this repo's own purposes, the minimal-SM-lepton field construction from feynlag's
 own test suite (``tests/test_suggest.py::test_sm_lepton_yukawa`` /
@@ -18,7 +18,7 @@ def build_sm_lepton_fields(nflavors: int = 1):
 
     The gauge coupling values (``gw``, ``g1``) are internal bookkeeping for feynlag's
     gauge-variation machinery, not a physical prediction -- they cancel out of the structural
-    "does an invariant term exist" question this peldano asks, so they do not need a
+    "does an invariant term exist" question this step asks, so they do not need a
     ``TODO_VERIFY`` sentinel.
     """
     gw = ExternalParameter("gw", 0.6535, positive=True)

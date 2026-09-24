@@ -1,4 +1,4 @@
-"""Peldano 0 -- dimensional estimate of the neutrino mass scale."""
+"""Step 0 -- dimensional estimate of the neutrino mass scale."""
 
 
 def m_nu_estimate(y: float, v: float, M: float) -> float:

@@ -1,6 +1,6 @@
-"""Peldano 1: no dimension<=4 neutrino-mass term exists for minimal SM lepton content."""
+"""Step 1: no dimension<=4 neutrino-mass term exists for minimal SM lepton content."""
 
-from anomalies.neutrino_mass.solutions.peldano_1 import count_dim4_yukawa_terms
+from anomalies.neutrino_mass.solutions.step_1 import count_dim4_yukawa_terms
 
 
 def test_no_dim4_neutrino_mass_term():

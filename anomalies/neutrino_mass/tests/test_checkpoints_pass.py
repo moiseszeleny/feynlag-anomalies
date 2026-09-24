@@ -5,20 +5,20 @@ CI catches a feynlag/feynlag-models API drift even if nbmake is skipped.
 """
 
 from anomalies.neutrino_mass import checkpoints_def as cd
-from anomalies.neutrino_mass.solutions import peldano_0, peldano_1, peldano_2
+from anomalies.neutrino_mass.solutions import step_0, step_1, step_2
 
 
 def test_check_0_passes_with_canonical_solution():
-    answer = peldano_0.m_nu_estimate(cd._P0_Y, cd._P0_V, cd._P0_M)
+    answer = step_0.m_nu_estimate(cd._P0_Y, cd._P0_V, cd._P0_M)
     assert cd.check_0(answer) is True
 
 
 def test_check_1_passes_with_canonical_solution():
-    assert cd.check_1(peldano_1.count_dim4_yukawa_terms()) is True
+    assert cd.check_1(step_1.count_dim4_yukawa_terms()) is True
 
 
 def test_check_2_passes_with_canonical_solution():
-    assert cd.check_2(peldano_2.weinberg_operator_present()) is True
+    assert cd.check_2(step_2.weinberg_operator_present()) is True
 
 
 def test_check_3_passes_with_canonical_answer():

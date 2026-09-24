@@ -3,12 +3,12 @@
 Full candidate catalog across every sector named in the kickoff prompt (§1). Only the three rows
 with a real `maturity` value have a directory under `anomalies/`; every other row is a planned
 placeholder, not yet created, so this table gives the intended scope without over-promising
-fichas that don't exist yet. `sm_failure_type` and `status` on the planned rows are preliminary
-guesses for triage only -- to be confirmed (or corrected) when each ficha is actually built.
+records that don't exist yet. `sm_failure_type` and `status` on the planned rows are preliminary
+guesses for triage only -- to be confirmed (or corrected) when each record is actually built.
 
 | id | sector | sm_failure_type (preliminary) | status (preliminary) | maturity | notes |
 |---|---|---|---|---|---|
-| `neutrino_mass` | neutrinos | structural | established | **A2** | pilot ficha, this session. Peldano 6 blocked on `model_requests/seesaw_type1_nN.md`. |
+| `neutrino_mass` | neutrinos | structural | established | **A2** | pilot record, this session. Step 6 blocked on `model_requests/seesaw_type1_nN.md`. |
 | `higgs_95gev` | collider | resonance | hint | **A0** | stub, this session. Needs literature pass. |
 | `emu_146gev` | collider | resonance | hint | **A0** | stub, this session. Needs literature pass. |
 | `muon_g_minus_2` | collider (precision) | quantitative | — | — | planned. Needs verification of Fermilab 2025 final result vs. the 2025 lattice White Paper (see `CLAUDE.md`). |
@@ -27,4 +27,4 @@ guesses for triage only -- to be confirmed (or corrected) when each ficha is act
 
 See [`docs/maturity.md`](../docs/maturity.md) for the A0-A4 scale and
 [`docs/protections.md`](../docs/protections.md) for the SM-protection taxonomy referenced by each
-ficha's `sm_protection[]` field.
+record's `sm_protection[]` field.
