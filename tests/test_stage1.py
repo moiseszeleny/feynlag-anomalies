@@ -8,6 +8,7 @@ from fit.stage1 import (
     bfb_single_quartic,
     chi2_gaussian,
     combine_uncertainties,
+    minimize_chi2,
     perturbativity_cut,
     predict,
     unitarity_cut,
@@ -46,6 +47,33 @@ def test_predict_evaluates_sympy_expression():
     x, y = sp.symbols("x y")
     predicted = predict({x: 2.0, y: 3.0}, {"sum": x + y})
     assert predicted == {"sum": pytest.approx(5.0)}
+
+
+def test_minimize_chi2_finds_toy_minimum():
+    """Two observables (a+b, a*b) at (5, 6) with a, b > 0: minimum at {a, b} = {2, 3}, chi2 = 0."""
+    observed = {"sum": (5.0, 0.1), "prod": (6.0, 0.1)}
+    fit = minimize_chi2(lambda x: {"sum": x[0] + x[1], "prod": x[0] * x[1]},
+                        x0=[1.0, 4.0], observed=observed, bounds=([0, 0], [10, 10]))
+    assert fit["success"]
+    assert fit["chi2"] == pytest.approx(0.0, abs=1e-12)
+    assert sorted(fit["x"]) == pytest.approx([2.0, 3.0], rel=1e-6)
+    assert fit["ndof"] == 0
+    assert chi2_gaussian(fit["predicted"], observed) == pytest.approx(fit["chi2"])
+
+
+def test_minimize_chi2_overconstrained_pulls():
+    """One parameter, two conflicting observables: best fit at the mean, pulls ±1, chi2 = 2."""
+    fit = minimize_chi2(lambda x: {"a": x[0], "b": x[0]}, x0=[0.0],
+                        observed={"a": (1.0, 1.0), "b": (3.0, 1.0)})
+    assert fit["x"][0] == pytest.approx(2.0)
+    assert fit["pulls"] == {"a": pytest.approx(1.0), "b": pytest.approx(-1.0)}
+    assert fit["chi2"] == pytest.approx(2.0)
+    assert fit["ndof"] == 1
+
+
+def test_minimize_chi2_rejects_sentinel():
+    with pytest.raises(Stage1Error):
+        minimize_chi2(lambda x: {"a": x[0]}, x0=[0.0], observed={"a": ("TODO_VERIFY", 1.0)})
 
 
 def test_perturbativity_cut():
