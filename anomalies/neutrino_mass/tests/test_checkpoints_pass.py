@@ -32,3 +32,12 @@ def test_check_4_passes_with_canonical_answer(seesaw_bundle):
 
 def test_check_5_passes_with_canonical_answer():
     assert cd.check_5(True) is True
+
+
+def test_check_6_passes_with_canonical_answer(step6_fit):
+    from anomalies.neutrino_mass.solutions.step_6 import FIT_OBSERVABLES
+    from feynlag_anomalies.registry import load
+
+    fit, _ = step6_fit
+    answer = fit["predicted"][FIT_OBSERVABLES[1]] / fit["predicted"][FIT_OBSERVABLES[0]]
+    assert cd.make_check_6(load("neutrino_mass"))(answer) is True

@@ -5,7 +5,8 @@ Builds ``check_0`` .. ``check_5`` from :mod:`checkpoints.core` plus
 ``seesaw_type1`` bundle. ``ladder.ipynb`` imports from this module only -- never from
 ``solutions/`` directly -- keeping exercises and worked solutions separated (kickoff spec §4).
 
-Step 6 has no checkpoint: it is explicitly skipped/blocked this session, see ``decisions.md``.
+Step 6's checkpoint is built from the loaded ``Anomaly`` (``make_check_6``), so the measured
+values it compares against come from ``anomaly.yaml`` and are never re-typed here.
 """
 
 from __future__ import annotations
@@ -107,3 +108,29 @@ check_5 = exact_match(
         "requests. Answer True once you've read it.",
     ],
 )
+
+
+# --- step 6: stage-1 chi2 against the measured oscillation parameters -------
+def make_check_6(anomaly) -> Checkpoint:
+    """Step 6 asks for the fitted ratio Delta m^2_31 / Delta m^2_21.
+
+    A rank-1 light sector (one nu_R) cannot produce two independent splittings, so this ratio is
+    what the two-nu_R model has to get right; the expected value is the measured one, read from
+    the loaded ``Anomaly`` (NuFIT 6.0, see ``anomaly.yaml`` ``sources``).
+    """
+    from anomalies.neutrino_mass.solutions.step_6 import FIT_OBSERVABLES
+
+    by_name = {o.name: o.value for o in anomaly.observables}
+    expected = by_name[FIT_OBSERVABLES[1]] / by_name[FIT_OBSERVABLES[0]]
+    return numeric_tolerance(
+        "step_6",
+        expected=expected,
+        rel_tol=1e-3,
+        hints=[
+            "Build seesaw_type1_2n with feynlag_models.registry.build and fit its six Yukawas "
+            "to the five observables with solutions/step_6.run_fit.",
+            "Take the ratio of the fitted predictions fit['predicted'] for Delta m^2_31 and "
+            "Delta m^2_21.",
+            f"The measured ratio is {expected:.4g}; a converged fit reproduces it (all pulls ~0).",
+        ],
+    )
