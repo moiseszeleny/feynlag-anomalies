@@ -6,6 +6,10 @@ user to act on (or not) in those repos directly.
 
 ## Open
 
+None.
+
+## Resolved
+
 ### UG-1 — `feynlag-models` git dependency ships no model data files (packaging gap)
 
 **Repo**: `feynlag-models`. **Discovered**: 2026-09-22, while verifying this session's build
@@ -53,4 +57,7 @@ editable-install workaround above (see the end-of-session report for the exact v
 "*/NEXT_STEPS.md", "*/outputs/**"]`) or `include_package_data = true` + a `MANIFEST.in`, and
 confirm with a clean (non-editable) install + `uv run pytest` after the fix.
 
-**Status**: open, not fixed, not approved for fixing.
+**Status**: resolved on 2026-09-25 by feynlag-models PR #11 (merge `1dc5c11`), which adds
+`[tool.setuptools.package-data]` for `models/*/metadata.yaml`, `README.md`, `NEXT_STEPS.md` and
+`outputs/`. Checked there from a fresh venv with the built wheel installed non-editable, and here
+after pinning `feynlag-models` to `1dc5c11`: a plain `uv sync` lists all six models.

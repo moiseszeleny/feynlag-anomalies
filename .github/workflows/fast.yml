@@ -1,7 +1,3 @@
-# NOTE: currently blocked by docs/upstream_gaps.md UG-1 (feynlag-models' git dependency ships no
-# model data files) -- the "uv run pytest -q" step below will fail on any model-touching test
-# until that packaging gap is fixed upstream. Left as-is (not worked around) since the only
-# available workaround needs a local sibling checkout, which CI runners don't have.
 name: fast
 
 on:
