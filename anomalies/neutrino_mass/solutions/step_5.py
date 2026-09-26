@@ -12,11 +12,14 @@ import sympy as sp
 
 def light_mass_matrix(n_nuR: int, n_gen: int = 3) -> sp.Matrix:
     """The ``n_gen x n_gen`` seesaw light-neutrino matrix for generic ``m_D`` and diagonal ``M_R``."""
-    from feynlag import seesaw_light_mass
+    from feynlag import seesaw_light_mass, tex_symbol
 
     flavors = ("e", "mu", "tau", *(f"f{a}" for a in range(3, n_gen)))
-    m_D = sp.Matrix(n_gen, n_nuR, lambda a, k: sp.Symbol(f"mD_{flavors[a]}{k + 1}"))
-    M_R = sp.diag(*[sp.Symbol(f"MR{k + 1}", positive=True) for k in range(n_nuR)])
+    flavor_tex = (r"e", r"\mu", r"\tau", *(f"f_{a}" for a in range(3, n_gen)))
+    m_D = sp.Matrix(n_gen, n_nuR, lambda a, k: tex_symbol(
+        f"mD_{flavors[a]}{k + 1}", rf"m^D_{{{flavor_tex[a]} {k + 1}}}"))
+    M_R = sp.diag(*[tex_symbol(f"MR{k + 1}", f"M_{{{k + 1}}}", positive=True)
+                    for k in range(n_nuR)])
     return seesaw_light_mass(m_D, M_R)
 
 

@@ -21,8 +21,8 @@ def build_sm_lepton_fields(nflavors: int = 1):
     "does an invariant term exist" question this step asks, so they do not need a
     ``TODO_VERIFY`` sentinel.
     """
-    gw = ExternalParameter("gw", 0.6535, positive=True)
-    g1 = ExternalParameter("g1", 0.3580, positive=True)
+    gw = ExternalParameter("gw", 0.6535, positive=True, tex="{g}")
+    g1 = ExternalParameter("g1", 0.3580, positive=True, tex="{g'}")
     SU2L = SU2("SU2L", coupling=gw)
     U1Y = U1("U1Y", coupling=g1)
     Ll = WeylFermion(
@@ -31,11 +31,14 @@ def build_sm_lepton_fields(nflavors: int = 1):
         chirality="L",
         nflavors=nflavors,
         component_names=["nuL", "eL"],
+        component_tex=[r"\nu_L", "e_L"],
     )
     eR = WeylFermion(
-        "eR", reps={U1Y: -1}, chirality="R", nflavors=nflavors, component_names=["eR"]
+        "eR", reps={U1Y: -1}, chirality="R", nflavors=nflavors, component_names=["eR"],
+        tex="e_R",
     )
-    H = Scalar("H", reps={SU2L: 2, U1Y: sp.Rational(1, 2)}, component_names=["Gp", "H0"])
+    H = Scalar("H", reps={SU2L: 2, U1Y: sp.Rational(1, 2)}, component_names=["Gp", "H0"],
+               component_tex=["G^+", "H^0"])
     return Ll, eR, H, (SU2L, U1Y)
 
 
