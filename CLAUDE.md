@@ -39,7 +39,11 @@ inlining literals. Notebooks show SymPy objects with `IPython.display.display` (
 `Math(... + latex(expr))` when paired with a label), rendering through
 `feynlag_anomalies.latex.latex` so feynlag names print in physics notation (`nuL` -> `\nu_L`);
 extend its `TEX_NAMES`/patterns when a new model brings new names. `print` stays for plain text
-and numeric tables. `fit/stage1.py` runs Gaussian χ² fits against `feynlag_models` model bundles.
+and numeric tables. Ladder notebooks follow the style of feynlag's
+`examples/DiscreteGroups_Tutorial.ipynb`: `---` + numbered sections whose titles make a claim,
+`> **Before running the next cell.**` prediction blockquotes, code cells headed
+`# ---- MOVE k: set up / collect / recognise / check ----` or `# ---- peek: ... ----`, checks as
+`assert` + `ok("...")`, and a closing Recap (mechanics, tools table, traps, next steps). `fit/stage1.py` runs Gaussian χ² fits against `feynlag_models` model bundles.
 Candidate models are consumed exclusively through `feynlag_models.registry`.
 
 ## Hard rules

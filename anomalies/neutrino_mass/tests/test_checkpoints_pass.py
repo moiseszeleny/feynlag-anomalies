@@ -40,6 +40,11 @@ def test_light_rank_counts_right_handed_neutrinos():
     assert step_5.light_rank(2) == 2
 
 
+def test_light_mass_matrix_is_an_outer_product_for_one_nu_R():
+    m = step_5.light_mass_matrix(1)
+    assert m.shape == (3, 3) and m.rank(simplify=True) == 1 and m == m.T
+
+
 def test_check_6_passes_with_canonical_answer(step6_fit):
     from anomalies.neutrino_mass.solutions.step_6 import FIT_OBSERVABLES
     from feynlag_anomalies.registry import load
