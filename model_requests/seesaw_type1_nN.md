@@ -1,7 +1,10 @@
 # Model request: `seesaw_type1_nN` (n-generation type-I seesaw)
 
 **Requested by**: `anomalies/neutrino_mass` (step 5 of `ladder.ipynb`)
-**Status**: open, not yet approved for building in `feynlag-models`
+**Status**: fulfilled on 2026-09-25 by `feynlag-models`' `seesaw_type1_2n` (PR #9, maturity L2).
+The id is lowercase because the metadata schema requires `^[a-z0-9_]+$`. It has three lepton
+generations (the rank argument needs n_L ≥ 2, and `sm.pieces` offers only 1 or 3) and two
+ν_R. Used by `anomalies/neutrino_mass` step 6.
 **Minimum level requested**: L2 (literature-checked masses/mixings/vertices — matching what the
 existing single-generation `seesaw_type1` already reaches; UFO/L3 is blocked upstream by
 `feynlag-models/FEYNLAG_GAPS.md` FG-3, no Majorana UFO export path in `feynlag`, so L2 is the

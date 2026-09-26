@@ -111,6 +111,49 @@ def scan(
     return chi2
 
 
+def minimize_chi2(
+    predict_fn: Callable[[np.ndarray], Mapping[str, float]],
+    x0,
+    observed: Mapping[str, tuple[float, float]],
+    bounds=(-np.inf, np.inf),
+    **least_squares_kwargs,
+) -> dict:
+    """Minimize the diagonal Gaussian chi2 over a parameter vector, without rebuilding a model.
+
+    ``predict_fn(x)`` returns ``{observable: prediction}`` for the parameter vector ``x``
+    (typically by substituting ``x`` into a bundle's symbolic matrices, which is far cheaper than
+    ``scan``'s rebuild per point). The residuals handed to ``scipy.optimize.least_squares`` are
+    the pulls, so the returned ``chi2`` equals ``chi2_gaussian`` at the optimum.
+
+    Returns ``{"x", "chi2", "predicted", "pulls", "ndof", "success", "message"}``; ``ndof`` is
+    ``n_observables - n_parameters`` and may be <= 0 (an underdetermined fit shows only that the
+    model *can* accommodate the data).
+    """
+    from scipy.optimize import least_squares
+
+    obs = {k: (_reject_sentinel(f"observed[{k!r}].center", c),
+               _reject_sentinel(f"observed[{k!r}].sigma", s)) for k, (c, s) in observed.items()}
+    names = list(obs)
+
+    def residuals(x):
+        pred = predict_fn(x)
+        return np.array([(float(pred[k]) - obs[k][0]) / obs[k][1] for k in names])
+
+    res = least_squares(residuals, np.asarray(x0, dtype=float), bounds=bounds,
+                        **least_squares_kwargs)
+    predicted = dict(predict_fn(res.x))
+    pulls = {k: (float(predicted[k]) - obs[k][0]) / obs[k][1] for k in names}
+    return {
+        "x": res.x,
+        "chi2": chi2_gaussian(predicted, obs),
+        "predicted": predicted,
+        "pulls": pulls,
+        "ndof": len(names) - len(res.x),
+        "success": bool(res.success),
+        "message": res.message,
+    }
+
+
 def perturbativity_cut(couplings: Mapping[str, float], bound: float = 4 * math.pi) -> bool:
     """True iff every named coupling satisfies ``|value| < bound`` (default ``4*pi``)."""
     return all(abs(_reject_sentinel(name, value)) < bound for name, value in couplings.items())

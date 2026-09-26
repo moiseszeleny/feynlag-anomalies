@@ -2,36 +2,41 @@ id: neutrino_mass
 title: "Neutrino mass and oscillations"
 sector: neutrinos
 
+# NuFIT 6.0, arXiv:2410.05380v2 (28 Oct 2025), Table 1, variant "IC24 with SK atmospheric data"
+# (the paper's comprehensive analysis), Normal Ordering column (the global best fit in this
+# variant). Values are the printed best-fit points. NuFIT prints asymmetric total 1-sigma errors
+# (+up/-down, in the comments); stat_uncertainty holds their mean, a stage-1 symmetrisation, and
+# sys_uncertainty is null because NuFIT gives no stat/sys split. See decisions.md, step 6.
 observables:
   - name: "Delta m^2_21 (solar)"
-    value: TODO_VERIFY
-    stat_uncertainty: TODO_VERIFY
-    sys_uncertainty: TODO_VERIFY
+    value: 7.49e-5                # 7.49 +0.19 -0.19 [1e-5 eV^2]
+    stat_uncertainty: 0.19e-5
+    sys_uncertainty: null
     units: "eV^2"
   - name: "Delta m^2_31 (atmospheric, normal ordering)"
-    value: TODO_VERIFY
-    stat_uncertainty: TODO_VERIFY
-    sys_uncertainty: TODO_VERIFY
+    value: 2.513e-3               # Delta m^2_3l = Delta m^2_31 for NO: +2.513 +0.021 -0.019 [1e-3 eV^2]
+    stat_uncertainty: 0.020e-3
+    sys_uncertainty: null
     units: "eV^2"
   - name: "theta_12"
-    value: TODO_VERIFY
-    stat_uncertainty: TODO_VERIFY
-    sys_uncertainty: TODO_VERIFY
+    value: 33.68                  # +0.73 -0.70
+    stat_uncertainty: 0.715
+    sys_uncertainty: null
     units: "degrees"
   - name: "theta_13"
-    value: TODO_VERIFY
-    stat_uncertainty: TODO_VERIFY
-    sys_uncertainty: TODO_VERIFY
+    value: 8.56                   # +0.11 -0.11
+    stat_uncertainty: 0.11
+    sys_uncertainty: null
     units: "degrees"
   - name: "theta_23"
-    value: TODO_VERIFY
-    stat_uncertainty: TODO_VERIFY
-    sys_uncertainty: TODO_VERIFY
+    value: 43.3                   # +1.0 -0.8
+    stat_uncertainty: 0.9
+    sys_uncertainty: null
     units: "degrees"
   - name: "delta_CP"
-    value: TODO_VERIFY
-    stat_uncertainty: TODO_VERIFY
-    sys_uncertainty: TODO_VERIFY
+    value: 212.0                  # +26 -41; recorded, not fitted (the model's Yukawas are real)
+    stat_uncertainty: 33.5
+    sys_uncertainty: null
     units: "degrees"
 
 sm_prediction:
@@ -54,18 +59,18 @@ experiments:
   - name: "NOvA"
     notes: "TODO_VERIFY: confirm specific role/current status against a primary source before citing a number."
 
-sources: []
-# TODO_VERIFY: no primary source (arXiv / PDG / NuFIT with version+date) has been consulted this
-# session. Every observable above must be sourced from a real global-fit reference (e.g. NuFIT,
-# with its version number and consultation date) before any of it is used in fit/stage1.py.
+sources:
+  - kind: arxiv
+    identifier: "arXiv:2410.05380v2 (NuFIT 6.0; JHEP 12 (2024) 216; INSPIRE 2838825), Table 1, IC24 with SK atmospheric data, Normal Ordering"
+    consulted_on: 2026-09-25
 
 status: established
-status_date: TODO_VERIFY
+status_date: 2026-09-25
 status_rationale: >
   Neutrino oscillations, and hence nonzero neutrino mass, are a well-established result confirmed
-  by multiple independent experiments (solar, atmospheric, reactor, accelerator).
-  TODO_VERIFY: pin the exact global-fit reference/version this status is anchored to, and a real
-  status_date, before treating this as more than a placeholder.
+  by multiple independent experiments (solar, atmospheric, reactor, accelerator). Anchored here
+  to the NuFIT 6.0 global fit (arXiv:2410.05380v2, Table 1): both mass splittings are measured
+  with percent-level 1-sigma errors, i.e. far from zero.
 
 tensions_with_other_data:
   - "TODO_VERIFY: interaction with cosmological Sigma m_nu bounds (Planck / DESI) and with
@@ -85,12 +90,15 @@ eft_operators:
 candidate_models:
   - model_id: seesaw_type1
     notes: >
-      Single-generation (nflavors=1) in feynlag-models as of this session -- gives only one
-      physical light-neutrino mass. A genuine fit against two independent measured Delta m^2
-      values needs the n-generation variant requested in
-      model_requests/seesaw_type1_nN.md (not yet approved or built).
+      Single generation, one nu_R: a single massive light neutrino (rank-1 light sector). Used in
+      steps 3-5 of the ladder; cannot fit two independent Delta m^2.
+  - model_id: seesaw_type1_2n
+    notes: >
+      Three generations, two nu_R (feynlag-models PR #9, maturity L2), built from
+      model_requests/seesaw_type1_nN.md. Rank-2 light sector: m1 = 0 plus two massive states.
+      Step-6 fit: chi2_min ~ 0 against NuFIT 6.0 (NO) with ndof = -1 (see decisions.md).
 
-maturity: A2
+maturity: A3
 
 falsifiers:
   - "Discovery of a renormalizable, dimension<=4 SM-only mechanism generating neutrino mass
@@ -107,4 +115,13 @@ changelog:
       (n-generation variant needed for a real fit); step 6 (stage-1 chi2 against two measured
       Delta m^2) is blocked on that model request and explicitly skipped this session, capping
       maturity at A2 rather than A3.
+    author: "Moises Zeleny (with Claude)"
+  - date: "2026-09-25"
+    note: >
+      Observables sourced from NuFIT 6.0 (arXiv:2410.05380v2, Table 1, IC24 with SK-atm, NO);
+      status_date set. Step 6 run: stage-1 chi2 of feynlag-models' seesaw_type1_2n over
+      Delta m^2_21, Delta m^2_31, theta_12, theta_13, theta_23 (delta_CP recorded, not fitted:
+      real Yukawas). chi2_min ~ 3e-14 with ndof = -1 (the model accommodates the data; not a
+      preference); m1 = 0 exactly. Maturity A2 -> A3. Pins moved to feynlag-models with
+      seesaw_type1_2n and the UG-1 packaging fix, and feynlag e34b356.
     author: "Moises Zeleny (with Claude)"

@@ -25,6 +25,8 @@ This repo depends on two sibling repos, both read-only from here:
 - `uv run pytest --nbmake anomalies -q` — execute every `ladder.ipynb` top-to-bottom; a notebook
   that raises (a failed checkpoint) is a test failure.
 - `uv run pytest -q anomalies/neutrino_mass` — one anomaly's tests only.
+- `uv run jupyter nbconvert --to notebook --execute --inplace anomalies/<id>/ladder.ipynb` —
+  refresh a notebook's stored outputs after editing it (nbmake runs in memory and never saves).
 
 ## Architecture
 
@@ -33,7 +35,11 @@ This repo depends on two sibling repos, both read-only from here:
 the pedagogical notebook; it imports checkpoint objects from the anomaly's own
 `checkpoints_def.py` (built from `checkpoints.core.Checkpoint` + `solutions/`), never from
 `solutions/` directly, and reads every numeric value from the loaded `Anomaly` object rather than
-inlining literals. `fit/stage1.py` runs Gaussian χ² fits against `feynlag_models` model bundles.
+inlining literals. Notebooks show SymPy objects with `IPython.display.display` (as
+`Math(... + latex(expr))` when paired with a label), rendering through
+`feynlag_anomalies.latex.latex` so feynlag names print in physics notation (`nuL` -> `\nu_L`);
+extend its `TEX_NAMES`/patterns when a new model brings new names. `print` stays for plain text
+and numeric tables. `fit/stage1.py` runs Gaussian χ² fits against `feynlag_models` model bundles.
 Candidate models are consumed exclusively through `feynlag_models.registry`.
 
 ## Hard rules

@@ -5,14 +5,15 @@ Builds ``check_0`` .. ``check_5`` from :mod:`checkpoints.core` plus
 ``seesaw_type1`` bundle. ``ladder.ipynb`` imports from this module only -- never from
 ``solutions/`` directly -- keeping exercises and worked solutions separated (kickoff spec §4).
 
-Step 6 has no checkpoint: it is explicitly skipped/blocked this session, see ``decisions.md``.
+Step 6's checkpoint is built from the loaded ``Anomaly`` (``make_check_6``), so the measured
+values it compares against come from ``anomaly.yaml`` and are never re-typed here.
 """
 
 from __future__ import annotations
 
 from checkpoints import Checkpoint, exact_match, numeric_tolerance
 
-from anomalies.neutrino_mass.solutions import step_0, step_1, step_2
+from anomalies.neutrino_mass.solutions import step_0, step_1, step_2, step_5
 
 # --- step 0: dimensional estimate -------------------------------------------
 # Illustrative parameters for the exercise (not measured anomaly data, so not subject to the
@@ -95,15 +96,43 @@ def make_check_4(bundle) -> Checkpoint:
     )
 
 
-# --- step 5: minimal extension needed for a real fit ------------------------
+# --- step 5: rank of the light-neutrino mass matrix with one nu_R ------------
+_p5_expected = step_5.light_rank(1)
+
 check_5 = exact_match(
     "step_5",
-    expected=True,
+    expected=_p5_expected,
     hints=[
-        "Two independently measured Delta m^2 require rank >= 2 in the light-neutrino mass "
-        "matrix -- how many nu_R does that need?",
-        "One nu_R gives rank 1 (a single light mass) -- not enough for two Delta m^2.",
-        "At least two nu_R are needed; that's exactly what model_requests/seesaw_type1_nN.md "
-        "requests. Answer True once you've read it.",
+        "Build a generic 3x1 Dirac mass m_D and a 1x1 M_R, form the seesaw matrix "
+        "-m_D M_R^-1 m_D^T (feynlag.seesaw_light_mass), and take its rank.",
+        "m_D M_R^-1 m_D^T is an outer product of a single column with itself.",
+        f"The rank is {_p5_expected}: one massive light neutrino, two massless, so only one "
+        "Delta m^2 -- two measured splittings need at least two nu_R.",
     ],
 )
+
+
+# --- step 6: stage-1 chi2 against the measured oscillation parameters -------
+def make_check_6(anomaly) -> Checkpoint:
+    """Step 6 asks for the fitted ratio Delta m^2_31 / Delta m^2_21.
+
+    A rank-1 light sector (one nu_R) cannot produce two independent splittings, so this ratio is
+    what the two-nu_R model has to get right; the expected value is the measured one, read from
+    the loaded ``Anomaly`` (NuFIT 6.0, see ``anomaly.yaml`` ``sources``).
+    """
+    from anomalies.neutrino_mass.solutions.step_6 import FIT_OBSERVABLES
+
+    by_name = {o.name: o.value for o in anomaly.observables}
+    expected = by_name[FIT_OBSERVABLES[1]] / by_name[FIT_OBSERVABLES[0]]
+    return numeric_tolerance(
+        "step_6",
+        expected=expected,
+        rel_tol=1e-3,
+        hints=[
+            "Build seesaw_type1_2n with feynlag_models.registry.build and fit its six Yukawas "
+            "to the five observables with solutions/step_6.run_fit.",
+            "Take the ratio of the fitted predictions fit['predicted'] for Delta m^2_31 and "
+            "Delta m^2_21.",
+            f"The measured ratio is {expected:.4g}; a converged fit reproduces it (all pulls ~0).",
+        ],
+    )
