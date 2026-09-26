@@ -81,3 +81,19 @@ or touches a sibling repo and needs the user's sign-off before acting on it).
     construction. Complex Yukawas need a complex Takagi, which feynlag's numeric route does not
     yet do. The confrontation with Σm_ν from cosmology and with 0νββ is not done, and
     `tensions_with_other_data` stays `TODO_VERIFY`. `[physics judgment]`
+- **2026-09-25 — Pedagogical pass on `ladder.ipynb`** (no change to any fitted result):
+  - Step 5's checkpoint now asks for a computed quantity: the rank of the 3×3 seesaw light matrix
+    `-m_D M_R⁻¹ m_Dᵀ` for one ν_R, via `feynlag.seesaw_light_mass` on generic symbolic matrices
+    (`solutions/step_5.py::light_rank`). It gives rank 1 for one ν_R and rank 2 for two. The old
+    checkpoint only tested that the model-request file existed. `[feynlag-verified: test]` —
+    `tests/test_checkpoints_pass.py::test_light_rank_counts_right_handed_neutrinos`.
+  - Step 2 takes the Weinberg operator to the vacuum (`G⁺ → 0`, `H⁰ → v/√2`, per
+    feynlag-models `CONVENTIONS.md`); only the ν_Lν_L Majorana term survives, ∝ v²/2. Step 4
+    links back: M_R/y² = 10¹⁵ GeV at the seesaw_type1 benchmark, the same order as step 2's Λ
+    for C = 1. The exact-vs-seesaw light-mass difference (3.1×10⁻¹⁴) matches (m_D/M_R)² (3.0×10⁻¹⁴).
+  - Step 6 shows the Casas–Ibarra degeneracy: `run_fit` from `alt_start` (benchmark with signs
+    flipped) gives different Yukawas with the same χ² and spectrum. `[feynlag-verified: test]` —
+    `tests/test_step6_fit.py::test_fit_yukawas_are_degenerate`. Largest active–sterile mixing at
+    the best fit ≈ 1.6×10⁻⁷ (computed).
+  - Checkpoint calls are now `assert cd.check_N(...)`: `Checkpoint.__call__` returns a bool and
+    never raised, so a wrong answer did not previously fail `pytest --nbmake`.

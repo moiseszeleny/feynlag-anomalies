@@ -25,6 +25,8 @@ FIT_OBSERVABLES = (
 )
 #: fit variables are y / YV_SCALE, so least_squares works with O(1) numbers
 YV_SCALE = 1e-6
+#: sign flips applied to the benchmark for a second, independent fit start (step 6's degeneracy demo)
+ALT_START_SIGNS = (1, -1, 1, 1, -1, 1)
 _GEV_TO_EV = 1e9
 _DPS = 30
 
@@ -76,16 +78,24 @@ class OscillationPredictor:
         }
 
 
-def run_fit(bundle, observed: dict) -> dict:
+def alt_start(bundle) -> np.ndarray:
+    """The benchmark Yukawas with ``ALT_START_SIGNS`` applied, in units of ``YV_SCALE``."""
+    return np.array(ALT_START_SIGNS) * OscillationPredictor(bundle).benchmark_yv / YV_SCALE
+
+
+def run_fit(bundle, observed: dict, x0=None) -> dict:
     """Minimize the Gaussian chi2 over the six Yukawas, starting from the model benchmark.
+
+    ``x0`` (in units of ``YV_SCALE``) overrides the starting point; different starts land on
+    different Yukawas with the same chi2 and spectrum (the Casas-Ibarra R-matrix degeneracy).
 
     Six parameters against five observables: ``ndof = -1``, so chi2_min ≈ 0 shows only that the
     model *can* accommodate the data. The result also carries the SM chi2 over the two Δm²
     (the SM predicts massless neutrinos) and the model's lightest mass, which is exactly 0.
     """
     predictor = OscillationPredictor(bundle)
-    fit = minimize_chi2(lambda x: predictor(x * YV_SCALE), predictor.benchmark_yv / YV_SCALE,
-                        observed, x_scale="jac")
+    start = predictor.benchmark_yv / YV_SCALE if x0 is None else np.asarray(x0, dtype=float)
+    fit = minimize_chi2(lambda x: predictor(x * YV_SCALE), start, observed, x_scale="jac")
     yv = fit["x"] * YV_SCALE
     masses, _ = predictor.spectrum(yv)
     dm2 = FIT_OBSERVABLES[:2]

@@ -78,3 +78,13 @@ def test_sm_is_excluded_by_the_splittings(step6_fit):
     fit, _ = step6_fit
     assert fit["chi2_sm_dm2"] > 1e4
     assert fit["chi2_model_dm2"] < 1e-6
+
+
+def test_fit_yukawas_are_degenerate(seesaw_2n_bundle, step6_fit):
+    """A second start converges to different Yukawas with the same chi2 and light spectrum
+    (the Casas-Ibarra R-matrix freedom), which is what step 6 of the notebook shows."""
+    fit, observed = step6_fit
+    alt = step_6.run_fit(seesaw_2n_bundle, observed, x0=step_6.alt_start(seesaw_2n_bundle))
+    assert alt["success"] and alt["chi2"] < 1e-8
+    assert np.allclose(alt["masses_eV"], fit["masses_eV"], rtol=1e-6, atol=1e-12)
+    assert not np.allclose(list(alt["yv"].values()), list(fit["yv"].values()), rtol=1e-2)

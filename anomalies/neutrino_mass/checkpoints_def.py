@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from checkpoints import Checkpoint, exact_match, numeric_tolerance
 
-from anomalies.neutrino_mass.solutions import step_0, step_1, step_2
+from anomalies.neutrino_mass.solutions import step_0, step_1, step_2, step_5
 
 # --- step 0: dimensional estimate -------------------------------------------
 # Illustrative parameters for the exercise (not measured anomaly data, so not subject to the
@@ -96,16 +96,18 @@ def make_check_4(bundle) -> Checkpoint:
     )
 
 
-# --- step 5: minimal extension needed for a real fit ------------------------
+# --- step 5: rank of the light-neutrino mass matrix with one nu_R ------------
+_p5_expected = step_5.light_rank(1)
+
 check_5 = exact_match(
     "step_5",
-    expected=True,
+    expected=_p5_expected,
     hints=[
-        "Two independently measured Delta m^2 require rank >= 2 in the light-neutrino mass "
-        "matrix -- how many nu_R does that need?",
-        "One nu_R gives rank 1 (a single light mass) -- not enough for two Delta m^2.",
-        "At least two nu_R are needed; that's exactly what model_requests/seesaw_type1_nN.md "
-        "requests. Answer True once you've read it.",
+        "Build a generic 3x1 Dirac mass m_D and a 1x1 M_R, form the seesaw matrix "
+        "-m_D M_R^-1 m_D^T (feynlag.seesaw_light_mass), and take its rank.",
+        "m_D M_R^-1 m_D^T is an outer product of a single column with itself.",
+        f"The rank is {_p5_expected}: one massive light neutrino, two massless, so only one "
+        "Delta m^2 -- two measured splittings need at least two nu_R.",
     ],
 )
 
