@@ -97,3 +97,9 @@ or touches a sibling repo and needs the user's sign-off before acting on it).
     the best fit ≈ 1.6×10⁻⁷ (computed).
   - Checkpoint calls are now `assert cd.check_N(...)`: `Checkpoint.__call__` returns a bool and
     never raised, so a wrong answer did not previously fail `pytest --nbmake`.
+- **2026-09-26 — `ladder.ipynb` restyled** after feynlag's `examples/DiscreteGroups_Tutorial.ipynb`
+  (numbered claim sections, prediction blockquotes, MOVE/peek cells with `ok`/`trace`, Recap).
+  Style only: no fitted or checked value changed. New cells compute a hypercharge ledger (§1),
+  walk the Weinberg operator into the vacuum term by term (§2.1), and display the symbolic
+  one-ν_R light matrix (`solutions/step_5.py::light_mass_matrix`, §5). Every `ok` line is
+  backed by an `assert` in the same cell.

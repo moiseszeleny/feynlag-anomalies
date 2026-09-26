@@ -35,6 +35,8 @@ _PATTERNS = [
     # seesaw_type1_2n: Dirac Yukawa of lepton flavour a with nu_R number k, and M_R eigenvalues
     (re.compile(r"^yv_(e|mu|tau)(\d+)$"), lambda m: rf"y^\nu_{{{_FLAVORS[m[1]]} {m[2]}}}"),
     (re.compile(r"^MR(\d+)$"), lambda m: rf"M_{{{m[1]}}}"),
+    # generic Dirac mass entries (neutrino_mass step 5)
+    (re.compile(r"^mD_(e|mu|tau)(\d+)$"), lambda m: rf"m^D_{{{_FLAVORS[m[1]]} {m[2]}}}"),
 ]
 
 
