@@ -8,7 +8,7 @@ guesses for triage only -- to be confirmed (or corrected) when each record is ac
 
 | id | sector | sm_failure_type (preliminary) | status (preliminary) | maturity | notes |
 |---|---|---|---|---|---|
-| `neutrino_mass` | neutrinos | structural | established | **A3** | pilot record. Step 6: stage-1 χ² of `seesaw_type1_2n` against NuFIT 6.0 (2026-09-25). |
+| `neutrino_mass` | neutrinos | structural | established | **A3** | pilot record. Step 6: stage-1 χ² of `seesaw_type1_2n` against NuFIT 6.0 (2026-09-25). Step 7: confronted with DESI DR2, KamLAND-Zen and KATRIN (2026-09-26); passes the collaboration bounds and sits at the NO minimum of Σm_ν. |
 | `higgs_95gev` | collider | resonance | hint | **A0** | stub, this session. Needs literature pass. |
 | `emu_146gev` | collider | resonance | hint | **A0** | stub, this session. Needs literature pass. |
 | `muon_g_minus_2` | collider (precision) | quantitative | — | — | planned. Needs verification of Fermilab 2025 final result vs. the 2025 lattice White Paper (see `CLAUDE.md`). |

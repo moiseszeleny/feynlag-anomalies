@@ -49,6 +49,11 @@ def load(anomaly_dir: Path, check_models: bool = True) -> Anomaly:
     if anomaly.id != anomaly_dir.name:
         errors.append(f"id {anomaly.id!r} does not match directory name {anomaly_dir.name!r}")
 
+    known_sources = {s.identifier for s in anomaly.sources}
+    for c in anomaly.constraints:
+        if c.source not in known_sources:
+            errors.append(f"constraint {c.name!r} cites source {c.source!r}, not in sources[]")
+
     if check_models:
         errors.extend(_check_candidate_models(anomaly))
 
