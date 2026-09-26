@@ -19,6 +19,10 @@ or touches a sibling repo and needs the user's sign-off before acting on it).
   `(LH)(LH)/Λ` is the minimal SM-lepton EFT operator generating a Majorana neutrino mass.
   `[feynlag-verified: test]` — `tests/test_weinberg_dim5.py::test_weinberg_operator_appears_at_dim5`,
   mirroring `feynlag`'s own `tests/test_majorana.py::test_suggest_weinberg_dim5`.
+- **2026-09-25 — Step 2** (Λ estimate): now that the observables are sourced (NuFIT 6.0), the
+  notebook's Λ ~ v²/m_ν estimate uses m_ν = √Δm²_31 from `anomaly.yaml` instead of only step 0's
+  illustrative m_ν, giving Λ ~ 10^15 GeV. The stale "no verified Δm²" note was removed.
+  `[physics judgment]`, a dimensional estimate with an O(1) Wilson coefficient.
 - **2026-09-22 — Step 3** (UV completion, choice of minimal model): type-I seesaw chosen over
   type-II/III per de Blas–Criado–Pérez-Victoria–Santiago (arXiv:1711.10391) — fewest new fields,
   smallest representation (a gauge singlet), fewest parameters, no ad hoc symmetries. Imported as
