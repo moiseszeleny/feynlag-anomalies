@@ -6,6 +6,10 @@ user to act on (or not) in those repos directly.
 
 ## Open
 
+_None._
+
+## Resolved
+
 ### UG-2 — no per-component LaTeX names for field components (`feynlag`)
 
 **Repo**: `feynlag`. **Discovered**: 2026-09-26, while rendering the neutrino_mass ladder's
@@ -27,7 +31,18 @@ that `sympy.latex` picks it up without a caller-side map. For example, the compo
 could carry a `_latex` override, or feynlag could expose a `symbol_names` dict for a model.
 feynlag-models would then set it once per field. Not acted on without the user's approval.
 
-## Resolved
+**Status**: resolved on 2026-09-26.
+- **feynlag #26/#27/#28** (main `c474522`) add `TexSymbol`. Declaring `component_tex=` on a field,
+  `tex=` on a parameter, or a name-keyed `tex=` map on the SM builders, `expand_vev` and
+  `standard_ckm` makes the symbol carry its own LaTeX. Plain `sympy.latex` prints it, and it sorts
+  exactly like a plain `Symbol`.
+- **feynlag-models #12** (merge `7fe75d8`) sets it for every component, parameter and physical boson
+  of every model, from one table (`feynlag_models/tex.py`).
+
+After pinning both here, `feynlag_anomalies/latex.py` lost its name map (`TEX_NAMES`, the regex
+patterns). It keeps only one rule with no upstream equivalent: the conjugate of a positively charged
+symbol prints as its antiparticle (`G^-`, not `\overline{G^+}`), read from the symbol's own tex. The
+ladder's own step-1 fields and step-5 matrices declare their tex where they are built.
 
 ### UG-1 — `feynlag-models` git dependency ships no model data files (packaging gap)
 

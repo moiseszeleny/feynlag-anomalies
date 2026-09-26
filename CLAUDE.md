@@ -37,8 +37,11 @@ the pedagogical notebook; it imports checkpoint objects from the anomaly's own
 `solutions/` directly, and reads every numeric value from the loaded `Anomaly` object rather than
 inlining literals. Notebooks show SymPy objects with `IPython.display.display` (as
 `Math(... + latex(expr))` when paired with a label), rendering through
-`feynlag_anomalies.latex.latex` so feynlag names print in physics notation (`nuL` -> `\nu_L`);
-extend its `TEX_NAMES`/patterns when a new model brings new names. `print` stays for plain text
+`feynlag_anomalies.latex.latex`. Names come from the symbols themselves (feynlag `TexSymbol`,
+UG-2): feynlag-models declares every model symbol's LaTeX, and a symbol built here gets it where it
+is declared (`component_tex=`/`tex=`, `feynlag.tex_symbol`). `latex` only adds the antiparticle
+rule, `conjugate(G^+)` -> `G^-`. Never rebuild a model symbol by name (`sp.Symbol("yv_e1")`): a
+tex'd symbol differs from a plain one of the same name, so take it from the bundle. `print` stays for plain text
 and numeric tables. Ladder notebooks follow the style of feynlag's
 `examples/DiscreteGroups_Tutorial.ipynb`: `---` + numbered sections whose titles make a claim,
 `> **Before running the next cell.**` prediction blockquotes, code cells headed
