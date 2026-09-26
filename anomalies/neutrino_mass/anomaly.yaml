@@ -46,23 +46,38 @@ sm_prediction:
   reference: "anomalies/neutrino_mass/tests/test_sm_structural.py::test_no_dim4_neutrino_mass_term (step 1: feynlag.suggest.suggest_yukawa on minimal SM leptons, no nu_R, returns exactly the charged-lepton Yukawa at max_dim=4)"
 
 experiments:
+  # Roles as attributed by NuFIT 6.0 (arXiv:2410.05380v2, Sec. 1 and App. A), consulted 2026-09-26.
   - name: "Super-Kamiokande"
-    notes: "TODO_VERIFY: confirm specific role/current status against a primary source before citing a number."
+    notes: "Solar (SK1-4, incl. SK-IV day-night spectrum): theta_12, Delta m^2_21. Atmospheric (SK1-5, chi^2 map): theta_23, |Delta m^2_3l|, mass ordering."
   - name: "SNO"
-    notes: "TODO_VERIFY: confirm specific role/current status against a primary source before citing a number."
+    notes: "Solar: theta_12, Delta m^2_21."
   - name: "KamLAND"
-    notes: "TODO_VERIFY: confirm specific role/current status against a primary source before citing a number."
+    notes: "Reactor (long baseline): theta_12, Delta m^2_21."
   - name: "Daya Bay"
-    notes: "TODO_VERIFY: confirm specific role/current status against a primary source before citing a number."
+    notes: "Reactor (short baseline): theta_13, |Delta m^2_3l|."
   - name: "T2K"
-    notes: "TODO_VERIFY: confirm specific role/current status against a primary source before citing a number."
+    notes: "Accelerator long-baseline: theta_23, delta_CP, mass ordering, |Delta m^2_3l|."
   - name: "NOvA"
-    notes: "TODO_VERIFY: confirm specific role/current status against a primary source before citing a number."
+    notes: "Accelerator long-baseline: theta_23, delta_CP, mass ordering, |Delta m^2_3l|."
+  - name: "IceCube/DeepCore"
+    notes: "Atmospheric (IC19, IC24; the 'IC24' variant fitted here): theta_23, |Delta m^2_3l|, mass ordering."
 
 sources:
   - kind: arxiv
     identifier: "arXiv:2410.05380v2 (NuFIT 6.0; JHEP 12 (2024) 216; INSPIRE 2838825), Table 1, IC24 with SK atmospheric data, Normal Ordering"
     consulted_on: 2026-09-25
+  - kind: arxiv
+    identifier: "arXiv:2503.14738v3 (DESI Collaboration, DESI DR2 Results II: BAO and cosmological constraints), abstract"
+    consulted_on: 2026-09-26
+  - kind: arxiv
+    identifier: "arXiv:2606.17994v1 (Hou, Wang, Zhao, Zhang, Sum of neutrino masses from ACT DR6 and DESI DR2 with isocurvature), abstract"
+    consulted_on: 2026-09-26
+  - kind: arxiv
+    identifier: "arXiv:2406.11438v2 (KamLAND-Zen, Search for Majorana neutrinos with the complete KamLAND-Zen dataset), Eq. 2"
+    consulted_on: 2026-09-26
+  - kind: arxiv
+    identifier: "arXiv:2406.13516v1 (KATRIN, Direct neutrino-mass measurement based on 259 days of KATRIN data), abstract"
+    consulted_on: 2026-09-26
 
 status: established
 status_date: 2026-09-25
@@ -73,9 +88,43 @@ status_rationale: >
   with percent-level 1-sigma errors, i.e. far from zero.
 
 tensions_with_other_data:
-  - "TODO_VERIFY: interaction with cosmological Sigma m_nu bounds (Planck / DESI) and with
-    0-neutrinoless-double-beta-decay limits on the effective Majorana mass -- not yet checked
-    against a primary source."
+  - "Cosmology vs. the normal-ordering minimum: DESI DR2 + CMB give sum m_nu < 0.064 eV (95%, LambdaCDM; arXiv:2503.14738v3), only just above the minimum allowed by the oscillation splittings in normal ordering. A 2026 combination (Planck 2018 + ACT DR6 + SPT-3G + DESI DR2 + DES Y5; arXiv:2606.17994v1) finds < 0.052 eV (95%, adiabatic LambdaCDM), below that minimum; its authors attribute this to the statistical prior extending to zero, and quote < 0.092 eV with a hierarchy-informed prior. The bounds are model dependent (DESI: < 0.16 eV in w0wa). See constraints[] and ladder step 7."
+  - "0nubetabeta and beta decay: KamLAND-Zen (m_betabeta < 28-122 meV, 90% CL; arXiv:2406.11438v2) and KATRIN (m_nu < 0.45 eV, 90% CL; arXiv:2406.13516v1) do not yet reach the normal-ordering region with a massless lightest neutrino (ladder step 7, computed)."
+
+constraints:
+  - name: "Sum of neutrino masses, DESI DR2 + CMB, LambdaCDM"
+    quantity: sum_m_nu
+    upper_limit: 0.064
+    confidence_level: 0.95
+    units: "eV"
+    source: "arXiv:2503.14738v3 (DESI Collaboration, DESI DR2 Results II: BAO and cosmological constraints), abstract"
+  - name: "Sum of neutrino masses, DESI DR2 + CMB, w0wa"
+    quantity: sum_m_nu
+    upper_limit: 0.16
+    confidence_level: 0.95
+    units: "eV"
+    source: "arXiv:2503.14738v3 (DESI Collaboration, DESI DR2 Results II: BAO and cosmological constraints), abstract"
+  - name: "Sum of neutrino masses, CMB-SPA + DESI DR2 + DES Y5, adiabatic LambdaCDM"
+    quantity: sum_m_nu
+    upper_limit: 0.052
+    confidence_level: 0.95
+    units: "eV"
+    source: "arXiv:2606.17994v1 (Hou, Wang, Zhao, Zhang, Sum of neutrino masses from ACT DR6 and DESI DR2 with isocurvature), abstract"
+    notes: "Not a collaboration result. Below the normal-ordering minimum; the authors attribute this to the prior extending to zero (hierarchy-informed prior: < 0.092 eV). Recorded as a tension, not as the anchor bound."
+  - name: "Effective Majorana mass, KamLAND-Zen 800 (136Xe)"
+    quantity: m_betabeta
+    upper_limit: 0.122
+    upper_limit_strongest: 0.028
+    confidence_level: 0.90
+    units: "eV"
+    source: "arXiv:2406.11438v2 (KamLAND-Zen, Search for Majorana neutrinos with the complete KamLAND-Zen dataset), Eq. 2"
+    notes: "Range from nuclear matrix elements (T_1/2 > 3.8e26 yr); the conservative end is used for the cut."
+  - name: "Effective electron-neutrino mass, KATRIN (259 days)"
+    quantity: m_beta
+    upper_limit: 0.45
+    confidence_level: 0.90
+    units: "eV"
+    source: "arXiv:2406.13516v1 (KATRIN, Direct neutrino-mass measurement based on 259 days of KATRIN data), abstract"
 
 sm_failure_type: structural
 sm_protection:
@@ -104,6 +153,8 @@ falsifiers:
   - "Discovery of a renormalizable, dimension<=4 SM-only mechanism generating neutrino mass
     without new fields would contradict the step-1 structural test -- not expected, listed as
     a sanity falsifier for the A1 claim itself."
+  - "seesaw_type1_2n (normal ordering) predicts m_1 = 0, i.e. the minimum sum m_nu allowed by the splittings. A robust cosmological bound below that minimum (one not driven by a prior extending to zero) would exclude it."
+  - "With real Yukawas, seesaw_type1_2n's light matrix is negative semidefinite, so m_betabeta takes the single constructive value |m2 s12^2 c13^2 + m3 s13^2| (ladder step 7, computed). A 0nubetabeta measurement of any other m_betabeta would exclude the real-Yukawa model (complex Yukawas would open the range down to the destructive branch)."
 
 changelog:
   - date: "2026-09-22"
@@ -124,4 +175,12 @@ changelog:
       real Yukawas). chi2_min ~ 3e-14 with ndof = -1 (the model accommodates the data; not a
       preference); m1 = 0 exactly. Maturity A2 -> A3. Pins moved to feynlag-models with
       seesaw_type1_2n and the UG-1 packaging fix, and feynlag e34b356.
+    author: "Moises Zeleny (with Claude)"
+  - date: "2026-09-26"
+    note: >
+      Experiment roles sourced from NuFIT 6.0 (IceCube/DeepCore added). New constraints[] from
+      DESI DR2 (sum m_nu, LambdaCDM and w0wa), KamLAND-Zen (m_betabeta), KATRIN (m_beta), and a
+      2026 non-collaboration cosmology combination recorded as a tension. tensions_with_other_data
+      and two falsifiers written. Ladder step 7 confronts the step-6 fit with these bounds.
+      Maturity stays A3 (stage-1 cuts only).
     author: "Moises Zeleny (with Claude)"

@@ -2,8 +2,10 @@
 
 Builds ``check_0`` .. ``check_5`` from :mod:`checkpoints.core` plus
 :mod:`anomalies.neutrino_mass.solutions` and, for step 4, a live ``feynlag-models``
-``seesaw_type1`` bundle. ``ladder.ipynb`` imports from this module only -- never from
-``solutions/`` directly -- keeping exercises and worked solutions separated (kickoff spec §4).
+``seesaw_type1`` bundle (``make_check_4``); steps 6 and 7 are built from the loaded ``Anomaly``
+and the step-6 fit (``make_check_6``, ``make_check_7``). ``ladder.ipynb`` imports from this
+module only -- never from ``solutions/`` directly -- keeping exercises and worked solutions
+separated (kickoff spec §4).
 
 Step 6's checkpoint is built from the loaded ``Anomaly`` (``make_check_6``), so the measured
 values it compares against come from ``anomaly.yaml`` and are never re-typed here.
@@ -134,5 +136,25 @@ def make_check_6(anomaly) -> Checkpoint:
             "Take the ratio of the fitted predictions fit['predicted'] for Delta m^2_31 and "
             "Delta m^2_21.",
             f"The measured ratio is {expected:.4g}; a converged fit reproduces it (all pulls ~0).",
+        ],
+    )
+
+
+# --- step 7: beyond oscillations -- the model's effective Majorana mass -----
+def make_check_7(bundle, fit) -> Checkpoint:
+    """Step 7 asks for m_betabeta in meV at the step-6 best fit (``seesaw_type1_2n``)."""
+    from anomalies.neutrino_mass.solutions import step_7
+
+    expected = step_7.predictions(bundle, fit)["m_betabeta"] * 1e3
+    return numeric_tolerance(
+        "step_7",
+        expected=expected,
+        rel_tol=1e-3,
+        hints=[
+            "Build the 3x3 light matrix from the fitted Yukawas with feynlag.seesaw_light_mass "
+            "(m_D = y v / sqrt2, M_R from the benchmark) -- solutions/step_7.light_matrix.",
+            "m_betabeta = |(m_nu)_ee| -- no PMNS phase convention needed. Convert eV to meV.",
+            f"With m_1 = 0 and real Yukawas it is the constructive branch "
+            f"|m2 s12^2 c13^2 + m3 s13^2| = {expected:.3g} meV.",
         ],
     )
