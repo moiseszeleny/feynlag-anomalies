@@ -20,7 +20,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest==8.3.5", "pytest-timeout==2.3.1", "nbmake"]
+dev = ["pytest==8.3.5", "pytest-timeout==2.3.1", "nbmake", "nbconvert"]
 
 [tool.setuptools.packages.find]
 include = ["checkpoints*", "fit*", "feynlag_anomalies*", "anomalies*"]

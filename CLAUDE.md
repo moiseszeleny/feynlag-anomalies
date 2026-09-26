@@ -25,6 +25,8 @@ This repo depends on two sibling repos, both read-only from here:
 - `uv run pytest --nbmake anomalies -q` — execute every `ladder.ipynb` top-to-bottom; a notebook
   that raises (a failed checkpoint) is a test failure.
 - `uv run pytest -q anomalies/neutrino_mass` — one anomaly's tests only.
+- `uv run jupyter nbconvert --to notebook --execute --inplace anomalies/<id>/ladder.ipynb` —
+  refresh a notebook's stored outputs after editing it (nbmake runs in memory and never saves).
 
 ## Architecture
 
