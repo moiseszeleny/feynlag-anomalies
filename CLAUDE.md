@@ -36,8 +36,10 @@ the pedagogical notebook; it imports checkpoint objects from the anomaly's own
 `checkpoints_def.py` (built from `checkpoints.core.Checkpoint` + `solutions/`), never from
 `solutions/` directly, and reads every numeric value from the loaded `Anomaly` object rather than
 inlining literals. Notebooks show SymPy objects with `IPython.display.display` (as
-`Math(... + sp.latex(expr))` when paired with a label) and keep `print` for plain text and
-numeric tables. `fit/stage1.py` runs Gaussian χ² fits against `feynlag_models` model bundles.
+`Math(... + latex(expr))` when paired with a label), rendering through
+`feynlag_anomalies.latex.latex` so feynlag names print in physics notation (`nuL` -> `\nu_L`);
+extend its `TEX_NAMES`/patterns when a new model brings new names. `print` stays for plain text
+and numeric tables. `fit/stage1.py` runs Gaussian χ² fits against `feynlag_models` model bundles.
 Candidate models are consumed exclusively through `feynlag_models.registry`.
 
 ## Hard rules

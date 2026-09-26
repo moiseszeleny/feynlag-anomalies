@@ -6,7 +6,26 @@ user to act on (or not) in those repos directly.
 
 ## Open
 
-None.
+### UG-2 — no per-component LaTeX names for field components (`feynlag`)
+
+**Repo**: `feynlag`. **Discovered**: 2026-09-26, while rendering the neutrino_mass ladder's
+SymPy output.
+
+**Symptom**: a field's `tex=` argument only covers the whole field (`Field._repr_latex_`, e.g.
+`L`). Its components are bare `IndexedBase`/`Symbol` objects named after `component_names`
+(`nuL`, `eL`, `Gp`, `H0`), so `sympy.latex` of any operator, Lagrangian piece or mass matrix
+prints those raw names. The same holds for components built inside `feynlag-models` models, which
+this repo cannot rename.
+
+**Workaround here**: `feynlag_anomalies/latex.py` maps names to LaTeX through SymPy's
+`symbol_names` printer setting (render only). It works because feynlag's `Bilinear`/Dirac
+`_latex` methods print their legs via `printer.doprint`. But every downstream repo needs its own
+name map, kept in sync with each model's component names.
+
+**Proposal**: a `component_tex=[...]` argument on `Field` (next to `component_names`), stored so
+that `sympy.latex` picks it up without a caller-side map. For example, the component symbols
+could carry a `_latex` override, or feynlag could expose a `symbol_names` dict for a model.
+feynlag-models would then set it once per field. Not acted on without the user's approval.
 
 ## Resolved
 
