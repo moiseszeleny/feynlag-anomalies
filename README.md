@@ -19,7 +19,7 @@ EFT-operator enumeration.
 | Anomaly records: data, sources, status | Model declaration and `Model.validate()` |
 | Tests for "why the SM can't" | Spectrum, vertices, UFO, round-trip |
 | Minimal candidates (referenced by `model_id`) | Tests against the literature (L2) |
-| Benchmark points, scans, fits, χ² | `GENEALOGY.md` |
+| Benchmark points, scans, fits, $\chi^2$ | `GENEALOGY.md` |
 | Pedagogical notebooks (ladders) | — |
 
 ## Quickstart
@@ -54,7 +54,7 @@ maturity level (A0-A4, see [`docs/maturity.md`](docs/maturity.md)) of each.
 
 Theoretical problems the SM is consistent with but does not explain (flavor, hierarchy, strong
 CP, ...) live in [`puzzles/`](puzzles/INDEX.md). They have their own schema (`Puzzle`), a
-code-computed `quantifier` instead of a χ², and a P0-P4 maturity scale.
+code-computed `quantifier` instead of a $\chi^2$, and a P0-P4 maturity scale.
 
 ## Further reading
 

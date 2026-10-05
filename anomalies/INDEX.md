@@ -8,7 +8,7 @@ guesses for triage only -- to be confirmed (or corrected) when each record is ac
 
 | id | sector | sm_failure_type (preliminary) | status (preliminary) | maturity | notes |
 |---|---|---|---|---|---|
-| `neutrino_mass` | neutrinos | structural | established | **A3** | pilot record. Step 6: stage-1 χ² of `seesaw_type1_2n` against NuFIT 6.0 (2026-09-25). Step 7: confronted with DESI DR2, KamLAND-Zen and KATRIN (2026-09-26); passes the collaboration bounds and sits at the NO minimum of Σm_ν. |
+| `neutrino_mass` | neutrinos | structural | established | **A3** | pilot record. Step 6: stage-1 $\chi^2$ of `seesaw_type1_2n` against NuFIT 6.0 (2026-09-25). Step 7: confronted with DESI DR2, KamLAND-Zen and KATRIN (2026-09-26); passes the collaboration bounds and sits at the NO minimum of $`\Sigma m_\nu`$. |
 | `higgs_95gev` | collider | resonance | hint | **A0** | stub, this session. Needs literature pass. |
 | `emu_146gev` | collider | resonance | hint | **A0** | stub, this session. Needs literature pass. |
 | `muon_g_minus_2` | collider (precision) | quantitative | — | — | planned. Needs verification of Fermilab 2025 final result vs. the 2025 lattice White Paper (see `CLAUDE.md`). |
@@ -23,7 +23,7 @@ guesses for triage only -- to be confirmed (or corrected) when each record is ac
 | `dark_matter_direct` | dark_matter | — | — | — | planned (direct-detection hints/limits, e.g. the September 2026 LZ event -- read the preprint, not press coverage, per `CLAUDE.md`). |
 | `dark_matter_relic` | dark_matter | — | — | — | planned (relic abundance constraints on candidate models). |
 | `hubble_tension` | cosmology | quantitative | — | — | planned (H0 early- vs. late-universe tension). |
-| `delta_n_eff` | cosmology | — | — | — | planned (ΔN_eff, effective number of relativistic species). |
+| `delta_n_eff` | cosmology | — | — | — | planned ($`\Delta N_{\rm eff}`$, effective number of relativistic species). |
 
 See [`docs/maturity.md`](../docs/maturity.md) for the A0-A4 scale and
 [`docs/protections.md`](../docs/protections.md) for the SM-protection taxonomy referenced by each
