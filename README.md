@@ -50,6 +50,12 @@ See [`anomalies/INDEX.md`](anomalies/INDEX.md) for the full candidate catalog ac
 (collider, flavor, electroweak precision, neutrinos, dark matter, cosmology, X17), and the
 maturity level (A0-A4, see [`docs/maturity.md`](docs/maturity.md)) of each.
 
+## Puzzle catalog
+
+Theoretical problems the SM is consistent with but does not explain (flavor, hierarchy, strong
+CP, ...) live in [`puzzles/`](puzzles/INDEX.md). They have their own schema (`Puzzle`), a
+code-computed `quantifier` instead of a χ², and a P0-P4 maturity scale.
+
 ## Further reading
 
 - [`CLAUDE.md`](CLAUDE.md) — operational rules for working in this repo.

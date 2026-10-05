@@ -16,3 +16,15 @@ deferred to the session that builds the corresponding anomaly record.
 
 Add new rows as needed; do not remove a row once an anomaly references it (breaks the
 cross-reference the schema loader checks).
+
+## Missing protections (puzzle direction)
+
+Anomalies ask *which protection blocks an effect*. Puzzles (`puzzles/<id>/`) ask the dual
+question: *why does nothing protect or fix a quantity*. A puzzle's `missing_protection[]` refers
+to rows of this table.
+
+| missing protection | what is missing (one line) | example puzzle | status |
+|---|---|---|---|
+| `no_flavor_organizing_symmetry` | The U(3)^5 flavor symmetry of the gauge sector is broken only by the Yukawas, and nothing in the SM fixes their pattern or size. | `flavor_puzzle` | seeded |
+| `no_scalar_mass_protection` | No chiral or gauge symmetry protects an elementary scalar mass, so m_H² is additively sensitive to heavy scales. | (hierarchy problem, not yet built) | placeholder |
+| `no_theta_protection` | θ̄ is a dimension-4 CP-odd parameter that no SM symmetry sets to zero, yet the neutron EDM bounds it to be tiny. | (strong CP, not yet built) | placeholder |
