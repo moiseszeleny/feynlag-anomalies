@@ -58,13 +58,15 @@ hard rules as anomalies, use the P0-P4 scale in `docs/maturity.md` and cross-lin
 **Markdown math.** Every equation, symbol or quantity in a `.md` file is LaTeX that GitHub
 renders. Inline math is `$...$`, or `` $`...`$ `` whenever it contains `_`: GitHub otherwise
 pairs underscores across spans into italics. A closing `$` must not touch a letter (write
-`$\Lambda\rm CDM$`, not `$\Lambda$CDM`). Display math is a ```` ```math ```` block, never a
-plain code fence. Inside tables, write absolute values as `\lvert ... \rvert`. Units stay as
+`$\Lambda\rm CDM$`, not `$\Lambda$CDM`). Display math is a ```` ```math ```` block at the top
+level, never indented inside a list item (GitHub's file view shows an indented one as code) and
+never a plain code fence. Inside tables, write absolute values as `\lvert ... \rvert`. Units stay as
 text after the math (`$\Sigma m_\nu < 0.064$ eV`). Code identifiers, paths, test names, maturity
 labels (L2, A3, P1) and quoted text stay as they are. `docs/PROJECT_BRIEF.md` and
 `prompt_feynlag_anomalies.md` are the verbatim kickoff record and are not rewritten. Check a file
-with `gh api -X POST markdown -f mode=gfm -F text=@<file>`: every span should come back inside
-`<math-renderer>`, with no `<em>` inside it.
+with `gh api -X POST markdown -f mode=gfm -f context=moiseszeleny/feynlag-anomalies -F
+text=@<file>` (the repository context matches the file view): every span should come back inside
+`<math-renderer>`, with no `<em>` inside it and no `<pre lang="math">` block.
 
 ## Hard rules
 
