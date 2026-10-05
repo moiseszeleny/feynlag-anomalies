@@ -7,35 +7,45 @@ statement: >
   powers of the Cabibbo angle, while lepton mixing has large angles. The SM fits all of this with
   free parameters but explains none of it.
 
-# Values to be compared at one common renormalization scale (MS-bar at M_Z is the planned
-# choice, see decisions.md). Nothing below has been taken from a primary source yet, so every
-# number is the sentinel and every `source` is null. P0 allows this; P1 needs the sources.
+# Running masses: Huang & Zhou, arXiv:2009.04851v2 (PRD 103, 016010), Table 2 (quarks) and
+# Table 3 (charged leptons), row "M_Z, Full SM" (MS-bar, six quarks and three leptons active).
+# Above the EW scale they define m_f = y_f v_F / sqrt(2) with v_F = 246 GeV, the same relation
+# as sm_ckm's y_f = sqrt(2) m_f / v; the Yukawas are derived from these by code (solutions/step_1).
+# Uncertainties are their quoted total (experimental and truncation errors combined).
+#
+# CKM: PDG 2024 CKM review (rpp2024-rev-ckm-matrix, 31 May 2024), Eq. (12.28), the global-fit
+# standard-parametrization angles, which are sm_ckm's own inputs (s12, s13, s23, deltaCP).
+# Asymmetric errors are stored as the mean of +/- (a stage-1 symmetrisation, as in
+# anomalies/neutrino_mass); the printed values are in the comments.
 sm_quantities:
-  - {name: "y_u", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
-  - {name: "y_c", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
-  - {name: "y_t", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
-  - {name: "y_d", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
-  - {name: "y_s", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
-  - {name: "y_b", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
-  - {name: "y_e", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
-  - {name: "y_mu", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
-  - {name: "y_tau", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
-  - {name: "Wolfenstein lambda", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1"}
-  - {name: "Wolfenstein A", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1"}
-  - {name: "Wolfenstein rho-bar", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1"}
-  - {name: "Wolfenstein eta-bar", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1"}
+  - {name: "m_u(M_Z)", value: 1.23e-3, uncertainty: 0.21e-3, units: "GeV", scale: "MS-bar, mu = M_Z, full SM", source: "arXiv:2009.04851"}
+  - {name: "m_c(M_Z)", value: 0.620, uncertainty: 0.017, units: "GeV", scale: "MS-bar, mu = M_Z, full SM", source: "arXiv:2009.04851"}
+  - {name: "m_t(M_Z)", value: 168.26, uncertainty: 0.75, units: "GeV", scale: "MS-bar, mu = M_Z, full SM", source: "arXiv:2009.04851"}
+  - {name: "m_d(M_Z)", value: 2.67e-3, uncertainty: 0.19e-3, units: "GeV", scale: "MS-bar, mu = M_Z, full SM", source: "arXiv:2009.04851"}
+  - {name: "m_s(M_Z)", value: 53.16e-3, uncertainty: 4.61e-3, units: "GeV", scale: "MS-bar, mu = M_Z, full SM", source: "arXiv:2009.04851"}
+  - {name: "m_b(M_Z)", value: 2.839, uncertainty: 0.026, units: "GeV", scale: "MS-bar, mu = M_Z, full SM", source: "arXiv:2009.04851"}
+  - {name: "m_e(M_Z)", value: 0.48307e-3, uncertainty: 0.00045e-3, units: "GeV", scale: "MS-bar, mu = M_Z, full SM", source: "arXiv:2009.04851"}
+  - {name: "m_mu(M_Z)", value: 0.101766, uncertainty: 0.000023, units: "GeV", scale: "MS-bar, mu = M_Z, full SM", source: "arXiv:2009.04851"}
+  - {name: "m_tau(M_Z)", value: 1.72856, uncertainty: 0.00028, units: "GeV", scale: "MS-bar, mu = M_Z, full SM", source: "arXiv:2009.04851"}
+  # v_F is a definition of the source (v_F = 246 GeV, about (sqrt(2) G_F)^(-1/2)), not a measurement.
+  - {name: "v_F", value: 246.0, uncertainty: null, units: "GeV", source: "arXiv:2009.04851"}
+  - {name: "sin theta_12", value: 0.22501, uncertainty: 0.00068, units: "1", source: "PDG2024:rev-ckm-matrix"}
+  - {name: "sin theta_13", value: 0.003732, uncertainty: 0.0000875, units: "1", source: "PDG2024:rev-ckm-matrix"}   # 0.003732 +0.000090 -0.000085
+  - {name: "sin theta_23", value: 0.04183, uncertainty: 0.00074, units: "1", source: "PDG2024:rev-ckm-matrix"}       # 0.04183 +0.00079 -0.00069
+  - {name: "delta", value: 1.147, uncertainty: 0.026, units: "rad", source: "PDG2024:rev-ckm-matrix"}
 
 quantifier:
   name: "free_parameter_log10_span"
   definition: >
     log10(max |c| / min |c|) over the dimensionless free parameters c that a theory needs to
-    reproduce the charged-fermion masses and the CKM matrix. In the SM the c are the Yukawa
-    eigenvalues and the CKM parameters themselves. In a flavor model they are the model's own
+    reproduce the charged-fermion masses and the CKM matrix. In the SM the c are the nine Yukawa
+    eigenvalues and the three CKM mixing sines (the phase delta is left out: it is an angle with
+    no hierarchy content). In a flavor model they are the model's own
     coefficients (e.g. the O(1) prefactors of Froggatt-Nielsen powers). A model addresses the
     puzzle to the extent that it lowers this span while still fitting the data.
-  implementation: null
+  implementation: "puzzles.flavor_puzzle.solutions.step_1:free_parameter_log10_span"
   provenance: computed
-  sm_value: TODO_VERIFY
+  sm_value: 5.542   # log10(y_t / y_e); checked against the code by tests/test_step1_yukawas.py
 
 missing_protection:
   - no_flavor_organizing_symmetry
@@ -44,9 +54,9 @@ mechanism_classes:
   - symmetry   # e.g. Froggatt-Nielsen U(1), non-abelian or modular flavor symmetries
   - dynamics   # e.g. partial compositeness, wavefunction localization in extra dimensions
 
-sources: []
-# TODO_VERIFY: no primary source consulted this session (PDG for the masses and the CKM fit, and
-# a published running to M_Z for the common-scale Yukawas, are the planned sources).
+sources:
+  - {kind: arxiv, identifier: "arXiv:2009.04851", consulted_on: 2026-10-04}
+  - {kind: pdg, identifier: "PDG2024:rev-ckm-matrix", consulted_on: 2026-10-04}
 
 status: open
 status_date: 2026-10-04
@@ -62,7 +72,7 @@ eft_operators: []
 candidate_models: []
 # A Froggatt-Nielsen model_request is planned for P2 (needs approval, CLAUDE.md hard rule 4).
 
-maturity: P0
+maturity: P1
 
 falsifiers: []
 
@@ -71,4 +81,9 @@ changelog:
     note: "P0 record created as the pilot of the puzzles/ collection. Statement, quantifier
       definition and missing protection written; every SM quantity is TODO_VERIFY pending a
       literature pass."
+    author: "Moises Zeleny (with Claude)"
+  - date: "2026-10-04"
+    note: "P1: SM quantities sourced (Huang-Zhou running masses at M_Z, PDG 2024 CKM fit); the
+      quantifier is computed from feynlag-models' sm_ckm in solutions/step_1.py (5.54 orders of
+      magnitude), with a regression of the Wolfenstein parameters against PDG 2024 Eq. (12.26)."
     author: "Moises Zeleny (with Claude)"
