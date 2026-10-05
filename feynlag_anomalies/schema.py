@@ -1,4 +1,4 @@
-"""Pydantic schema for ``anomalies/<id>/anomaly.yaml``.
+"""Pydantic schema for ``anomalies/<id>/anomaly.yaml`` and ``puzzles/<id>/puzzle.yaml``.
 
 Every numeric field that could come from an experimental measurement is typed as
 ``Verifiable = float | Literal["TODO_VERIFY"]`` — the sentinel is a first-class value, not an
@@ -10,6 +10,11 @@ This module only validates shape and closed vocabularies. Cross-file checks (id 
 name, ``candidate_models[].model_id`` exists in the feynlag-models registry, maturity vs. model
 maturity) live in ``feynlag_anomalies.loader`` because they need to look outside a single YAML
 file.
+
+``Anomaly`` records an experimental tension (data vs. SM prediction, judged by a Δχ²/pull).
+``Puzzle`` records a theoretical problem the SM is consistent with but does not explain (flavor,
+hierarchy, strong CP, ...); its figure of merit is a code-computed ``Quantifier`` instead of a χ².
+The two are deliberately separate models so each keeps ``extra="forbid"`` strictness.
 """
 
 from __future__ import annotations
@@ -42,6 +47,10 @@ SOURCE_KINDS = Literal["arxiv", "doi", "hepdata", "pdg", "other"]
 CONSTRAINT_QUANTITIES = Literal["sum_m_nu", "m_betabeta", "m_beta"]
 
 ID_PATTERN = r"^[a-z0-9_]+$"
+
+PUZZLE_STATUSES = Literal["open", "partially_addressed", "contested"]
+PUZZLE_MATURITIES = Literal["P0", "P1", "P2", "P3", "P4"]
+MECHANISM_CLASSES = Literal["symmetry", "dynamics", "anthropic", "other"]
 
 
 class _Strict(BaseModel):
@@ -141,5 +150,56 @@ class Anomaly(_Strict):
     eft_operators: list[EFTOperator] = Field(default_factory=list)
     candidate_models: list[CandidateModel] = Field(default_factory=list)
     maturity: MATURITIES
+    falsifiers: list[str] = Field(default_factory=list)
+    changelog: list[ChangelogEntry] = Field(default_factory=list)
+
+
+class SMQuantity(_Strict):
+    """An SM parameter the puzzle is about (a Yukawa, a mixing angle, θ̄, ...).
+
+    ``scale`` records the renormalization scale/scheme the value is quoted at, since puzzle
+    quantities are usually compared at a common scale. ``source`` must equal a
+    ``sources[].identifier`` (checked in the loader).
+    """
+
+    name: str
+    value: Verifiable
+    uncertainty: Verifiable | None = None
+    units: str
+    scale: str | None = None
+    source: str | None = None
+
+
+class Quantifier(_Strict):
+    """The figure of merit that makes a puzzle quantitative, replacing an anomaly's Δχ².
+
+    ``implementation`` is ``"module.path:function"``. From P1 on it must resolve to a callable and
+    ``provenance`` must be ``computed`` (checked in the loader): a puzzle is never quantified, or
+    claimed solved, in prose alone.
+    """
+
+    name: str
+    definition: str
+    implementation: str | None = None
+    provenance: PROVENANCES
+    sm_value: Verifiable | None = None
+
+
+class Puzzle(_Strict):
+    id: str = Field(pattern=ID_PATTERN)
+    title: str
+    statement: str
+    sm_quantities: list[SMQuantity] = Field(default_factory=list)
+    quantifier: Quantifier | None = None
+    missing_protection: list[str] = Field(default_factory=list)
+    mechanism_classes: list[MECHANISM_CLASSES] = Field(default_factory=list)
+    sources: list[Source] = Field(default_factory=list)
+    status: PUZZLE_STATUSES
+    status_date: DateOrTodo
+    status_rationale: str
+    related_anomalies: list[str] = Field(default_factory=list)
+    eft_operators: list[EFTOperator] = Field(default_factory=list)
+    candidate_models: list[CandidateModel] = Field(default_factory=list)
+    maturity: PUZZLE_MATURITIES
     falsifiers: list[str] = Field(default_factory=list)
     changelog: list[ChangelogEntry] = Field(default_factory=list)

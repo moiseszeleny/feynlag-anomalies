@@ -1,0 +1,74 @@
+id: flavor_puzzle
+title: "The flavor puzzle: hierarchical masses and mixings"
+statement: >
+  The SM gauge sector has a U(3)^5 flavor symmetry that only the Yukawa couplings break, and
+  nothing in the SM fixes their values. The nine charged-fermion Yukawa eigenvalues spread over
+  about six orders of magnitude. The CKM matrix is close to the identity, with a hierarchy in
+  powers of the Cabibbo angle, while lepton mixing has large angles. The SM fits all of this with
+  free parameters but explains none of it.
+
+# Values to be compared at one common renormalization scale (MS-bar at M_Z is the planned
+# choice, see decisions.md). Nothing below has been taken from a primary source yet, so every
+# number is the sentinel and every `source` is null. P0 allows this; P1 needs the sources.
+sm_quantities:
+  - {name: "y_u", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
+  - {name: "y_c", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
+  - {name: "y_t", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
+  - {name: "y_d", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
+  - {name: "y_s", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
+  - {name: "y_b", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
+  - {name: "y_e", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
+  - {name: "y_mu", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
+  - {name: "y_tau", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1", scale: "MS-bar, mu = M_Z"}
+  - {name: "Wolfenstein lambda", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1"}
+  - {name: "Wolfenstein A", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1"}
+  - {name: "Wolfenstein rho-bar", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1"}
+  - {name: "Wolfenstein eta-bar", value: TODO_VERIFY, uncertainty: TODO_VERIFY, units: "1"}
+
+quantifier:
+  name: "free_parameter_log10_span"
+  definition: >
+    log10(max |c| / min |c|) over the dimensionless free parameters c that a theory needs to
+    reproduce the charged-fermion masses and the CKM matrix. In the SM the c are the Yukawa
+    eigenvalues and the CKM parameters themselves. In a flavor model they are the model's own
+    coefficients (e.g. the O(1) prefactors of Froggatt-Nielsen powers). A model addresses the
+    puzzle to the extent that it lowers this span while still fitting the data.
+  implementation: null
+  provenance: computed
+  sm_value: TODO_VERIFY
+
+missing_protection:
+  - no_flavor_organizing_symmetry
+
+mechanism_classes:
+  - symmetry   # e.g. Froggatt-Nielsen U(1), non-abelian or modular flavor symmetries
+  - dynamics   # e.g. partial compositeness, wavefunction localization in extra dimensions
+
+sources: []
+# TODO_VERIFY: no primary source consulted this session (PDG for the masses and the CKM fit, and
+# a published running to M_Z for the common-scale Yukawas, are the planned sources).
+
+status: open
+status_date: 2026-10-04
+status_rationale: >
+  No mechanism for the Yukawa hierarchies is established, and none is singled out by data. This
+  is a judgment about the theoretical state of the field, not a measured quantity. It should be
+  re-checked against recent flavor-model reviews in the P0 literature pass.
+
+related_anomalies:
+  - neutrino_mass   # lepton mixing with large angles is the lepton side of the puzzle
+
+eft_operators: []
+candidate_models: []
+# A Froggatt-Nielsen model_request is planned for P2 (needs approval, CLAUDE.md hard rule 4).
+
+maturity: P0
+
+falsifiers: []
+
+changelog:
+  - date: "2026-10-04"
+    note: "P0 record created as the pilot of the puzzles/ collection. Statement, quantifier
+      definition and missing protection written; every SM quantity is TODO_VERIFY pending a
+      literature pass."
+    author: "Moises Zeleny (with Claude)"

@@ -22,8 +22,8 @@ This repo depends on two sibling repos, both read-only from here:
 
 - `uv sync --all-extras` — install/update the environment.
 - `uv run pytest -q` — fast suite (schema validation, checkpoints, stage1, structural tests).
-- `uv run pytest --nbmake anomalies -q` — execute every `ladder.ipynb` top-to-bottom; a notebook
-  that raises (a failed checkpoint) is a test failure.
+- `uv run pytest --nbmake anomalies puzzles -q` — execute every `ladder.ipynb` top-to-bottom; a
+  notebook that raises (a failed checkpoint) is a test failure.
 - `uv run pytest -q anomalies/neutrino_mass` — one anomaly's tests only.
 - `uv run jupyter nbconvert --to notebook --execute --inplace anomalies/<id>/ladder.ipynb` —
   refresh a notebook's stored outputs after editing it (nbmake runs in memory and never saves).
@@ -47,6 +47,12 @@ and numeric tables. Ladder notebooks follow the style of feynlag's
 `> **Before running the next cell.**` prediction blockquotes, code cells headed
 `# ---- MOVE k: set up / collect / recognise / check ----` or `# ---- peek: ... ----`, checks as
 `assert` + `ok("...")`, and a closing Recap (mechanics, tools table, traps, next steps). `fit/stage1.py` runs Gaussian χ² fits against `feynlag_models` model bundles.
+`puzzles/<id>/puzzle.yaml` records a theoretical problem (flavor, hierarchy, strong CP, ...),
+validated by `feynlag_anomalies.schema.Puzzle` and `loader.load_puzzle`. It has no data-vs-SM
+χ²; its figure of merit is a `quantifier` that must be computed in code (`implementation:
+"module:function"`) from P1 on. Puzzles follow the same layout, notebook style and hard rules as
+anomalies, use the P0-P4 scale in `docs/maturity.md` and cross-link through
+`related_anomalies[]`.
 Candidate models are consumed exclusively through `feynlag_models.registry`.
 
 ## Hard rules
@@ -96,5 +102,7 @@ Candidate models are consumed exclusively through `feynlag_models.registry`.
   coverage), X17, MicroBooNE.
 - A regression test against a published benchmark is expected before trusting any new numeric
   result derived here.
+- "Addresses the puzzle" is only claimed with a code-computed before/after quantifier plus the
+  experimental constraints the model satisfies.
 - "Explains the anomaly" is only claimed once a code-computed metric (Δχ² or pull) and the list of
   satisfied constraints back it up — never as prose alone.
