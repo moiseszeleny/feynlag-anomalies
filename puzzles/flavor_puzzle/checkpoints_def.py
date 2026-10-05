@@ -40,7 +40,8 @@ def make_check_2(bundle) -> Checkpoint:
         hints=[
             "Collect the nine Yukawas and the three CKM sines in one dict.",
             "The span is log10(max / min). Which two parameters set it?",
-            f"The largest is y_t and the smallest is y_e, so the span is {expected:.3f} decades.",
+            f"The largest is y_t and the smallest is y_e, so the span is {expected:.3f} "
+            "orders of magnitude.",
         ],
     )
 

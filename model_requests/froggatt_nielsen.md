@@ -9,8 +9,8 @@ puzzle is a stage-1 fit, which hard rule 7 gates at ≥ L2. L3/UFO is not needed
 ## Motivation
 
 The SM fits the nine charged-fermion masses and the CKM matrix with free Yukawas whose
-dimensionless values span **5.54 decades** (the puzzle's quantifier `free_parameter_log10_span`,
-computed from `sm_ckm` in `puzzles/flavor_puzzle/solutions/step_1.py`). Section 4 of the
+dimensionless values span **5.54 orders of magnitude** (the puzzle's quantifier
+`free_parameter_log10_span`, computed from `sm_ckm` in `puzzles/flavor_puzzle/solutions/step_1.py`). Section 4 of the
 notebook shows that every Yukawa is close to λ^n with 0 ≲ n ≲ 9 (λ ≈ 0.225), and that the CKM
 sines go as λ, λ², λ³ with O(1) coefficients.
 
@@ -19,9 +19,9 @@ doi:10.1016/0550-3213(79)90316-X, INSPIRE 131306) turns that observation into a 
 U(1)_FN under which the generations carry different charges forbids most renormalizable Yukawas.
 A flavon φ, charged under U(1)_FN, gets a vev, and the Yukawas arise from higher-dimension
 operators suppressed by ε = ⟨φ⟩/Λ to a power fixed by the charges. The free parameters become
-O(1) coefficients c_ij, whose span is the number P3 will compare with 5.54 decades. Leurer, Nir
-and Seiberg (Nucl. Phys. B398 (1993) 319, hep-ph/9212278) give the systematic analysis of such
-mass-matrix models and of their mass and mixing scaling.
+O(1) coefficients c_ij, whose span is the number P3 will compare with 5.54 orders of magnitude.
+Leurer, Nir and Seiberg (Nucl. Phys. B398 (1993) 319, hep-ph/9212278) give the systematic analysis
+of such mass-matrix models and of their mass and mixing scaling.
 
 Without this model the puzzle cannot pass P2: no candidate in `feynlag-models` addresses flavour
 hierarchies. `sm_ckm` only reproduces them with free Yukawas.
@@ -67,7 +67,7 @@ P3 of `puzzles/flavor_puzzle`:
    functions of (ε, c_ij), against the sourced `sm_quantities` (Huang–Zhou masses at M_Z, PDG
    2024 CKM).
 2. At the best fit, the quantifier `free_parameter_log10_span` over the model's own free
-   parameters {|c_ij|} (and ε), compared with the SM's 5.54 decades.
+   parameters {|c_ij|} (and ε), compared with the SM's 5.54 orders of magnitude.
 
 From the bundle this needs: the symbolic 3×3 Yukawa matrices Y_u, Y_d, Y_e in terms of
 (ε, c_ij, charges), and a way to get masses and V_CKM at a numeric point (a biunitary
