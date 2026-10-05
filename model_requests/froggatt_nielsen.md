@@ -47,29 +47,30 @@ against Leurer–Nir–Seiberg), not taken from this request.
 
 ## Symmetries and Lagrangian
 
-- $`U(1)_{\rm FN}`$, spontaneously broken by $\langle\phi\rangle$. Whether it is a global $U(1)$
-  (with a pseudo-Goldstone flavon in the spectrum), explicitly broken to a discrete $`Z_N`$, or
-  gauged (anomaly conditions) is left to the implementer's judgment. The choice changes the
-  flavon phenomenology, not the Yukawa scaling that P3 needs. Please record the choice in the
-  model's `metadata.yaml`.
-- Effective Yukawas, the minimal EFT version (heavy FN messengers integrated out at $\Lambda$):
+$`U(1)_{\rm FN}`$ is spontaneously broken by $\langle\phi\rangle$. Whether it is a global $U(1)$
+(with a pseudo-Goldstone flavon in the spectrum), explicitly broken to a discrete $`Z_N`$, or
+gauged (anomaly conditions) is left to the implementer's judgment. The choice changes the flavon
+phenomenology, not the Yukawa scaling that P3 needs. Please record the choice in the model's
+`metadata.yaml`.
 
-  ```math
-  -\mathcal L \supset c^u_{ij} \left(\frac{\phi}{\Lambda}\right)^{n^u_{ij}} \bar Q_i \tilde H u_j
-  + c^d_{ij} \left(\frac{\phi}{\Lambda}\right)^{n^d_{ij}} \bar Q_i H d_j
-  + c^e_{ij} \left(\frac{\phi}{\Lambda}\right)^{n^e_{ij}} \bar L_i H e_j + \text{h.c.}
-  ```
+Effective Yukawas, the minimal EFT version (heavy FN messengers integrated out at $\Lambda$):
 
-  with $`n_{ij}`$ fixed by $`U(1)_{\rm FN}`$ invariance, e.g.
-  $`n^u_{ij} = \lvert q(Q_{L,i}) - q(u_{R,j}) \rvert`$ (using $\phi^*$ when the difference is
-  negative; the sign convention is the implementer's). After symmetry breaking,
+```math
+-\mathcal L \supset c^u_{ij} \left(\frac{\phi}{\Lambda}\right)^{n^u_{ij}} \bar Q_i \tilde H u_j
++ c^d_{ij} \left(\frac{\phi}{\Lambda}\right)^{n^d_{ij}} \bar Q_i H d_j
++ c^e_{ij} \left(\frac{\phi}{\Lambda}\right)^{n^e_{ij}} \bar L_i H e_j + \text{h.c.}
+```
 
-  ```math
-  y^f_{ij} = c^f_{ij}\, \epsilon^{\,n^f_{ij}}, \qquad \epsilon = \frac{v_\phi}{\sqrt2\,\Lambda} .
-  ```
+with $`n_{ij}`$ fixed by $`U(1)_{\rm FN}`$ invariance, e.g.
+$`n^u_{ij} = \lvert q(Q_{L,i}) - q(u_{R,j}) \rvert`$ (using $\phi^*$ when the difference is
+negative; the sign convention is the implementer's). After symmetry breaking,
 
-  The $`c_{ij}`$ are complex $O(1)$ parameters.
-- Neutrinos stay massless, as in `sm_ckm`. Lepton mixing is out of scope for this request.
+```math
+y^f_{ij} = c^f_{ij}\, \epsilon^{\,n^f_{ij}}, \qquad \epsilon = \frac{v_\phi}{\sqrt2\,\Lambda} .
+```
+
+The $`c_{ij}`$ are complex $O(1)$ parameters. Neutrinos stay massless, as in `sm_ckm`. Lepton
+mixing is out of scope for this request.
 
 ## What calculation requires it
 
@@ -88,20 +89,20 @@ numeric point (a biunitary diagonalisation of the complex $3\times3$ matrices).
 
 ## L2 literature checks requested
 
-- Mass scaling: for suitably ordered charges, up to $O(1)$ factors,
+Mass scaling: for suitably ordered charges, up to $O(1)$ factors,
 
-  ```math
-  \frac{m_{f_i}}{v} \sim \epsilon^{\,\lvert q(Q_{L,i}) - q(f_{R,i}) \rvert} .
-  ```
+```math
+\frac{m_{f_i}}{v} \sim \epsilon^{\,\lvert q(Q_{L,i}) - q(f_{R,i}) \rvert} .
+```
 
-- Mixing scaling, for $i \neq j$:
+Mixing scaling, for $i \neq j$:
 
-  ```math
-  \lvert V_{ij} \rvert \sim \epsilon^{\,\lvert q(Q_{L,i}) - q(Q_{L,j}) \rvert} .
-  ```
+```math
+\lvert V_{ij} \rvert \sim \epsilon^{\,\lvert q(Q_{L,i}) - q(Q_{L,j}) \rvert} .
+```
 
-- Both checked against Leurer–Nir–Seiberg (or Froggatt–Nielsen), as an $O(1)$-coefficient scaling
-  at a random point, in the style of the numeric dual checks of `feynlag_models.checks`.
+Both are checked against Leurer–Nir–Seiberg (or Froggatt–Nielsen), as an $O(1)$-coefficient
+scaling at a random point, in the style of the numeric dual checks of `feynlag_models.checks`.
 
 ## Anticipated feynlag gaps (for the implementer, not claimed as found)
 
