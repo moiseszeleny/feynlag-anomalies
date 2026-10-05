@@ -69,10 +69,14 @@ related_anomalies:
   - neutrino_mass   # lepton mixing with large angles is the lepton side of the puzzle
 
 eft_operators: []
-candidate_models: []
-# A Froggatt-Nielsen model_request is planned for P2 (needs approval, CLAUDE.md hard rule 4).
+candidate_models:
+  - model_request: model_requests/froggatt_nielsen.md
+    notes: "U(1)_FN flavon; Yukawas y_ij = c_ij eps^n_ij with O(1) c_ij. Filed 2026-10-04, not
+      yet built in feynlag-models; P3 needs it at >= L2."
+# No eft_operators entry yet: the Froggatt-Nielsen operators have dimension 4 + n_ij, set by
+# charges that are benchmark inputs of the requested model, not fixed here.
 
-maturity: P1
+maturity: P2
 
 falsifiers: []
 
@@ -86,4 +90,8 @@ changelog:
     note: "P1: SM quantities sourced (Huang-Zhou running masses at M_Z, PDG 2024 CKM fit); the
       quantifier is computed from feynlag-models' sm_ckm in solutions/step_1.py (5.54 orders of
       magnitude), with a regression of the Wolfenstein parameters against PDG 2024 Eq. (12.26)."
+    author: "Moises Zeleny (with Claude)"
+  - date: "2026-10-04"
+    note: "P2: mechanism class symmetry (Froggatt-Nielsen U(1)_FN); model_requests/froggatt_nielsen.md
+      filed with the user's approval. P3 waits for the model in feynlag-models at >= L2."
     author: "Moises Zeleny (with Claude)"
