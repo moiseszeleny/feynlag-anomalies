@@ -159,6 +159,11 @@ def perturbativity_cut(couplings: Mapping[str, float], bound: float = 4 * math.p
     return all(abs(_reject_sentinel(name, value)) < bound for name, value in couplings.items())
 
 
+def upper_limit_cut(prediction: float, limit) -> bool:
+    """True iff ``prediction <= limit``; ``limit`` is typically ``Constraint.upper_limit``."""
+    return _reject_sentinel("prediction", prediction) <= _reject_sentinel("limit", limit)
+
+
 def bfb_single_quartic(lam: float) -> bool:
     """Bounded-from-below cut for a single quartic coupling: ``lam > 0``.
 

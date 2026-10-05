@@ -103,3 +103,23 @@ or touches a sibling repo and needs the user's sign-off before acting on it).
   walk the Weinberg operator into the vacuum term by term (§2.1), and display the symbolic
   one-ν_R light matrix (`solutions/step_5.py::light_mass_matrix`, §5). Every `ok` line is
   backed by an `assert` in the same cell.
+- **2026-09-26 — Step 7** (beyond oscillations): the step-6 fit confronted with cosmology,
+  0νββ and β decay, as stage-1 upper-limit cuts (`fit.stage1.upper_limit_cut`) against the new
+  `anomaly.yaml` `constraints[]`.
+  - Anchor bounds are collaboration results: DESI DR2 + CMB (arXiv:2503.14738v3; Σm_ν < 0.064 eV
+    ΛCDM, < 0.16 eV w₀wₐ, 95%), KamLAND-Zen (arXiv:2406.11438v2; m_ββ < 28–122 meV, 90% CL, cut
+    at the conservative end, strongest end also reported) and KATRIN (arXiv:2406.13516v1;
+    m_β < 0.45 eV, 90% CL). LEGEND-200 (2026) is weaker than KamLAND-Zen and is not recorded.
+    `[physics judgment]`
+  - A 2026 non-collaboration combination (arXiv:2606.17994v1, Σm_ν < 0.052 eV adiabatic ΛCDM)
+    is below the NO minimum; its authors attribute that to the prior. It is recorded as a
+    constraint with a `notes` caveat and reported as the one failing bound, not hidden and not
+    used as the anchor. `[physics judgment]`
+  - Result (computed): Σm_ν = 58.78 meV (DESI ΛCDM limit/prediction = 1.09), m_ββ = 3.71 meV,
+    m_β = 8.84 meV; 4/5 bounds pass. With real Yukawas and positive M_R the light matrix
+    is negative semidefinite, so m_ββ is the single constructive branch
+    |m₂s₁₂²c₁₃² + m₃s₁₃²| (the destructive 1.49 meV needs complex Yukawas); every sign-flip
+    fit start lands there. The seesaw-matrix and exact-Takagi routes agree to 1e-6.
+    `[feynlag-verified: test]` — `tests/test_step7_constraints.py`.
+  - Experiment roles sourced from NuFIT 6.0 §1/App. A; IceCube/DeepCore added. Maturity stays
+    A3: A4 needs real likelihoods (stage-2/3 tooling, not approved).

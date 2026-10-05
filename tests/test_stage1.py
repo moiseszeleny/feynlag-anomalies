@@ -12,6 +12,7 @@ from fit.stage1 import (
     perturbativity_cut,
     predict,
     unitarity_cut,
+    upper_limit_cut,
 )
 
 
@@ -84,6 +85,13 @@ def test_perturbativity_cut():
 def test_bfb_single_quartic():
     assert bfb_single_quartic(0.13) is True
     assert bfb_single_quartic(-0.1) is False
+
+
+def test_upper_limit_cut():
+    assert upper_limit_cut(0.05, 0.064) is True
+    assert upper_limit_cut(0.07, 0.064) is False
+    with pytest.raises(Stage1Error):
+        upper_limit_cut(0.05, "TODO_VERIFY")
 
 
 def test_unitarity_cut_not_implemented():

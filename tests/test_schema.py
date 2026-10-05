@@ -82,3 +82,28 @@ def test_candidate_model_needs_id_or_request():
 
     with pytest.raises(Exception):
         CandidateModel()
+
+
+def _constraint(source):
+    return {"name": "toy bound", "quantity": "sum_m_nu", "upper_limit": 0.1,
+            "confidence_level": 0.95, "units": "eV", "source": source}
+
+
+def test_constraint_with_known_source_accepted(tmp_path, valid_anomaly_dict):
+    valid_anomaly_dict["constraints"] = [_constraint(valid_anomaly_dict["sources"][0]["identifier"])]
+    d = _write(tmp_path, "neutrino_mass", valid_anomaly_dict)
+    assert load(d).constraints[0].upper_limit == 0.1
+
+
+def test_constraint_with_unknown_source_rejected(tmp_path, valid_anomaly_dict):
+    valid_anomaly_dict["constraints"] = [_constraint("arXiv:0000.00000 (not in sources)")]
+    d = _write(tmp_path, "neutrino_mass", valid_anomaly_dict)
+    with pytest.raises(AnomalyValidationError):
+        load(d)
+
+
+def test_bad_constraint_quantity_rejected(valid_anomaly_dict):
+    bad = _constraint(valid_anomaly_dict["sources"][0]["identifier"]) | {"quantity": "mass_of_everything"}
+    valid_anomaly_dict["constraints"] = [bad]
+    with pytest.raises(Exception):
+        Anomaly.model_validate(valid_anomaly_dict)

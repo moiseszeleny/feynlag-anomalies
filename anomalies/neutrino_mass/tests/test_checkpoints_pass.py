@@ -52,3 +52,11 @@ def test_check_6_passes_with_canonical_answer(step6_fit):
     fit, _ = step6_fit
     answer = fit["predicted"][FIT_OBSERVABLES[1]] / fit["predicted"][FIT_OBSERVABLES[0]]
     assert cd.make_check_6(load("neutrino_mass"))(answer) is True
+
+
+def test_check_7_passes_with_canonical_answer(seesaw_2n_bundle, step6_fit):
+    from anomalies.neutrino_mass.solutions import step_7
+
+    fit, _ = step6_fit
+    answer = step_7.predictions(seesaw_2n_bundle, fit)["m_betabeta"] * 1e3
+    assert cd.make_check_7(seesaw_2n_bundle, fit)(answer) is True

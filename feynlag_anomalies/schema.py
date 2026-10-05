@@ -39,6 +39,7 @@ SM_FAILURE_TYPES = Literal["structural", "resonance", "quantitative"]
 PROVENANCES = Literal["computed", "cited"]
 MATURITIES = Literal["A0", "A1", "A2", "A3", "A4"]
 SOURCE_KINDS = Literal["arxiv", "doi", "hepdata", "pdg", "other"]
+CONSTRAINT_QUANTITIES = Literal["sum_m_nu", "m_betabeta", "m_beta"]
 
 ID_PATTERN = r"^[a-z0-9_]+$"
 
@@ -81,6 +82,24 @@ class Source(_Strict):
     consulted_on: DateOrTodo
 
 
+class Constraint(_Strict):
+    """A published upper limit a candidate model's prediction is cut against (stage 1).
+
+    ``upper_limit`` is the conservative end used for the cut; ``upper_limit_strongest`` records
+    the other end of a quoted range (e.g. nuclear-matrix-element spread). ``source`` must equal
+    a ``sources[].identifier`` (checked in the loader).
+    """
+
+    name: str
+    quantity: CONSTRAINT_QUANTITIES
+    upper_limit: Verifiable
+    upper_limit_strongest: Verifiable | None = None
+    confidence_level: Verifiable
+    units: str
+    source: str
+    notes: str | None = None
+
+
 class EFTOperator(_Strict):
     name: str
     dimension: int
@@ -116,6 +135,7 @@ class Anomaly(_Strict):
     status_date: DateOrTodo
     status_rationale: str
     tensions_with_other_data: list[str] = Field(default_factory=list)
+    constraints: list[Constraint] = Field(default_factory=list)
     sm_failure_type: SM_FAILURE_TYPES
     sm_protection: list[str] = Field(default_factory=list)
     eft_operators: list[EFTOperator] = Field(default_factory=list)
