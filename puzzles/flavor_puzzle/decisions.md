@@ -19,8 +19,8 @@ One dated line per ladder step, tagged as in `anomalies/neutrino_mass/decisions.
   were read in this session. The masses, not Yukawas, are stored because they are what the
   source prints; v_F = 246 GeV is stored as the source's definition. `[physics judgment]`
 - **2026-10-04 — P1** (input vintage): Huang & Zhou's inputs are PDG-2020 era (e.g. M_t = 172.4
-  GeV), older than the PDG 2024 CKM fit. The quantifier spans decades and its inputs move by
-  percent, so the mismatch is immaterial here. Refresh if an updated running appears. `[physics judgment]`
+  GeV), older than the PDG 2024 CKM fit. The quantifier spans orders of magnitude and its inputs
+  move by percent, so the mismatch is immaterial here. Refresh if an updated running appears. `[physics judgment]`
 - **2026-10-04 — P1** (CKM scale): CKM angles are the low-energy fit, masses are at M_Z. PDG 2024
   §12.1 states the CKM elements can be treated as constants below m_W; the running from there to
   M_Z is negligible at this precision. `[physics judgment]`, backed by the cited statement.
@@ -32,8 +32,8 @@ One dated line per ladder step, tagged as in `anomalies/neutrino_mass/decisions.
   `yukawa_params` (y_f = √2 m_f / v) at a benchmark overriding masses, v and CKM inputs with the
   sourced values; it matches the source's definition to 1e-12.
   `[feynlag-verified: test]`, `tests/test_step1_yukawas.py::test_yukawas_match_published_definition`.
-- **2026-10-04 — P1** (quantifier): SM value 5.542 decades (log10 y_t/y_e); sector spans up 5.14,
-  lepton 3.55, down 3.03. `[feynlag-verified: test]`, `test_quantifier_sm_value_matches_yaml`.
+- **2026-10-04 — P1** (quantifier): SM value 5.542 orders of magnitude (log10 y_t/y_e); sector
+  spans up 5.14, lepton 3.55, down 3.03. `[feynlag-verified: test]`, `test_quantifier_sm_value_matches_yaml`.
 - **2026-10-04 — P1** (regression): λ, A, ρ̄, η̄ from `sm_ckm`'s V at the Eq. (12.28) angles all
   fall inside the PDG 2024 Eq. (12.26) 1σ bands (0.22501, 0.826, 0.159, 0.352).
   `[feynlag-verified: test]`, `tests/test_step2_ckm.py::test_wolfenstein_regression_pdg2024`.

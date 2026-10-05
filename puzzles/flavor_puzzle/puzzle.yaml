@@ -84,6 +84,6 @@ changelog:
     author: "Moises Zeleny (with Claude)"
   - date: "2026-10-04"
     note: "P1: SM quantities sourced (Huang-Zhou running masses at M_Z, PDG 2024 CKM fit); the
-      quantifier is computed from feynlag-models' sm_ckm in solutions/step_1.py (5.54 decades),
-      with a regression of the Wolfenstein parameters against PDG 2024 Eq. (12.26)."
+      quantifier is computed from feynlag-models' sm_ckm in solutions/step_1.py (5.54 orders of
+      magnitude), with a regression of the Wolfenstein parameters against PDG 2024 Eq. (12.26)."
     author: "Moises Zeleny (with Claude)"

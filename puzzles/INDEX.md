@@ -6,7 +6,7 @@ the others are planned. Their `missing_protection` entries are preliminary guess
 
 | id | missing protection (preliminary) | status | maturity | notes |
 |---|---|---|---|---|
-| `flavor_puzzle` | `no_flavor_organizing_symmetry` | open | **P1** | pilot. SM quantifier computed from `sm_ckm`: 5.54 decades (Huang–Zhou masses at M_Z, PDG 2024 CKM). Cross-linked to `neutrino_mass`. |
+| `flavor_puzzle` | `no_flavor_organizing_symmetry` | open | **P1** | pilot. SM quantifier computed from `sm_ckm`: 5.54 orders of magnitude (Huang–Zhou masses at M_Z, PDG 2024 CKM). Cross-linked to `neutrino_mass`. |
 | `hierarchy_problem` | `no_scalar_mass_protection` | — | — | planned. Needs a loop-level fine-tuning quantifier. Check whether feynlag provides one before starting. |
 | `strong_cp` | `no_theta_protection` | — | — | planned. θ̄ is bounded by the neutron EDM, so it will carry a sourced experimental bound. |
 | `cosmological_constant` | — | — | — | planned. Mostly conceptual. Its quantifier needs careful definition. |
