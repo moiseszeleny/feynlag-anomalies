@@ -37,6 +37,13 @@ One dated line per ladder step, tagged as in `anomalies/neutrino_mass/decisions.
 - **2026-10-04 — P1** (regression): λ, A, ρ̄, η̄ from `sm_ckm`'s V at the Eq. (12.28) angles all
   fall inside the PDG 2024 Eq. (12.26) 1σ bands (0.22501, 0.826, 0.159, 0.352).
   `[feynlag-verified: test]`, `tests/test_step2_ckm.py::test_wolfenstein_regression_pdg2024`.
-- **Next (P2)**: `model_requests/froggatt_nielsen.md` (a U(1)_FN flavon and its charges). The
-  notebook's λ-power table (y_f ~ λ^n with 0 ≲ n ≲ 9) is the motivation.
-  `[decision, needs approval]` (hard rule 4).
+- **2026-10-04 — P2** (model request): `model_requests/froggatt_nielsen.md` filed with the
+  user's approval (hard rule 4). It asks for the EFT version (flavon plus higher-dimension Yukawas,
+  messengers integrated out), with parent `sm_ckm` and U(1)_FN charges as integer benchmark inputs,
+  so that charge assignments are benchmarks rather than separate models. It requests L2: mass and
+  mixing scaling checked against Froggatt–Nielsen (1979) and Leurer–Nir–Seiberg (1993), both
+  verified on INSPIRE/arXiv this session. It flags two likely feynlag gaps: dimension 4 + n
+  operators and a numeric complex 3×3 SVD. `[decision, approved]`
+- **Next (P3)**: once the model reaches L2, fit (ε, c_ij) to the sourced masses and CKM with
+  `fit/stage1.py`, then compute `free_parameter_log10_span` over {|c_ij|} and compare with 5.54.
+  Flavon FCNC constraints need stage-2 tools; stage 1 applies only coarse cuts.
