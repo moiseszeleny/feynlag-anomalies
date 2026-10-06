@@ -50,6 +50,13 @@ One dated line per ladder step, tagged as in `anomalies/neutrino_mass/decisions.
   Leurer–Nir–Seiberg (1993), both verified on INSPIRE/arXiv this session. It flags two likely
   feynlag gaps: dimension $4 + n$ operators and a numeric complex $3\times3$ SVD.
   `[decision, approved]`
+- **2026-10-05 — P2** (model built): `feynlag-models`' `froggatt_nielsen` reached L2 (PR #14):
+  textures, the determinant charge sum and the mass and CKM scaling are checked against
+  Leurer–Nir–Seiberg (hep-ph/9310320 Eqs. 2.2–2.7, 2.19). For P3 the bundle exposes
+  `extra["Yu"]`, `extra["Yd"]`, `extra["Ye"]` (symbolic in `extra["eps"]` and the
+  $`\lvert c_{ij}\rvert`$, $`\alpha_{ij}`$ parameters in `extra["c_params"]`), and
+  `feynlag_models.flavor.ckm_from_yukawas` / `mass_spectrum` give $V$ and the masses at a numeric
+  point without rebuilding. `candidate_models` now lists `model_id: froggatt_nielsen`.
 - **Next (P3)**: once the model reaches L2, fit $`(\epsilon, c_{ij})`$ to the sourced masses and
   CKM with `fit/stage1.py`, then compute `free_parameter_log10_span` over
   $`\{\lvert c_{ij}\rvert\}`$ and compare with 5.54. Flavon FCNC constraints need stage-2 tools;
