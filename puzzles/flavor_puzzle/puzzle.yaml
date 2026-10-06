@@ -70,11 +70,13 @@ related_anomalies:
 
 eft_operators: []
 candidate_models:
-  - model_request: model_requests/froggatt_nielsen.md
-    notes: "U(1)_FN flavon; Yukawas y_ij = c_ij eps^n_ij with O(1) c_ij. Filed 2026-10-04, not
-      yet built in feynlag-models; P3 needs it at >= L2."
-# No eft_operators entry yet: the Froggatt-Nielsen operators have dimension 4 + n_ij, set by
-# charges that are benchmark inputs of the requested model, not fixed here.
+  - model_id: froggatt_nielsen
+    model_request: model_requests/froggatt_nielsen.md
+    notes: "U(1)_FN flavon; Yukawas y_ij = c_ij eps^n_ij with O(1) complex c_ij (feynlag-models
+      PR #14, maturity L2), built from model_requests/froggatt_nielsen.md. Integer FN charges are
+      benchmark inputs (LNS master model at the benchmark); P3 fits (eps, c_ij)."
+# No eft_operators entry: the Froggatt-Nielsen operators have dimension 4 + n_ij, set by
+# charges that are benchmark inputs of the model, not fixed here.
 
 maturity: P2
 
@@ -94,4 +96,8 @@ changelog:
   - date: "2026-10-04"
     note: "P2: mechanism class symmetry (Froggatt-Nielsen U(1)_FN); model_requests/froggatt_nielsen.md
       filed with the user's approval. P3 waits for the model in feynlag-models at >= L2."
+    author: "Moises Zeleny (with Claude)"
+  - date: "2026-10-05"
+    note: "froggatt_nielsen built in feynlag-models at L2 (PR #14) and listed as candidate model_id;
+      feynlag-models pin moved to the merge commit. P3 (stage-1 fit) can start."
     author: "Moises Zeleny (with Claude)"

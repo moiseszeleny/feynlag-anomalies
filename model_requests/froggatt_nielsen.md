@@ -2,7 +2,14 @@
 
 **Requested by**: `puzzles/flavor_puzzle` (P2; motivated by the $\lambda$-power table in section 4
 of `ladder.ipynb`)
-**Status**: filed on 2026-10-04 with the user's approval (CLAUDE.md hard rule 4). Not yet built.
+**Status**: fulfilled on 2026-10-05 by `feynlag-models`' `froggatt_nielsen` (PR #14, maturity L2),
+filed on 2026-10-04 with the user's approval (CLAUDE.md hard rule 4). Design choices: a global
+$`U(1)_{\rm FN}`$, spontaneously broken (the flavon phase $a$ is a massless Goldstone); the flavon
+has charge $+1$ rather than $-1$ (only differences matter; the map to Leurer–Nir–Seiberg is in the
+model's `metadata.yaml`); the integer charges are benchmark inputs, set at the benchmark to the
+LNS "master model" (hep-ph/9310320 Eq. 2.5) for quarks and to placeholder lepton charges. The
+numeric complex SVD this request anticipated as a gap is FEYNLAG_GAPS FG-6, worked around in
+`feynlag_models.flavor` (`ckm_from_yukawas`, `mass_spectrum`). For use by P3 of `puzzles/flavor_puzzle`.
 **Minimum level requested**: L2 (literature-checked mass and mixing scaling, below). P3 of the
 puzzle is a stage-1 fit, which hard rule 7 gates at L2 or higher. L3/UFO is not needed for P3.
 
