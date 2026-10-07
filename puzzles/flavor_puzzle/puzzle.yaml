@@ -101,3 +101,8 @@ changelog:
     note: "froggatt_nielsen built in feynlag-models at L2 (PR #14) and listed as candidate model_id;
       feynlag-models pin moved to the merge commit. P3 (stage-1 fit) can start."
     author: "Moises Zeleny (with Claude)"
+  - date: "2026-10-07"
+    note: "feynlag-models pin bumped bff29fe -> 622fe9a (PR #15): froggatt_nielsen's flavon
+      s-coupling sign for n < 0 corrected in the stated formula, card and tests; model code and
+      benchmark numbers unchanged. Full suite and the ladder notebook pass at the new pin."
+    author: "Moises Zeleny (with Claude)"
