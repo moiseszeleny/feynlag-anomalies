@@ -43,9 +43,18 @@ quantifier:
     no hierarchy content). In a flavor model they are the model's own
     coefficients (e.g. the O(1) prefactors of Froggatt-Nielsen powers). A model addresses the
     puzzle to the extent that it lowers this span while still fitting the data.
+    Froggatt-Nielsen case (amended 2026-10-08, decisions.md): only the O(1) coefficients |c_ij|
+    count. The order parameter eps and the integer U(1)_FN charges are not c's: eps is a free fit
+    parameter that produces the hierarchy, and the charges are discrete model choices. Span rule:
+    the minimum of log10(max |c| / min |c|) over the c's, subject to chi2 <= chi2_min + Delta,
+    counting only the c's that some observable constrains (Delta and that set are fixed in the P3
+    design). P3 is quark-only, so its comparison value is sm_reference_values.quarks_only (six
+    quark Yukawas and three CKM sines), not the all-sector sm_value.
   implementation: "puzzles.flavor_puzzle.solutions.step_1:free_parameter_log10_span"
   provenance: computed
-  sm_value: 5.542   # log10(y_t / y_e); checked against the code by tests/test_step1_yukawas.py
+  sm_value: 5.542   # all sectors, log10(y_t / y_e); checked against the code by tests/test_step1_yukawas.py
+  sm_reference_values:
+    quarks_only: 5.136   # log10(y_t / y_u); test_quark_only_sm_value_matches_yaml
 
 missing_protection:
   - no_flavor_organizing_symmetry
@@ -57,6 +66,10 @@ mechanism_classes:
 sources:
   - {kind: arxiv, identifier: "arXiv:2009.04851", consulted_on: 2026-10-04}
   - {kind: pdg, identifier: "PDG2024:rev-ckm-matrix", consulted_on: 2026-10-04}
+  # NA62, JHEP 06 (2021) 093: BR(K+ -> pi+ X) < 3-6e-11 at 90% CL for a stable or invisible X with
+  # m_X = 0-110 MeV (text of Sec. 8 and the conclusions). Input to the P3 familon constraint on
+  # v_phi; the translation to a v_phi bound is not done yet (TODO_VERIFY, see decisions.md).
+  - {kind: arxiv, identifier: "arXiv:2103.15389", consulted_on: 2026-10-08}
 
 status: open
 status_date: 2026-10-04
@@ -74,7 +87,12 @@ candidate_models:
     model_request: model_requests/froggatt_nielsen.md
     notes: "U(1)_FN flavon; Yukawas y_ij = c_ij eps^n_ij with O(1) complex c_ij (feynlag-models
       PR #14, maturity L2), built from model_requests/froggatt_nielsen.md. Integer FN charges are
-      benchmark inputs (LNS master model at the benchmark); P3 fits (eps, c_ij)."
+      benchmark inputs (LNS master model at the benchmark); P3 fits (eps, c_ij), quarks only.
+      Build with v = v_F = 246 GeV (the model default is 246.22 GeV), as sm_benchmark does.
+      P3 hard constraint, listed and not part of the stage-1 chi2: the flavon phase a is an
+      exact Goldstone (familon) with off-diagonal couplings n_ij M_ij / v_phi, bounded by
+      K+ -> pi+ a (NA62, arXiv:2103.15389). The v_phi bound itself is TODO_VERIFY, and the
+      benchmark v_phi = 2.83 TeV must not be quoted as viable."
 # No eft_operators entry: the Froggatt-Nielsen operators have dimension 4 + n_ij, set by
 # charges that are benchmark inputs of the model, not fixed here.
 
@@ -111,4 +129,10 @@ changelog:
       upstream. feynlag_models.flavor is deleted; froggatt_nielsen's numeric masses and CKM now
       come from models.froggatt_nielsen.model.mass_basis / ckm / benchmark_flavour (feynlag's
       numeric diagonalize_svd). Full suite and both ladder notebooks pass at the new pins."
+    author: "Moises Zeleny (with Claude)"
+  - date: "2026-10-08"
+    note: "P3 prep (user decisions of 2026-10-08): eps free and outside the span, quarks only, a
+      constrained-minimum span rule, FN relation at M_Z. Quantifier definition amended; quark-only
+      SM reference 5.136 added and pinned by a test; familon K -> pi a listed as a P3 hard
+      constraint on v_phi (bound TODO_VERIFY). Maturity stays P2."
     author: "Moises Zeleny (with Claude)"

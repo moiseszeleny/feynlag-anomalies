@@ -176,6 +176,10 @@ class Quantifier(_Strict):
     ``implementation`` is ``"module.path:function"``. From P1 on it must resolve to a callable and
     ``provenance`` must be ``computed`` (checked in the loader): a puzzle is never quantified, or
     claimed solved, in prose alone.
+
+    ``sm_reference_values`` holds further SM values of the same quantifier on a restricted
+    footing (e.g. ``quarks_only``), for comparison with a model that covers only part of the
+    sector. Each should be pinned against the code by a test, like ``sm_value``.
     """
 
     name: str
@@ -183,6 +187,7 @@ class Quantifier(_Strict):
     implementation: str | None = None
     provenance: PROVENANCES
     sm_value: Verifiable | None = None
+    sm_reference_values: dict[str, Verifiable] = Field(default_factory=dict)
 
 
 class Puzzle(_Strict):
