@@ -246,16 +246,16 @@ wheels = [
 
 [[package]]
 name = "feynlag"
-version = "0.2.0"
+version = "0.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
     { name = "numpy", version = "2.5.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "sympy" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4d/5d/df08017526c133e88332c2ee30749c6dd53e543eb4989e3621b34fa5ff9b/feynlag-0.2.0.tar.gz", hash = "sha256:e36e037804b31f465dba02af1014cd36a784cc0ad18ebf4f6b767f4517a995ac", size = 162920, upload-time = "2026-09-26T21:22:42.906Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f2/e9/1a24d12165f89cfada81a1eb98b590c69874deb56ceea15d4e842e50fda7/feynlag-0.3.0.tar.gz", hash = "sha256:272136525fb85045c065ededae54533c161b88b999ea331b168daa8889088f25", size = 167857, upload-time = "2026-10-07T17:51:55.882Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f0/10/e38d2ba8e3a2e3a951a38d55bc4fc28de6a6092789658823f45e7bb6b2d9/feynlag-0.2.0-py3-none-any.whl", hash = "sha256:4031f50c5550237717f05fb2f53b0839c9e13db7cec724ee01f59394fc08a23d", size = 184400, upload-time = "2026-09-26T21:22:41.559Z" },
+    { url = "https://files.pythonhosted.org/packages/44/f3/1b413f0dd33eb469c518ea6eff189f551df4ad60bd4a578e10e5fdf73f4e/feynlag-0.3.0-py3-none-any.whl", hash = "sha256:cf2ddd5f84bbef905c0dc3a397411f5b4a5c66630310d6c87eb0cc69bf0c96f3", size = 189198, upload-time = "2026-10-07T17:51:54.148Z" },
 ]
 
 [[package]]
@@ -284,8 +284,8 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "feynlag", specifier = "==0.2.0" },
-    { name = "feynlag-models", git = "https://github.com/moiseszeleny/feynlag-models.git?rev=622fe9ac9bf8f72f53f1c1b62beecc192f005a64" },
+    { name = "feynlag", specifier = "==0.3.0" },
+    { name = "feynlag-models", git = "https://github.com/moiseszeleny/feynlag-models.git?rev=cb0678a5c5b64628e3a93d256051a44f245f5f22" },
     { name = "nbconvert", marker = "extra == 'dev'" },
     { name = "nbmake", marker = "extra == 'dev'" },
     { name = "numpy" },
@@ -301,7 +301,7 @@ provides-extras = ["dev"]
 [[package]]
 name = "feynlag-models"
 version = "0.1.0"
-source = { git = "https://github.com/moiseszeleny/feynlag-models.git?rev=622fe9ac9bf8f72f53f1c1b62beecc192f005a64#622fe9ac9bf8f72f53f1c1b62beecc192f005a64" }
+source = { git = "https://github.com/moiseszeleny/feynlag-models.git?rev=cb0678a5c5b64628e3a93d256051a44f245f5f22#cb0678a5c5b64628e3a93d256051a44f245f5f22" }
 dependencies = [
     { name = "feynlag" },
     { name = "jsonschema" },
