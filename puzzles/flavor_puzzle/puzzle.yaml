@@ -106,3 +106,9 @@ changelog:
       s-coupling sign for n < 0 corrected in the stated formula, card and tests; model code and
       benchmark numbers unchanged. Full suite and the ladder notebook pass at the new pin."
     author: "Moises Zeleny (with Claude)"
+  - date: "2026-10-08"
+    note: "Pins moved to feynlag 0.3.0 and feynlag-models cb0678a (PR #16), closing FG-6/FG-7
+      upstream. feynlag_models.flavor is deleted; froggatt_nielsen's numeric masses and CKM now
+      come from models.froggatt_nielsen.model.mass_basis / ckm / benchmark_flavour (feynlag's
+      numeric diagonalize_svd). Full suite and both ladder notebooks pass at the new pins."
+    author: "Moises Zeleny (with Claude)"

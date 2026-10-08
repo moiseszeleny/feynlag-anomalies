@@ -10,6 +10,10 @@ model's `metadata.yaml`); the integer charges are benchmark inputs, set at the b
 LNS "master model" (hep-ph/9310320 Eq. 2.5) for quarks and to placeholder lepton charges. The
 numeric complex SVD this request anticipated as a gap is FEYNLAG_GAPS FG-6, worked around in
 `feynlag_models.flavor` (`ckm_from_yukawas`, `mass_spectrum`). For use by P3 of `puzzles/flavor_puzzle`.
+**Update (2026-10-08)**: FG-6 and FG-7 are closed on feynlag 0.3.0 (`feynlag-models` PR #16,
+`cb0678a`), and `feynlag_models.flavor` is deleted. The numeric route is now
+`models.froggatt_nielsen.model.mass_basis` / `ckm` / `benchmark_flavour`, built on feynlag's
+`diagonalize_svd(method="numeric")`.
 **Minimum level requested**: L2 (literature-checked mass and mixing scaling, below). P3 of the
 puzzle is a stage-1 fit, which hard rule 7 gates at L2 or higher. L3/UFO is not needed for P3.
 

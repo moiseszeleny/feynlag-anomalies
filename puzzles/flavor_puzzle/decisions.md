@@ -57,6 +57,13 @@ One dated line per ladder step, tagged as in `anomalies/neutrino_mass/decisions.
   $`\lvert c_{ij}\rvert`$, $`\alpha_{ij}`$ parameters in `extra["c_params"]`), and
   `feynlag_models.flavor.ckm_from_yukawas` / `mass_spectrum` give $V$ and the masses at a numeric
   point without rebuilding. `candidate_models` now lists `model_id: froggatt_nielsen`.
+- **2026-10-08 — P2** (pin bump): feynlag 0.3.0 and `feynlag-models` `cb0678a` (PR #16), which
+  close FG-6 (numeric complex SVD) and FG-7 (the global $U(1)$ charge counter) upstream.
+  `feynlag_models.flavor` is deleted, so the entry above is superseded on that point: $V$ and the
+  masses at a numeric point now come from `models.froggatt_nielsen.model.mass_basis` / `ckm` /
+  `benchmark_flavour`, which use feynlag's `diagonalize_svd(method="numeric")`. The bundle's
+  `extra` keys are unchanged. `[feynlag-verified: test]` — full suite and both notebooks pass at
+  the new pins.
 - **Next (P3)**: once the model reaches L2, fit $`(\epsilon, c_{ij})`$ to the sourced masses and
   CKM with `fit/stage1.py`, then compute `free_parameter_log10_span` over
   $`\{\lvert c_{ij}\rvert\}`$ and compare with 5.54. Flavon FCNC constraints need stage-2 tools;
