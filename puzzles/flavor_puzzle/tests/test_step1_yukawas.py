@@ -33,6 +33,16 @@ def test_quantifier_sm_value_matches_yaml(puzzle, sm_ckm_bundle):
     assert span == pytest.approx(puzzle.quantifier.sm_value, abs=5e-4)
 
 
+def test_quark_only_sm_value_matches_yaml(puzzle, sm_ckm_bundle):
+    """The quark-only SM reference (six quark Yukawas + three CKM sines), the footing of the
+    quark-only P3 fit, is pinned against the value recorded in puzzle.yaml."""
+    params = step_1.sm_quark_parameters(sm_ckm_bundle)
+    assert set(params) == {"yu", "yc", "yt", "yd", "ys", "yb", "s12", "s13", "s23"}
+    span = step_1.free_parameter_log10_span(params)
+    assert span == pytest.approx(puzzle.quantifier.sm_reference_values["quarks_only"], abs=5e-4)
+    assert max(params, key=params.get) == "yt" and min(params, key=params.get) == "yu"
+
+
 def test_span_is_set_by_top_and_electron(sm_ckm_bundle):
     params = step_1.sm_free_parameters(sm_ckm_bundle)
     assert max(params, key=params.get) == "yt"

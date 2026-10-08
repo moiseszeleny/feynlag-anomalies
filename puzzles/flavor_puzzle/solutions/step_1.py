@@ -80,6 +80,16 @@ def sm_free_parameters(bundle) -> dict[str, float]:
     return {**sm_yukawas(bundle), **sm_ckm_sines(bundle)}
 
 
+def sm_quark_parameters(bundle) -> dict[str, float]:
+    """The quark-only free parameters: the six quark Yukawas and the three CKM sines.
+
+    This is the SM's footing for comparison with a model fitted to quarks only (P3).
+    """
+    yukawas = sm_yukawas(bundle)
+    quarks = {name: yukawas[name] for name in SECTORS["up"] + SECTORS["down"]}
+    return {**quarks, **sm_ckm_sines(bundle)}
+
+
 def sector_spans(yukawas: Mapping[str, float]) -> dict[str, float]:
     """The quantifier restricted to each sector's three Yukawas."""
     return {sector: free_parameter_log10_span({n: yukawas[n] for n in names})
