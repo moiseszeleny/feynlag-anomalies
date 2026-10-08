@@ -21,7 +21,7 @@ from pathlib import Path
 import yaml
 
 from . import ANOMALIES_DIR
-from .schema import ID_PATTERN, Anomaly, CandidateModel, Puzzle
+from .schema import ID_PATTERN, TODO_VERIFY, Anomaly, CandidateModel, Puzzle
 
 _MATURITY_ORDER = {"A0": 0, "A1": 1, "A2": 2, "A3": 3, "A4": 4}
 _FIT_LEVEL_MATURITY = "A3"
@@ -131,6 +131,12 @@ def _check_quantifier(puzzle: Puzzle) -> list[str]:
     if q.provenance != "computed":
         errors.append(
             f"maturity {puzzle.maturity!r} requires a computed quantifier, got {q.provenance!r}"
+        )
+    sentinels = [n for n, v in [("sm_value", q.sm_value), *[(f"sm_reference_values.{k}", v)
+                 for k, v in q.sm_reference_values.items()]] if v == TODO_VERIFY]
+    if sentinels:
+        errors.append(
+            f"maturity {puzzle.maturity!r} forbids {TODO_VERIFY} in quantifier: " + ", ".join(sentinels)
         )
     if not q.implementation:
         errors.append(f"maturity {puzzle.maturity!r} requires quantifier.implementation")

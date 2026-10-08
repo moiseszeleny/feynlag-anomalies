@@ -115,3 +115,18 @@ def test_low_maturity_model_rejected_for_fit_level_puzzle(tmp_path, valid_puzzle
     d = _write(tmp_path, "flavor_puzzle", valid_puzzle_dict)
     with pytest.raises(PuzzleValidationError, match="implies a fit/scan"):
         load_puzzle(d)
+
+
+@pytest.mark.parametrize("where", ["sm_value", "quarks_only"])
+def test_p1_rejects_todo_verify_in_quantifier_values(tmp_path, valid_puzzle_dict, where):
+    valid_puzzle_dict["maturity"] = "P1"
+    q = valid_puzzle_dict["quantifier"]
+    q["implementation"] = _RESOLVABLE
+    q["sm_reference_values"] = {"quarks_only": 5.136}
+    if where == "sm_value":
+        q["sm_value"] = "TODO_VERIFY"
+    else:
+        q["sm_reference_values"]["quarks_only"] = "TODO_VERIFY"
+    d = _write(tmp_path, "flavor_puzzle", valid_puzzle_dict)
+    with pytest.raises(PuzzleValidationError, match="TODO_VERIFY"):
+        load_puzzle(d)

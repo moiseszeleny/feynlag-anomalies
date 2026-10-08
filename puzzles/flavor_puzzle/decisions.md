@@ -70,7 +70,8 @@ One dated line per ladder step, tagged as in `anomalies/neutrino_mass/decisions.
   `[decision, approved by the user]`
 - **2026-10-08 — P3 prep** (quarks only): P3 fits quarks only. The lepton FN charges are
   placeholders in the model, and at its benchmark they give $`m_e = 22`$ MeV (recomputed this
-  session with `benchmark_flavour`: 22.09 MeV). The SM comparison value is recomputed on the same
+  session with `benchmark_flavour`: 22.09 MeV, pinned by
+  `tests/test_fn_benchmark.py::test_fn_lepton_placeholder_gives_me_22_mev`). The SM comparison value is recomputed on the same
   footing: six quark Yukawas and three CKM sines give 5.136 orders of magnitude
   ($`\log_{10} y_t/y_u`$), stored as `quantifier.sm_reference_values.quarks_only` and pinned by
   `tests/test_step1_yukawas.py::test_quark_only_sm_value_matches_yaml`. The all-sector 5.542
