@@ -101,6 +101,39 @@ One dated line per ladder step, tagged as in `anomalies/neutrino_mass/decisions.
 - **2026-10-08 — P3 prep** (vev convention): `froggatt_nielsen` is built with $`v = v_F = 246`$
   GeV, overriding the model default of 246.22 GeV, as `sm_benchmark` already does for `sm_ckm`.
   The masses are Huang–Zhou's $`m_f = y_f v_F/\sqrt2`$. `[decision, approved by the user]`
-- **Next (P3)**: the `solutions/step_3.py` fit design is proposed for approval (no fit code yet).
-  P3 maturity is not claimed until that fit, its constrained-minimum span and the familon
-  constraint are in place.
+- **2026-10-08 — P3 design** (tuning guard): the minimum span is computed without a box. At the
+  minimum-span point the tuning measure
+  $`\max \lvert \partial \ln O / \partial \ln\lvert c\rvert \rvert`$ over the ten observables and 18
+  quark $`\lvert c\rvert`$ is reported, and flagged if it exceeds 10. The span with every
+  $`\lvert c\rvert`$ boxed in $[1/3, 3]$ is reported as a sensitivity variant. Reason: a free
+  minimum could lower the span through tuned cancellations among $O(1)$ coefficients; the measure
+  detects that, and the box shows how much the answer depends on allowing it.
+  `[decision, approved by the user]`
+- **2026-10-08 — P3 design** ($\Delta\chi^2$): $\Delta = 1$ is the headline, the 68% profile
+  interval of one derived quantity (the span); $\Delta = 4$ is reported as a sensitivity check.
+  `[decision, approved by the user]`
+- **2026-10-08 — P3 fit** (`solutions/step_3.py`, result; P3 not yet claimed): `froggatt_nielsen`
+  built with $v = v_F$, fitted to the 10 quark observables with 18 $`\ln\lvert c\rvert`$ and 10
+  free phases at $\epsilon = 0.2$ (the 8 other phases fixed by rephasing). The fit loop uses numpy
+  SVD on the bundle's lambdified Yukawas, which agrees with the model's `mass_basis` / `ckm` at
+  dps 60 to $10^{-13}$; every reported point is recomputed with the model. The exact flat
+  direction $`\epsilon \to \epsilon/k`$, $`\lvert c_{ij}\rvert \to \lvert c_{ij}\rvert k^{n_{ij}}`$
+  ($`n_{ij} = a_i + b_j`$ in both sectors) means the data cannot fix $\epsilon$; only the span
+  minimisation picks it. Full run, 32 starts (about 17 min):
+  - $`\chi^2_{\min} = 1.3\times10^{-23}`$ (28 parameters, 10 observables: the model accommodates
+    the data, which is not a preference).
+  - Constrained-minimum span: **0.189** orders of magnitude at $\Delta = 1$ (at
+    $\epsilon = 0.136$), 0.182 at $\Delta = 4$, against 5.136 for the SM's quarks. At least four
+    starts reach the same minimum to $10^{-4}$.
+  - Boxed in $`\lvert c\rvert \in [1/3, 3]`$: the same 0.189 / 0.182, so the free minimum
+    already lies inside the box.
+  - Tuning measure at the minimum-span point: 0.98 (full run) and 1.06 (the default 4-seed
+    point), far below the flag at 10. The minimum-span point is not unique, so the measure is
+    quoted per point.
+  - All 18 quark $`\lvert c\rvert`$ enter some observable (the determinant argument).
+  `[feynlag-verified: test]` — `tests/test_step3_fn_fit.py` (default: 4 pinned seeds;
+  `test_full_multistart_is_stable` is `slow`). Open before P3 is claimed: an Opus physics review,
+  and the familon bound on $`v_\phi`$ (`TODO_VERIFY`).
+- **Next (P3)**: an Opus physics review of the fit and of the notebook's section 5. Then the
+  familon bound on $`v_\phi`$ from a cited $`\Gamma(K \to \pi a)`$ formula. P3 maturity is
+  claimed in `puzzle.yaml` only after both.
