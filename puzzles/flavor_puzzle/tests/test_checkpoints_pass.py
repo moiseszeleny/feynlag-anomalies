@@ -21,3 +21,13 @@ def test_check_3_passes_with_canonical_solution(sm_ckm_bundle):
 
 def test_check_1_rejects_a_wrong_answer(sm_ckm_bundle):
     assert cd.make_check_1(sm_ckm_bundle)(1.0) is False
+
+
+def test_check_4_passes_with_canonical_solution(p3):
+    assert cd.make_check_4()(p3["fit"]["chi2"]) is True
+
+
+def test_check_5_passes_with_canonical_solution(puzzle, p3):
+    sm_span = puzzle.quantifier.sm_reference_values["quarks_only"]
+    answer = sm_span - p3["spans"][1.0]["span"]
+    assert cd.make_check_5(puzzle, p3["spans"][1.0])(answer) is True
