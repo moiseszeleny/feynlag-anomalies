@@ -126,15 +126,38 @@ One dated line per ladder step, tagged as in `anomalies/neutrino_mass/decisions.
   - Constrained-minimum span: **0.189** orders of magnitude at $\Delta = 1$ (at
     $\epsilon = 0.136$), 0.182 at $\Delta = 4$, against 5.136 for the SM's quarks. At least four
     starts reach the same minimum to $10^{-4}$.
-  - Boxed in $`\lvert c\rvert \in [1/3, 3]`$: the same 0.189 / 0.182, so the free minimum
-    already lies inside the box.
+  - Boxed in $`\lvert c\rvert \in [1/3, 3]`$: 0.189 / 0.182 in the full run, equal to the free
+    minimum, which already lies inside the box. The default 4-seed run gives 0.1898 / 0.1825
+    boxed against 0.1894 / 0.1820 free, within $5\times10^{-4}$ (the notebook table rounds
+    0.1898 to 0.190).
   - Tuning measure at the minimum-span point: 0.98 (full run) and 1.06 (the default 4-seed
-    point), far below the flag at 10. The minimum-span point is not unique, so the measure is
-    quoted per point.
+    point, reproduced on 2026-10-09 with `run_p3(DEFAULT_SEEDS)`: 1.0639), far below the flag
+    at 10. The minimum-span point is not unique, so the measure is quoted per point and can
+    differ by platform.
   - All 18 quark $`\lvert c\rvert`$ enter some observable (the determinant argument).
   `[feynlag-verified: test]` — `tests/test_step3_fn_fit.py` (default: 4 pinned seeds;
   `test_full_multistart_is_stable` is `slow`). Open before P3 is claimed: an Opus physics review,
   and the familon bound on $`v_\phi`$ (`TODO_VERIFY`).
+- **2026-10-09 — P3 review fold-in** (Opus review of PR #14: no physics error, headline numbers
+  reproduced, 0.189 confirmed as the constrained minimum). Three low findings:
+  - *SM footing.* 5.136 is the SM span at central values, while the FN span is a minimum under
+    $`\chi^2 \leq \chi^2_{\min} + 1`$. Under the same rule the quark-only SM span is **5.068**
+    (`step_3.sm_quark_span_profiled`: $`m_u`$ up by $1.00\,\sigma$, $`m_t`$ down by
+    $0.03\,\sigma$, the rest unmoved; an analytic scan of the $1\sigma$ circle gives the same
+    5.0676). Stored as
+    `quantifier.sm_reference_values.quarks_only_profiled_delta1` and pinned by
+    `tests/test_step3_fn_fit.py::test_sm_quark_span_profiled_matches_yaml`. The gap is 4.947
+    orders of magnitude at central values and **4.878** like-for-like. At $\Delta = 4$ the SM
+    value is 5.008 against the FN 0.182. `[feynlag-verified: test]`
+  - *Conditional headline.* The 0.189 holds for the LNS charge assignment, with $\epsilon$ and
+    the integer charges excluded from the span by the user decision of 2026-10-08. As context,
+    counting $\epsilon$ as one more $c$ would give at most
+    $`\log_{10}(0.958/0.136) = 0.85`$ at the reported point (max $`\lvert c\rvert = 0.958`$,
+    $\epsilon = 0.136$, recomputed this session). `[physics judgment]`
+  - *Tuning value.* The review quoted 0.9814 for `run_p3(DEFAULT_SEEDS)`; rerun here it gives
+    1.0639, and 0.9814 is the full 32-start value already reported above. Both are kept, each
+    for its own point, and the notebook outputs were refreshed (they show 1.06). Not changed to
+    0.98. `[feynlag-verified: test]`
 - **Next (P3)**: an Opus physics review of the fit and of the notebook's section 5. Then the
   familon bound on $`v_\phi`$ from a cited $`\Gamma(K \to \pi a)`$ formula. P3 maturity is
   claimed in `puzzle.yaml` only after both.

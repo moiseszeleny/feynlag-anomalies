@@ -54,7 +54,10 @@ quantifier:
   provenance: computed
   sm_value: 5.542   # all sectors, log10(y_t / y_e); checked against the code by tests/test_step1_yukawas.py
   sm_reference_values:
-    quarks_only: 5.136   # log10(y_t / y_u); test_quark_only_sm_value_matches_yaml
+    quarks_only: 5.136   # log10(y_t / y_u) at central values; test_quark_only_sm_value_matches_yaml
+    # The same quark-only SM span under the FN span rule: minimum subject to chi2 <= 1 (m_u up
+    # 1.0 sigma, m_t down 0.03 sigma); step_3.sm_quark_span_profiled, test_sm_quark_span_profiled.
+    quarks_only_profiled_delta1: 5.068
 
 missing_protection:
   - no_flavor_organizing_symmetry
@@ -92,7 +95,12 @@ candidate_models:
       P3 hard constraint, listed and not part of the stage-1 chi2: the flavon phase a is an
       exact Goldstone (familon) with off-diagonal couplings n_ij M_ij / v_phi, bounded by
       K+ -> pi+ a (NA62, arXiv:2103.15389). The v_phi bound itself is TODO_VERIFY, and the
-      benchmark v_phi = 2.83 TeV must not be quoted as viable."
+      benchmark v_phi = 2.83 TeV must not be quoted as viable.
+      P3 result (not yet claimed): for the LNS charge assignment, and with eps and the integer
+      charges excluded from the span by the user decision of 2026-10-08, the constrained-minimum
+      span of the 18 quark |c| is 0.189 (chi2 <= chi2_min + 1), against 5.068 for the SM's quarks
+      under the same rule (5.136 at central values). Counting eps as one more c would give at
+      most 0.85 at the reported point (log10(0.958 / 0.136))."
 # No eft_operators entry: the Froggatt-Nielsen operators have dimension 4 + n_ij, set by
 # charges that are benchmark inputs of the model, not fixed here.
 
@@ -135,4 +143,10 @@ changelog:
       constrained-minimum span rule, FN relation at M_Z. Quantifier definition amended; quark-only
       SM reference 5.136 added and pinned by a test; familon K -> pi a listed as a P3 hard
       constraint on v_phi (bound TODO_VERIFY). Maturity stays P2."
+    author: "Moises Zeleny (with Claude)"
+  - date: "2026-10-09"
+    note: "P3 review fold-in (PR #14): quark-only SM span under the same chi2 <= 1 rule added
+      (quarks_only_profiled_delta1 = 5.068, test-pinned); the FN headline is stated as
+      conditional on the LNS charges and on excluding eps and the charges. P3 not claimed
+      (familon v_phi bound TODO_VERIFY)."
     author: "Moises Zeleny (with Claude)"

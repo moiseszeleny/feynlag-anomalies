@@ -243,6 +243,47 @@ def minimize_span(predictor, observed, fit, delta, box=None) -> dict:
             "spans": sorted(r["span"] for r in feasible)}
 
 
+# --- the SM on the same footing -----------------------------------------------------------------
+SM_QUARK_SPAN_INPUTS = MASS_OBSERVABLES + ("sin theta_12", "sin theta_13", "sin theta_23")
+
+
+def sm_quark_span_profiled(puzzle, delta) -> dict:
+    """The quark-only SM span under the same rule as the FN span: the minimum of
+    ``log10(max|c| / min|c|)`` over the SM's quark parameters (six Yukawas ``sqrt(2) m_f / v_F``
+    and three CKM sines) subject to ``chi2 <= chi2_min + delta``, where the parameters are the
+    observables themselves (``chi2_min = 0`` at the central values; delta is not a hierarchy
+    parameter and stays at its central value).
+
+    Solved as ``min (u - l)`` with ``l <= ln c_k <= u`` and the chi2 constraint (SLSQP), started
+    at the central values. Returns ``span``, the parameter values and their pulls.
+    """
+    from scipy.optimize import minimize
+
+    by_name = {q.name: q for q in puzzle.sm_quantities}
+    v_F = _reject_sentinel("v_F", by_name["v_F"].value)
+    mu = np.array([_reject_sentinel(n, by_name[n].value) for n in SM_QUARK_SPAN_INPUTS])
+    sigma = np.array([_reject_sentinel(f"{n}.uncertainty", by_name[n].uncertainty)
+                      for n in SM_QUARK_SPAN_INPUTS])
+    to_c = np.array([math.sqrt(2) / v_F] * 6 + [1.0] * 3)  # y_f = sqrt(2) m_f / v_F; sines as is
+
+    def chi2(z):
+        return float(np.sum(((np.exp(z[2:]) - mu) / sigma) ** 2))
+
+    lnc0 = np.log(mu)
+    cons = [{"type": "ineq", "fun": lambda z: delta - chi2(z)},
+            {"type": "ineq", "fun": lambda z: z[2:] + np.log(to_c) - z[0]},
+            {"type": "ineq", "fun": lambda z: z[1] - z[2:] - np.log(to_c)}]
+    c0 = lnc0 + np.log(to_c)
+    z0 = np.r_[c0.min(), c0.max(), lnc0]
+    res = minimize(lambda z: z[1] - z[0], z0, method="SLSQP", constraints=cons,
+                   options={"maxiter": 500, "ftol": 1e-12})
+    values = np.exp(res.x[2:])
+    c = values * to_c
+    return {"span": log10_span(c), "chi2": chi2(res.x), "success": bool(res.success),
+            "values": dict(zip(SM_QUARK_SPAN_INPUTS, values)),
+            "pulls": dict(zip(SM_QUARK_SPAN_INPUTS, (values - mu) / sigma))}
+
+
 # --- the tuning measure ---------------------------------------------------------------------------
 def tuning_measure(predictor, eps, abs_c, args, h=1e-6) -> dict:
     """``max |d ln O / d ln|c_k||`` over the ten observables and 18 ``|c|`` (central differences).

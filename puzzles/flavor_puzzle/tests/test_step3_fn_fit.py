@@ -139,3 +139,18 @@ def test_full_multistart_is_stable(puzzle):
         spans = full["spans"][delta]["spans"]
         assert len(spans) >= 2 and spans[1] - spans[0] < 0.02
         assert default["spans"][delta]["span"] - spans[0] < 0.02
+
+
+def test_sm_quark_span_profiled_matches_yaml(puzzle):
+    """The quark-only SM span under the FN span rule (min subject to chi2 <= 1): only m_u (up ~1
+    sigma) and m_t (down ~0.03 sigma) move, and the value is pinned in puzzle.yaml next to the
+    central-value 5.136."""
+    res = step_3.sm_quark_span_profiled(puzzle, 1.0)
+    assert res["success"] and res["chi2"] == pytest.approx(1.0, abs=1e-6)
+    assert res["span"] == pytest.approx(
+        puzzle.quantifier.sm_reference_values["quarks_only_profiled_delta1"], abs=5e-4)
+    assert res["pulls"]["m_u(M_Z)"] == pytest.approx(1.0, abs=2e-3)
+    assert abs(res["pulls"]["m_t(M_Z)"]) < 0.05
+    others = [abs(v) for k, v in res["pulls"].items() if k not in ("m_u(M_Z)", "m_t(M_Z)")]
+    assert max(others) < 1e-4
+    assert res["span"] < puzzle.quantifier.sm_reference_values["quarks_only"]
