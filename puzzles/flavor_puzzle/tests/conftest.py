@@ -16,3 +16,12 @@ def sm_ckm_bundle(puzzle):
     from puzzles.flavor_puzzle.solutions import step_1
 
     return build(step_1.MODEL_ID, benchmark=step_1.sm_benchmark(puzzle))
+
+
+@pytest.fixture(scope="session")
+def p3(puzzle):
+    """The P3 computation with the default pinned seeds (fit, spans, boxed, tuning, dps=60
+    recomputation), run once per session (~70 s)."""
+    from puzzles.flavor_puzzle.solutions import step_3
+
+    return step_3.run_p3(puzzle, seeds=step_3.DEFAULT_SEEDS)

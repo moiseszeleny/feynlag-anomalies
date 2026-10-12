@@ -28,4 +28,6 @@ include = ["checkpoints*", "fit*", "feynlag_anomalies*", "anomalies*", "puzzles*
 [tool.pytest.ini_options]
 testpaths = ["tests", "anomalies", "puzzles"]
 markers = ["slow: MadGraph or otherwise long-running checks (manual / release only)"]
+# the default run skips slow tests; `pytest -m slow` overrides this (the last -m wins)
+addopts = "-m 'not slow'"
 timeout = 1800

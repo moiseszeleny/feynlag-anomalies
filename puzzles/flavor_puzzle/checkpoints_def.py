@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from checkpoints import Checkpoint, numeric_tolerance
 
-from puzzles.flavor_puzzle.solutions import step_1, step_2
+from puzzles.flavor_puzzle.solutions import step_1, step_2, step_3
 
 
 # --- step 1: the top Yukawa from the model's own relation -------------------
@@ -58,5 +58,42 @@ def make_check_3(bundle) -> Checkpoint:
             "lambda is |V_us| / sqrt(|V_ud|^2 + |V_us|^2), essentially s12.",
             "A lambda^2 = s23, so A is s23 / s12^2 up to tiny corrections.",
             f"A = {expected:.3f}: an O(1) number once the power lambda^2 is pulled out.",
+        ],
+    )
+
+
+# --- step 4 (P3): the Froggatt-Nielsen fit reproduces the quark data ------------------------
+def make_check_4() -> Checkpoint:
+    """Step 4 asks for chi2_min of the froggatt_nielsen quark fit; passes if it is below 1e-6.
+
+    28 free parameters against 10 observables: the expected answer is 0 (the data are
+    reproduced exactly), which shows the model *can* accommodate the data, not a preference.
+    """
+    return numeric_tolerance(
+        "step_4",
+        expected=0.0,
+        rel_tol=1e-6,
+        hints=[
+            "Fit with solutions/step_3.run_fit: 18 ln|c| and 10 free phases at fixed eps.",
+            "Count the parameters against the 10 observables before you look at the number.",
+            "With more parameters than observables, chi2_min should come out at ~0 (below 1e-6).",
+        ],
+    )
+
+
+# --- step 5 (P3): the FN span against the quark-only SM span ---------------------------------
+def make_check_5(puzzle, span_result) -> Checkpoint:
+    """Step 5 asks how many orders of magnitude the FN coefficients save: the quark-only SM span
+    (``sm_reference_values.quarks_only``) minus the delta = 1 constrained-minimum span."""
+    sm_span = puzzle.quantifier.sm_reference_values["quarks_only"]
+    expected = sm_span - span_result["span"]
+    return numeric_tolerance(
+        "step_5",
+        expected=expected,
+        rel_tol=1e-3,
+        hints=[
+            f"The quark-only SM span is {sm_span} (six quark Yukawas and three CKM sines).",
+            "The FN span is the delta = 1 result of solutions/step_3.minimize_span.",
+            f"The difference is {expected:.3f} orders of magnitude.",
         ],
     )
