@@ -130,3 +130,12 @@ def test_p1_rejects_todo_verify_in_quantifier_values(tmp_path, valid_puzzle_dict
     d = _write(tmp_path, "flavor_puzzle", valid_puzzle_dict)
     with pytest.raises(PuzzleValidationError, match="TODO_VERIFY"):
         load_puzzle(d)
+
+
+def test_puzzle_constraint_source_must_be_listed(tmp_path, valid_puzzle_dict):
+    valid_puzzle_dict["constraints"] = [{
+        "name": "x", "quantity": "br_k_to_pi_a", "upper_limit": 1e-10, "confidence_level": 0.9,
+        "units": "1", "source": "not-in-sources"}]
+    d = _write(tmp_path, "flavor_puzzle", valid_puzzle_dict)
+    with pytest.raises(PuzzleValidationError, match="constraint"):
+        load_puzzle(d)

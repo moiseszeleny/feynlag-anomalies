@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from checkpoints import Checkpoint, numeric_tolerance
 
-from puzzles.flavor_puzzle.solutions import step_1, step_2, step_3
+from puzzles.flavor_puzzle.solutions import step_1, step_2, step_3, step_4
 
 
 # --- step 1: the top Yukawa from the model's own relation -------------------
@@ -95,5 +95,21 @@ def make_check_5(puzzle, span_result) -> Checkpoint:
             f"The quark-only SM span is {sm_span} (six quark Yukawas and three CKM sines).",
             "The FN span is the delta = 1 result of solutions/step_3.minimize_span.",
             f"The difference is {expected:.3f} orders of magnitude.",
+        ],
+    )
+
+
+# --- step 6 (P3 constraint): the familon bound on v_phi -----------------------------------
+def make_check_6(bound) -> Checkpoint:
+    """Step 6 asks for the lower bound on v_phi (GeV) from K+ -> pi+ a at the Delta = 1 point."""
+    expected = bound["v_phi_min"]
+    return numeric_tolerance(
+        "step_6",
+        expected=expected,
+        rel_tol=1e-3,
+        hints=[
+            "Get ghat = v_phi / |F^V_sd| from solutions/step_4.familon_coupling.",
+            "BR = kappa f_+(0)^2 (ghat / v_phi)^2 tau_K / hbar must stay below the NA62 limit.",
+            f"Solving for v_phi gives about {expected:.2e} GeV.",
         ],
     )

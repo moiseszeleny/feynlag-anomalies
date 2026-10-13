@@ -158,6 +158,58 @@ One dated line per ladder step, tagged as in `anomalies/neutrino_mass/decisions.
     1.0639, and 0.9814 is the full 32-start value already reported above. Both are kept, each
     for its own point, and the notebook outputs were refreshed (they show 1.06). Not changed to
     0.98. `[feynlag-verified: test]`
-- **Next (P3)**: an Opus physics review of the fit and of the notebook's section 5. Then the
-  familon bound on $`v_\phi`$ from a cited $`\Gamma(K \to \pi a)`$ formula. P3 maturity is
-  claimed in `puzzle.yaml` only after both.
+- **2026-10-13 — P3 constraint** (familon bound on $`v_\phi`$; supersedes the `TODO_VERIFY` of
+  the 2026-10-08 familon entry, which stays as written):
+  - *Rate*, cited from Martin Camalich, Pospelov, Vuong, Ziegler, Zupan, arXiv:2002.04623 (PRD 102,
+    015023), read this session: Eq. (1)
+    $`\mathcal L = \frac{\partial_\mu a}{2f_a}\,\bar f_i\gamma^\mu(c^V_{ij} + c^A_{ij}\gamma_5)f_j`$,
+    Eq. (2) $`F^V_{ij} = 2f_a/c^V_{ij}`$, Eq. (5)
+    $`\Gamma(K^+ \to \pi^+ a) = \kappa\, f_+(0)^2/\lvert F^V_{sd}\rvert^2`$, Eq. (6)
+    $`\kappa = \frac{m_K^3}{16\pi}(1 - m_\pi^2/m_K^2)^3`$. `[cited]`
+  - *Conversion*, derived: the paper's Eq. (17) writes the same interaction as
+    $`-\frac{ia}{2f_a}\bar f_i[(m_i - m_j)c^V_{ij} + (m_i + m_j)c^A_{ij}\gamma_5]f_j`$. The model's
+    term (`froggatt_nielsen` `metadata.yaml`,
+    $`-M_{ij}\, i n_{ij} a/v_\phi\, \bar d_{L,i} d_{R,j}`$) is
+    $`-a\,\bar s(G_{sd}P_R + G_{ds}^* P_L)d`$ with $`G = R_L(i\,n\circ M)R_R^\dagger/v_\phi`$. Only
+    the scalar part $`(G_{sd} + G_{ds}^*)/2`$ enters $K \to \pi$ (parity; the pseudoscalar part,
+    0.6–0.75 of the scalar here, does not). Matching gives
+    $`1/\lvert F^V_{sd}\rvert = \lvert G_{sd} + G_{ds}^*\rvert/(2(m_s - m_d))`$. Because $a$ is the
+    $`U(1)_{\rm FN}`$ Goldstone and $`n_{ij} = q(Q_i) - q(d_j)`$, this equals
+    $`\lvert(X_L + X_R)_{sd}\rvert/(2v_\phi)`$ with the charges rotated to the mass basis: the
+    masses drop out, so no running-mass scale enters. Both forms agree to $10^{-10}$ at every point
+    (`tests/test_step4_familon.py::test_mass_form_equals_goldstone_charge_form`).
+    `[feynlag-verified: test]`
+  - *Regression*: Eqs. (5), (6) with PDG 2024 kaon inputs and the paper's $f_+(0) = 0.9706$
+    reproduce its Table III bound $`F^V_{sd} > 6.8\times10^{11}`$ GeV (E949,
+    $`{\rm BR} < 7.3\times10^{-11}`$) to 1% (6.73). `[feynlag-verified: test]`
+  - *Inputs*, all sourced on 2026-10-13: NA62 observed 90% CL limit at $`m_X = 0`$,
+    $`{\rm BR}(K^+ \to \pi^+ X) < 4.96\times10^{-11}`$, from HEPData Table 1
+    (doi:10.17182/hepdata.106641.v1/t1, the data of the paper's Fig. 8 right), so the value at
+    $`m_X = 0`$ is used rather than the conservative end ($6\times10^{-11}$ would weaken the bound
+    by 10%); PDG 2024 listings $`m_{K^\pm} = 493.677(15)`$ MeV,
+    $`\tau_{K^\pm} = 1.2380(20)\times10^{-8}`$ s, $`m_{\pi^\pm} = 139.57039(18)`$ MeV; FLAG 2024 Eq.
+    (72) $`f_+(0) = 0.9698(17)`$ ($`N_f = 2+1+1`$); $\hbar$ from the exact SI $h$ and $e$.
+  - *Result* (`solutions/step_4.py`, default-seed P3 points):
+    $`\lvert F^V_{sd}\rvert \geq 8.15\times10^{11}`$ GeV. At the $\Delta = 1$ minimum-span point
+    $`v_\phi/\lvert F^V_{sd}\rvert = 0.1616`$, so $`v_\phi \geq 1.32\times10^{11}`$ GeV and
+    $`\Lambda = v_\phi/(\sqrt2\,\epsilon) \geq 6.83\times10^{11}`$ GeV ($\epsilon = 0.136$). Spread:
+    $\Delta = 4$ point $`1.22\times10^{11}`$ / $`6.35\times10^{11}`$ GeV, best fit
+    $`4.42\times10^{10}`$ / $`1.56\times10^{11}`$ GeV (its $\epsilon = 0.2$ is the fit's gauge
+    choice; $`v_\phi`$ is invariant along the flat direction, $\Lambda$ is not). The hard cut
+    `step_4.familon_cut` (via `fit.stage1.upper_limit_cut`) passes for every $`v_\phi`$ above the
+    bound, and the Yukawa fit depends only on $\epsilon$, so the fit survives. The model's benchmark
+    $`v_\phi = 2.83`$ TeV is $`4.7\times10^7`$ times below the bound: excluded.
+    `[feynlag-verified: test]`
+  - *Scope*: an exact (massless) Goldstone is assumed, as in the model; a familon mass above
+    $`m_K - m_\pi`$ from explicit breaking would close this channel. The flavon radial mode $s$
+    couples with $`1/v_\phi`$ too and is negligible at these scales. `[physics judgment]`
+- **2026-10-13 — P3 proposed**: the two P3 requirements of `docs/maturity.md` now have computed,
+  sourced backing. (1) The quantifier in a candidate model at L2 or higher: `froggatt_nielsen`'s
+  constrained-minimum span is 0.189 orders of magnitude against 5.068 for the SM's quarks under the
+  same $`\chi^2 \leq \chi^2_{\min} + 1`$ rule (5.136 at central values), conditional on the LNS
+  charge assignment, with $\epsilon$ and the integer charges excluded from the span by the user
+  decision of 2026-10-08. (2) The experimental constraint: the familon bound above, passed for
+  $`v_\phi \geq 1.32\times10^{11}`$ GeV. `maturity: P3` is set in `puzzle.yaml` in this PR, pending
+  the code and physics reviews before merge. `[decision, needs approval]`
+- **Next (P4)**: real likelihoods (stage-2 tools, not approved), and the lepton sector once its FN
+  charges are more than placeholders.

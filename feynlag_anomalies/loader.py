@@ -104,6 +104,9 @@ def load_puzzle(puzzle_dir: Path, check_models: bool = True) -> Puzzle:
             errors.append(f"related_anomalies references unknown anomaly {anomaly_id!r}")
 
     known_sources = {s.identifier for s in puzzle.sources}
+    for c in puzzle.constraints:
+        if c.source not in known_sources:
+            errors.append(f"constraint {c.name!r} cites source {c.source!r}, not in sources[]")
     for q in puzzle.sm_quantities:
         if q.source is not None and q.source not in known_sources:
             errors.append(f"sm_quantities {q.name!r} cites {q.source!r}, not in sources[]")

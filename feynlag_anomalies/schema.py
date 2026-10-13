@@ -44,7 +44,7 @@ SM_FAILURE_TYPES = Literal["structural", "resonance", "quantitative"]
 PROVENANCES = Literal["computed", "cited"]
 MATURITIES = Literal["A0", "A1", "A2", "A3", "A4"]
 SOURCE_KINDS = Literal["arxiv", "doi", "hepdata", "pdg", "other"]
-CONSTRAINT_QUANTITIES = Literal["sum_m_nu", "m_betabeta", "m_beta"]
+CONSTRAINT_QUANTITIES = Literal["sum_m_nu", "m_betabeta", "m_beta", "br_k_to_pi_a"]
 
 ID_PATTERN = r"^[a-z0-9_]+$"
 
@@ -206,5 +206,6 @@ class Puzzle(_Strict):
     eft_operators: list[EFTOperator] = Field(default_factory=list)
     candidate_models: list[CandidateModel] = Field(default_factory=list)
     maturity: PUZZLE_MATURITIES
+    constraints: list[Constraint] = Field(default_factory=list)
     falsifiers: list[str] = Field(default_factory=list)
     changelog: list[ChangelogEntry] = Field(default_factory=list)
