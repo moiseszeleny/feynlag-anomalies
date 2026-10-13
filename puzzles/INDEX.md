@@ -6,7 +6,7 @@ the others are planned. Their `missing_protection` entries are preliminary guess
 
 | id | missing protection (preliminary) | status | maturity | notes |
 |---|---|---|---|---|
-| `flavor_puzzle` | `no_flavor_organizing_symmetry` | open | **P3** | pilot. SM quark-only span 5.07 (same $`\Delta\chi^2 \leq 1`$ rule; 5.14 at central values) vs 0.19 for `froggatt_nielsen`'s $`\lvert c_{ij}\rvert`$ (LNS charges; $\epsilon$ and charges excluded). Familon bound $`v_\phi \geq 1.3\times10^{11}`$ GeV from NA62 $`K^+ \to \pi^+ a`$. Cross-linked to `neutrino_mass`. |
+| `flavor_puzzle` | `no_flavor_organizing_symmetry` | open | **P3 (quark sector)** | pilot. SM quark-only span 5.07 (same $`\Delta\chi^2 \leq 1`$ rule; 5.14 at central values) vs 0.19 for `froggatt_nielsen`'s $`\lvert c_{ij}\rvert`$ (LNS charges; $\epsilon$ and charges excluded). Familon bound from NA62 $`K^+ \to \pi^+ a`$: $`v_\phi \geq 1.3\times10^{11}`$ GeV at the $\Delta = 1$ point ($`4.4\times10^{10}`$–$`1.3\times10^{11}`$ GeV over the stored points; a tuned alignment can suppress the channel). Leptons deferred. Cross-linked to `neutrino_mass`. |
 | `hierarchy_problem` | `no_scalar_mass_protection` | — | — | planned. Needs a loop-level fine-tuning quantifier. Check whether feynlag provides one before starting. |
 | `strong_cp` | `no_theta_protection` | — | — | planned. $\bar\theta$ is bounded by the neutron EDM, so it will carry a sourced experimental bound. |
 | `cosmological_constant` | — | — | — | planned. Mostly conceptual. Its quantifier needs careful definition. |

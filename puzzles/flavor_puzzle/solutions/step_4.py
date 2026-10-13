@@ -1,6 +1,9 @@
 """Step 4 (P3 constraint) -- the familon bound on v_phi from K+ -> pi+ a.
 
-In ``froggatt_nielsen`` the flavon phase ``a`` is an exact Goldstone (a familon). The model states
+In ``froggatt_nielsen`` the flavon phase ``a`` is the Goldstone of the global U(1)_FN (a familon):
+massless at tree level, and an axiflavon once QCD is included, because U(1)_FN has a colour anomaly
+with the LNS charges (:func:`colour_anomaly_coefficient`). Its QCD-induced mass is far below
+``m_K - m_pi`` and does not affect K -> pi a. The model states
 its one-flavon couplings (``metadata.yaml`` key result, test ``test_flavon_couplings``) as
 
     -M_ij (h/v + (|n_ij| s + i n_ij a) / v_phi) dbar_L,i d_R,j + h.c.,
@@ -109,6 +112,17 @@ def familon_coupling(predictor, point, dps=DPS) -> dict:
     }
 
 
+def colour_anomaly_coefficient(benchmark) -> float:
+    """The U(1)_FN-SU(3)_c^2 anomaly coefficient ``sum_generations (2 q_Q - q_u - q_d)``.
+
+    Each quark doublet holds two colour triplets of charge ``q_Q``; ``u_R``, ``d_R`` enter as
+    left-handed conjugates with charge ``-q``. Nonzero means U(1)_FN is QCD-anomalous, so ``a`` is
+    an axiflavon. feynlag's ``check_anomalies`` skips global groups by design, hence this check.
+    """
+    q = {f: [float(benchmark[f"q{f}{i}"]) for i in (1, 2, 3)] for f in ("Q", "u", "d")}
+    return 2 * sum(q["Q"]) - sum(q["u"]) - sum(q["d"])
+
+
 # --- the rate and the bound -----------------------------------------------------------------------
 def kappa(m_K, m_pi) -> float:
     """arXiv:2002.04623 Eq. (6), in GeV^3."""
@@ -139,7 +153,8 @@ def v_phi_min(ghat, br_max, kin) -> float:
 
 def familon_cut(v_phi, ghat, puzzle) -> bool:
     """Hard cut in the style of ``fit/stage1.py``: True iff BR(K+ -> pi+ a) at ``v_phi`` passes the
-    NA62 limit recorded in ``puzzle.yaml``."""
+    NA62 limit recorded in ``puzzle.yaml``. The cut is satisfied by choosing ``v_phi`` above
+    :func:`v_phi_min` for the point's coupling ``ghat``; the bound is point dependent."""
     kin = kaon_inputs(puzzle)
     return upper_limit_cut(branching_ratio(ghat, v_phi, kin), br_limit(puzzle))
 

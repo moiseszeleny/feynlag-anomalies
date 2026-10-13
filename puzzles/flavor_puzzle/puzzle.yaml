@@ -109,13 +109,17 @@ candidate_models:
       PR #14, maturity L2), built from model_requests/froggatt_nielsen.md. Integer FN charges are
       benchmark inputs (LNS master model at the benchmark); P3 fits (eps, c_ij), quarks only.
       Build with v = v_F = 246 GeV (the model default is 246.22 GeV), as sm_benchmark does.
-      P3 hard constraint, listed and not part of the stage-1 chi2: the flavon phase a is an
-      exact Goldstone (familon) with off-diagonal couplings n_ij M_ij / v_phi, bounded by
-      K+ -> pi+ a (NA62, constraints[] below). Bound (2026-10-13, solutions/step_4.py; rate from
-      arXiv:2002.04623 Eqs. 5, 6): v_phi >= 1.32e11 GeV and Lambda >= 6.83e11 GeV at the Delta = 1
-      point. The benchmark v_phi = 2.83 TeV is 4.7e7 times below it and must not be quoted as
-      viable.
-      P3 result: for the LNS charge assignment, and with eps and the integer
+      P3 hard constraint, listed and not part of the stage-1 chi2: the flavon phase a is the
+      U(1)_FN Goldstone (familon), massless at tree level and an axiflavon once QCD is included
+      (U(1)_FN is QCD-anomalous with the LNS charges), with off-diagonal couplings
+      n_ij M_ij / v_phi, bounded by K+ -> pi+ a (NA62, constraints[] below). Bound (2026-10-13,
+      solutions/step_4.py; rate from arXiv:2002.04623 Eqs. 5, 6), point dependent: at the
+      Delta = 1 minimum-span point (all |c| O(1)) v_phi >= 1.32e11 GeV and Lambda >= 6.83e11 GeV;
+      over the stored points 4.4e10-1.3e11 GeV. A tuned alignment of (X_L + X_R)_sd can suppress
+      the channel (arXiv:2002.04623 Sec. VII.A); B -> K a would then set the floor, not computed
+      here. The cut is satisfied by choosing v_phi above the bound; the benchmark v_phi = 2.83 TeV
+      is not viable (excluded at O(1)-coefficient points).
+      P3 (quark sector) result: for the LNS charge assignment, and with eps and the integer
       charges excluded from the span by the user decision of 2026-10-08, the constrained-minimum
       span of the 18 quark |c| is 0.189 (chi2 <= chi2_min + 1), against 5.068 for the SM's quarks
       under the same rule (5.136 at central values). Counting eps as one more c would give at
@@ -181,9 +185,12 @@ changelog:
       (familon v_phi bound TODO_VERIFY)."
     author: "Moises Zeleny (with Claude)"
   - date: "2026-10-13"
-    note: "P3 proposed: the familon constraint closes the last P3 requirement. NA62 K+ -> pi+ a
-      (HEPData, BR < 4.96e-11 at m_X = 0) with the rate of arXiv:2002.04623 Eqs. (5)-(6), PDG 2024
-      kaon inputs and FLAG 2024 f_+(0) gives v_phi >= 1.32e11 GeV, Lambda >= 6.83e11 GeV at the
-      Delta = 1 point; the fit passes for every v_phi above it. With the span 0.189 vs 5.068
-      (like-for-like), maturity is set to P3, pending the code and physics reviews."
+    note: "P3 (quark sector) proposed: the familon constraint closes the last P3 requirement for
+      the quarks; leptons stay deferred (decision of 2026-10-08), so the neutrino_mass constraints
+      are not applied. NA62 K+ -> pi+ a (HEPData, BR < 4.96e-11 at m_X = 0) with the rate of
+      arXiv:2002.04623 Eqs. (5)-(6), PDG 2024 kaon inputs and FLAG 2024 f_+(0) gives
+      v_phi >= 1.32e11 GeV, Lambda >= 6.83e11 GeV at the Delta = 1 point (4.4e10-1.3e11 GeV over the
+      stored points; point dependent, a tuned alignment can suppress the channel). The cut is
+      satisfied by choosing v_phi above the bound. With the span 0.189 vs 5.068 (like-for-like),
+      maturity is set to P3 (quark sector), pending the code and physics reviews."
     author: "Moises Zeleny (with Claude)"

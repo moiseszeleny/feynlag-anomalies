@@ -37,7 +37,8 @@ def test_coupling_at_the_reported_point(bounds):
 
 def test_rate_formula_reproduces_the_paper_worked_number(puzzle):
     """arXiv:2002.04623 Table III: F^V_sd > 6.8e11 GeV from BR(K+ -> pi+ a) < 7.3e-11 (E949), with
-    their f_+(0) = 0.9706 (Table IV). Eqs. (5), (6) with PDG 2024 kaon inputs give it to 2%."""
+    their f_+(0) = 0.9706 (Table IV). Eqs. (5), (6) with PDG 2024 kaon inputs give 6.73e11, within
+    rounding of the quoted 6.8 (2% tolerance)."""
     kin = {**step_4.kaon_inputs(puzzle), "f_plus": 0.9706}
     assert step_4.F_min(7.3e-11, kin) == pytest.approx(6.8e11, rel=0.02)
 
@@ -66,7 +67,9 @@ def test_model_benchmark_v_phi_is_excluded(p3, bounds, puzzle):
 
 
 def test_spread_over_points(bounds):
-    """The Delta = 4 and best-fit points give bounds of the same order (within a factor 5)."""
+    """Regression check on these three stored points only (Delta = 1, Delta = 4, best fit): their
+    bounds agree within a factor 5. It says nothing about other points of the chi2 <= chi2_min + 1
+    region, where a tuned alignment of (X_L + X_R)_sd can make the coupling much smaller."""
     vs = [b["v_phi_min"] for b in bounds.values()]
     assert max(vs) / min(vs) < 5
 
@@ -78,3 +81,13 @@ def test_sentinel_rejected(puzzle):
     [c for c in broken.constraints if c.quantity == step_4.CONSTRAINT_QUANTITY][0].upper_limit = "TODO_VERIFY"
     with pytest.raises(Stage1Error):
         step_4.br_limit(broken)
+
+
+def test_u1_fn_is_qcd_anomalous_with_the_model_charges():
+    """The U(1)_FN-SU(3)_c^2 anomaly coefficient, computed from froggatt_nielsen's benchmark charges
+    (via the registry), is nonzero: a is massless only at tree level, an axiflavon with QCD."""
+    from feynlag_models.registry import metadata
+
+    bench = metadata("froggatt_nielsen")["benchmark"]["inputs"]
+    coeff = step_4.colour_anomaly_coefficient(bench)
+    assert coeff == int(coeff) and coeff != 0
