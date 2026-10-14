@@ -154,3 +154,27 @@ def test_sm_quark_span_profiled_matches_yaml(puzzle):
     others = [abs(v) for k, v in res["pulls"].items() if k not in ("m_u(M_Z)", "m_t(M_Z)")]
     assert max(others) < 1e-4
     assert res["span"] < puzzle.quantifier.sm_reference_values["quarks_only"]
+
+
+
+# --- the stored reference point (what every reported number is computed at) -----------------------
+def test_reference_point_satisfies_the_chi2_limit(p3):
+    """The stored Delta = 1 point re-validated: chi2 <= chi2_min + 1 with numpy and with the model's
+    mass_basis / ckm at dps=60, its span is the recorded one, and every |c| is O(1)."""
+    ref = step_3.load_reference_point()
+    fast = chi2_gaussian(p3["predictor"](ref["eps"], ref["abs_c"], ref["args"]), p3["observed"])
+    slow = chi2_gaussian(step_3.recompute_with_model(p3["predictor"], ref["eps"], ref["abs_c"],
+                                                     ref["args"]), p3["observed"])
+    assert fast <= ref["limit"] + 1e-6 and slow <= ref["limit"] + 1e-6
+    assert slow == pytest.approx(ref["chi2"], abs=1e-6)
+    assert step_3.log10_span(ref["abs_c"]) == pytest.approx(ref["span"], abs=1e-12)
+    lo, hi = step_3.BOX
+    assert np.all(ref["abs_c"] >= lo) and np.all(ref["abs_c"] <= hi)
+
+
+def test_fresh_fit_reaches_the_reference_span(p3):
+    """A fresh 4-seed fit reaches the stored minimum span. The span is unique even though the point
+    is not, so the tolerance only allows for the optimiser's convergence (the 32-start run agrees
+    to 1e-4)."""
+    ref = step_3.load_reference_point()
+    assert p3["spans"][1.0]["span"] == pytest.approx(ref["span"], abs=2e-3)

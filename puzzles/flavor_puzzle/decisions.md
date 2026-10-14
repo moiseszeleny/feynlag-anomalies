@@ -190,7 +190,8 @@ One dated line per ladder step, tagged as in `anomalies/neutrino_mass/decisions.
     by 10%); PDG 2024 listings $`m_{K^\pm} = 493.677(15)`$ MeV,
     $`\tau_{K^\pm} = 1.2380(20)\times10^{-8}`$ s, $`m_{\pi^\pm} = 139.57039(18)`$ MeV; FLAG 2024 Eq.
     (72) $`f_+(0) = 0.9698(17)`$ ($`N_f = 2+1+1`$); $\hbar$ from the exact SI $h$ and $e$.
-  - *Result* (`solutions/step_4.py`, default-seed P3 points; point dependent):
+  - *Result* (`solutions/step_4.py`; point dependent; the $\Delta = 1$ point is the stored
+    `puzzles/flavor_puzzle/reference_point_delta1.json`, the others are default-seed fit points):
     $`\lvert F^V_{sd}\rvert \geq 8.15\times10^{11}`$ GeV. The bound holds at the $\Delta = 1$
     minimum-span point, where all $`\lvert c\rvert`$ are $O(1)$: there
     $`v_\phi/\lvert F^V_{sd}\rvert = 0.1616`$, so $`v_\phi \geq 1.32\times10^{11}`$ GeV and
@@ -225,6 +226,15 @@ One dated line per ladder step, tagged as in `anomalies/neutrino_mass/decisions.
   sector is deferred by the user decision of 2026-10-08 (placeholder lepton FN charges, which give
   $`m_e = 22`$ MeV), so the `neutrino_mass` constraints (cosmology, $0\nu\beta\beta$, $\beta$ decay)
   are not applied: the fitted model has no lepton sector to cut. `[decision, approved by the user]`
+- **2026-10-13 — P3 reference point**: the $\Delta = 1$ minimum-span point is stored in
+  `puzzles/flavor_puzzle/reference_point_delta1.json` ($\epsilon$ and the 18 complex $`c_{ij}`$ at
+  full precision, generator `step_3.make_reference_point`, commit `57691cc`), and the coupling, the
+  bound and the notebook headline are computed at it. Reason: the minimum span is unique (0.189),
+  but the point reaching it is not, and CI's 4-seed fit landed on a different point
+  ($`v_\phi/\lvert F^V_{sd}\rvert = 0.16099`$ against 0.16162 here; the bound moves by 0.4%). The
+  stored point re-validates at $`\chi^2 = 0.99999996 \leq \chi^2_{\min} + 1`$ at dps 60, and a
+  separate test checks that a fresh fit reaches the same span to $`2\times10^{-3}`$.
+  `[feynlag-verified: test]`
 - **2026-10-13 — P3 (quark sector) proposed**: the two P3 requirements of `docs/maturity.md` now
   have computed, sourced backing in the quark sector. (1) The quantifier in a candidate model at L2
   or higher: `froggatt_nielsen`'s constrained-minimum span is 0.189 orders of magnitude against

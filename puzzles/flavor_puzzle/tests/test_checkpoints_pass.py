@@ -36,5 +36,7 @@ def test_check_5_passes_with_canonical_solution(puzzle, p3):
 def test_check_6_passes_with_canonical_solution(p3, puzzle):
     from puzzles.flavor_puzzle.solutions import step_4
 
-    bound = step_4.bound_at(p3["predictor"], p3["spans"][1.0], puzzle)
+    from puzzles.flavor_puzzle.solutions import step_3
+
+    bound = step_4.bound_at(p3["predictor"], step_3.load_reference_point(), puzzle)
     assert cd.make_check_6(bound)(bound["v_phi_min"]) is True

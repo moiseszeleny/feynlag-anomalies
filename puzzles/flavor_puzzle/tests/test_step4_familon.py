@@ -6,14 +6,19 @@ import pytest
 
 from puzzles.flavor_puzzle.solutions import step_4
 
-# Pinned at the default-seed P3 points (computed 2026-10-13; see decisions.md).
-GHAT_DELTA1 = 0.161625      # v_phi / |F^V_sd| at the Delta = 1 minimum-span point
-V_PHI_MIN_DELTA1 = 1.318e11  # GeV
+# Pinned at the stored Delta = 1 point (puzzles/flavor_puzzle/reference_point_delta1.json): the
+# minimum span is unique but the point reaching it is not, so a fresh fit's point (and its
+# coupling) can differ by platform. The Delta = 4 and best-fit points are fresh-fit points and are
+# only used in point-independent checks (mass form = charge form, the loose spread check).
+GHAT_DELTA1 = 0.1616245      # v_phi / |F^V_sd| at the stored Delta = 1 point
+V_PHI_MIN_DELTA1 = 1.317917e11  # GeV
 
 
 @pytest.fixture(scope="module")
 def bounds(p3, puzzle):
-    pts = {"delta1": p3["spans"][1.0], "delta4": p3["spans"][4.0], "bestfit": p3["fit"]}
+    from puzzles.flavor_puzzle.solutions import step_3
+
+    pts = {"delta1": step_3.load_reference_point(), "delta4": p3["spans"][4.0], "bestfit": p3["fit"]}
     return {k: step_4.bound_at(p3["predictor"], pt, puzzle) for k, pt in pts.items()}
 
 
@@ -32,7 +37,7 @@ def test_mass_form_equals_goldstone_charge_form(bounds, point):
 
 
 def test_coupling_at_the_reported_point(bounds):
-    assert bounds["delta1"]["ghat_mass"] == pytest.approx(GHAT_DELTA1, rel=1e-4)
+    assert bounds["delta1"]["ghat_mass"] == pytest.approx(GHAT_DELTA1, rel=1e-6)
 
 
 def test_rate_formula_reproduces_the_paper_worked_number(puzzle):
@@ -46,7 +51,7 @@ def test_rate_formula_reproduces_the_paper_worked_number(puzzle):
 def test_bound_on_v_phi(bounds):
     b = bounds["delta1"]
     assert b["br_max"] == pytest.approx(4.96e-11, rel=1e-12)
-    assert b["v_phi_min"] == pytest.approx(V_PHI_MIN_DELTA1, rel=1e-3)
+    assert b["v_phi_min"] == pytest.approx(V_PHI_MIN_DELTA1, rel=1e-6)
     assert b["Lambda_min"] == pytest.approx(b["v_phi_min"] / (math.sqrt(2) * b["eps"]), rel=1e-12)
 
 
