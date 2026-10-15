@@ -85,7 +85,8 @@ or touches a sibling repo and needs the user's sign-off before acting on it).
   - $`\delta_{CP}`$ is recorded but not fitted: the model's Yukawas are real, so it is
     CP-conserving by construction. Complex Yukawas need a complex Takagi, which feynlag's numeric
     route does not yet do. The confrontation with $`\Sigma m_\nu`$ from cosmology and with
-    $0\nu\beta\beta$ is not done, and `tensions_with_other_data` stays `TODO_VERIFY`.
+    $0\nu\beta\beta$ is not done at step 6, and `tensions_with_other_data` stayed `TODO_VERIFY`
+    until step 7 (2026-09-26), which filled it with sourced entries.
     `[physics judgment]`
 - **2026-09-25 — Pedagogical pass on `ladder.ipynb`** (no change to any fitted result):
   - Step 5's checkpoint now asks for a computed quantity: the rank of the $3\times3$ seesaw light

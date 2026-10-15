@@ -78,7 +78,7 @@ sources:
   - {kind: pdg, identifier: "PDG2024:rev-ckm-matrix", consulted_on: 2026-10-04}
   # NA62, JHEP 06 (2021) 093: BR(K+ -> pi+ X) < 3-6e-11 at 90% CL for a stable or invisible X with
   # m_X = 0-110 MeV (text of Sec. 8 and the conclusions). Input to the P3 familon constraint on
-  # v_phi; the translation to a v_phi bound is not done yet (TODO_VERIFY, see decisions.md).
+  # v_phi; the translation to a v_phi bound is done in decisions.md (2026-10-13, P3 constraint).
   - {kind: arxiv, identifier: "arXiv:2103.15389", consulted_on: 2026-10-08}
   # The same NA62 limits, tabulated: HEPData Table 1 (data of Fig. 8 right), observed 90% CL
   # upper limit on BR(K+ -> pi+ X) vs m_X; at m_X = 0 it is 4.96e-11.
