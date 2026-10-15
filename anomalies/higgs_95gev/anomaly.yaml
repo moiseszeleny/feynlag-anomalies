@@ -2,35 +2,67 @@ id: higgs_95gev
 title: "~95 GeV diphoton/ditau/bb excess"
 sector: collider
 
+# Values read from the papers themselves on 2026-10-15 (see sources[]). The cross-section is the
+# best fit printed by CMS for gg -> phi -> tau tau at m_phi = 95 GeV; CMS prints it asymmetric
+# (+3.9 -3.1 pb), stat_uncertainty holds the mean, a stage-1 symmetrisation, and sys_uncertainty
+# is null because CMS gives no stat/sys split. The diphoton and bb-bar channels have no
+# cross-section or signal-strength entry yet: significances are recorded under significance: and in
+# the experiments[] notes, and the best-fit signal strengths were not read (see decisions.md).
 observables:
-  - name: "local significance (diphoton channel)"
-    value: TODO_VERIFY
-    stat_uncertainty: TODO_VERIFY
-    sys_uncertainty: TODO_VERIFY
-    units: "sigma"
+  - name: "sigma(gg -> phi) x B(phi -> tau tau) at m_phi = 95 GeV (CMS ditau)"
+    value: 7.8                    # +3.9 -3.1 [pb]
+    stat_uncertainty: 3.5
+    sys_uncertainty: null
+    units: "pb"
 
+# The SM has no scalar near 95 GeV. The only SM statement used here is the background-only
+# expectation of the cited searches, so the new-resonance signal is zero by construction.
 sm_prediction:
-  value: TODO_VERIFY
-  uncertainty: TODO_VERIFY
+  value: 0.0
+  uncertainty: 0.0
   provenance: cited
-  reference: TODO_VERIFY
+  reference: "Background-only (SM) hypothesis of CMS diphoton, arXiv:2405.18149, Fig. 7; no SM-like Higgs boson other than the 125 GeV state is predicted near 95 GeV."
 
-experiments: []
-# TODO_VERIFY: likely CMS/ATLAS (diphoton, ditau) and LEP (bb-bar) -- not listed until each is
-# confirmed against a primary source, per CLAUDE.md's verifiability discipline.
+# Diphoton channel, CMS full Run 2 (the largest deviation of that search). The ditau and bb-bar
+# significances are in experiments[].notes because Significance holds one channel.
+significance:
+  local: 2.9
+  global: 1.3
+  method: "CMS diphoton, arXiv:2405.18149 (PLB 860 (2024) 139067): local (global) significance at m = 95.4 GeV, 2016-2018 data, 132 fb^-1 at 13 TeV. Global from the method of Ref. [93] of that paper."
 
-sources: []
-# TODO_VERIFY: no primary source consulted this session. This is an A0 stub only: it exists so
-# the anomaly is tracked in anomalies/INDEX.md, not because any claim in it has been verified.
+experiments:
+  - name: "CMS diphoton, 13 TeV, 2016-2018"
+    notes: "arXiv:2405.18149. Largest deviation at 95.4 GeV: local 2.9 sigma, global 1.3 sigma. The 2016 data alone, reanalysed with the new calibration, give 3.3 sigma at about 95.4 GeV (2.8 sigma in the earlier analysis, arXiv:1811.08459). 95% CL upper limits 15 to 73 fb."
+  - name: "ATLAS diphoton, 13 TeV, 140 fb^-1"
+    notes: "arXiv:2407.07546 (JHEP 01 (2025) 053). No significant excess. In the model-dependent (low-mass Higgs) search the largest deviation is at 95.4 GeV, local significance 1.7 sigma. Largest model-independent deviation is 2.2 sigma at 71.8 GeV."
+  - name: "CMS ditau, 13 TeV, 138 fb^-1"
+    notes: "arXiv:2208.02717 (JHEP 07 (2023) 073). Largest low-mass deviation for gg -> phi at m_phi = 100 GeV: local (global) 3.1 (2.7) sigma. At m_phi = 95 GeV: local (global) 2.6 (2.3) sigma. The abstract reports the two excesses for gluon-fusion production only."
+  - name: "LEP, e+e- -> Z H, H -> b bbar (ALEPH, DELPHI, L3, OPAL)"
+    notes: "arXiv:hep-ex/0306033 (PLB 565 (2003) 61). Around m_H of about 98 GeV, 1 - CLb of about 0.02, which the paper translates to 2.3 sigma. The paper notes the signal giving this deviation is about an order of magnitude smaller than the SM Higgs rate at that mass. Reanalysis in arXiv:2407.10948 (Janot) disfavours a 95 GeV scalar as its cause."
+
+sources:
+  - {kind: arxiv, identifier: "arXiv:2405.18149", consulted_on: 2026-10-15}
+  - {kind: arxiv, identifier: "arXiv:1811.08459", consulted_on: 2026-10-15}
+  - {kind: arxiv, identifier: "arXiv:2407.07546", consulted_on: 2026-10-15}
+  - {kind: arxiv, identifier: "arXiv:2208.02717", consulted_on: 2026-10-15}
+  - {kind: arxiv, identifier: "arXiv:hep-ex/0306033", consulted_on: 2026-10-15}
+  - {kind: arxiv, identifier: "arXiv:2407.10948", consulted_on: 2026-10-15}
 
 status: hint
-status_date: TODO_VERIFY
+status_date: 2026-10-15
 status_rationale: >
-  TODO_VERIFY: placeholder status only. This is a stub created without a literature pass; the
-  kickoff prompt explicitly flags this excess (CMS/ATLAS diphoton, ditau, LEP bb-bar channels) as
-  needing a fresh status check before any claim is made about it.
+  Three channels show deviations of 2 to 3 sigma at similar masses, and none is significant alone.
+  CMS diphoton sees 2.9 sigma local (1.3 sigma global) at 95.4 GeV. CMS ditau sees 2.6 sigma local
+  (2.3 sigma global) at 95 GeV and 3.1 sigma local at 100 GeV. LEP bb-bar sees 2.3 sigma near 98
+  GeV. ATLAS finds only 1.7 sigma at 95.4 GeV in its full Run 2 diphoton search, with no
+  significant excess. A reanalysis of the LEP data disfavours a 95 GeV scalar as the source of the
+  bb-bar excess. A search through 2026-10-15 found no Run 3 or 2026 collaboration result on this
+  excess. Status stays hint, not live.
 
-tensions_with_other_data: []
+tensions_with_other_data:
+  - "ATLAS vs. CMS diphoton: ATLAS (arXiv:2407.07546, 140 fb^-1) sees 1.7 sigma local at 95.4 GeV and reports no significant excess, against 2.9 sigma local (1.3 sigma global) in CMS (arXiv:2405.18149). The ATLAS excess sits at the same mass but is weaker."
+  - "LEP bb-bar: Janot (arXiv:2407.10948) finds the LEP data strongly disfavour a 95 GeV scalar as the cause of the bb-bar excess, and disfavour other new-physics interpretations in 95 to 100 GeV. This reanalysis is a single-author paper, not a LEP collaboration result."
+  - "Mass: the CMS ditau excess is largest at 100 GeV (3.1 sigma local), not at 95 GeV (2.6 sigma local), and the LEP bb-bar minimum is at about 98 GeV. CMS itself notes the ditau excess coincides, within mass resolution, with the diphoton one."
 
 sm_failure_type: resonance
 sm_protection: []
@@ -40,11 +72,18 @@ candidate_models: []
 
 maturity: A0
 
-falsifiers: []
+falsifiers:
+  - "A Run 3 CMS or ATLAS low-mass diphoton search at 13.6 TeV that rules out the CMS 95.4 GeV signal."
+  - "A larger-statistics CMS or ATLAS ditau search showing no gg -> phi excess at 95 to 100 GeV."
 
 changelog:
   - date: "2026-09-22"
     note: "A0 stub created (session 1). No literature pass performed. Needs: primary sources
       (arXiv/HEPData) for the diphoton/ditau/bb channels, current significance and status,
       sm_protection assignment, and candidate_models once an SM-failure argument exists."
+    author: "Moises Zeleny (with Claude)"
+  - date: "2026-10-15"
+    note: "A0 literature pass: CMS diphoton, ATLAS diphoton, CMS ditau and the LEP bb-bar excess
+      read from the papers, with local and global significances recorded. Status set to hint,
+      dated. Best-fit signal strengths for diphoton and bb-bar not recorded. Maturity stays A0."
     author: "Moises Zeleny (with Claude)"
