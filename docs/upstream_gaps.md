@@ -6,7 +6,35 @@ user to act on (or not) in those repos directly.
 
 ## Open
 
-_None._
+### UG-3 — `froggatt_nielsen` calls the flavon phase an exact massless Goldstone (`feynlag-models`)
+
+**Repo**: `feynlag-models`. **Discovered**: 2026-10-13, in the physics review of
+`feynlag-anomalies` PR #15 (the familon bound on $`v_\phi`$ for `puzzles/flavor_puzzle`).
+
+**Symptom**: `froggatt_nielsen` describes the flavon phase $a$ as an exact massless Goldstone, at
+`models/froggatt_nielsen/README.md:56` ("an exactly massless Goldstone"), `model.py:24` ("U(1)_FN
+is exact in the Lagrangian, so the flavon phase `a` is a massless Goldstone") and `metadata.yaml:26`
+(`broken_by`: "an exact massless Goldstone") and `:131` (key result "four massless real
+scalars … and the U(1)_FN Goldstone a"). Line numbers are at the pinned `cb0678a`.
+
+**Why it is not exact**: with the benchmark (LNS) charges, $`U(1)_{\rm FN}`$ has a colour
+anomaly. The $`U(1)_{\rm FN}`$–$`SU(3)_c^2`$ coefficient
+$`\sum_{\rm gen}(2q_Q - q_u - q_d)`$ is 21, computed here from the model's charges
+(`puzzles/flavor_puzzle/tests/test_step4_familon.py::test_u1_fn_is_qcd_anomalous_with_the_model_charges`).
+So $a$ is massless only at tree level; once QCD is included it is an axiflavon with a QCD-induced
+mass. This does not change the tree-level spectrum or the Yukawa results the model's tests check,
+and here it does not change the $`K^+ \to \pi^+ a`$ bound (the mass is far below
+$`m_K - m_\pi`$). It does change how the state should be described, and it brings in the axion
+constraints from stars and dark matter.
+
+**Proposal**: (1) qualify the wording in those four places as "massless at tree level (an
+axiflavon once QCD is included, when the charges are colour-anomalous)"; (2) add a test or key
+result that computes the $`U(1)_{\rm FN}`$–$`SU(3)_c^2`$ anomaly coefficient from the charges,
+because feynlag's `check_anomalies` skips global groups by design; (3) optionally, note the axion
+bounds (stellar cooling, dark matter) in `NEXT_STEPS.md`.
+
+**Status**: open. Filed with the user's approval on 2026-10-13; not acted on in `feynlag-models`
+from here (hard rule 4).
 
 ## Resolved
 

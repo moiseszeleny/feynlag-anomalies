@@ -52,8 +52,8 @@ instead of `1`.
 
 Step 6 of `anomalies/neutrino_mass/ladder.ipynb`: a diagonal Gaussian $\chi^2$ (via `fit/stage1.py`)
 against two independently measured $\Delta m^2$ values from a global neutrino-oscillation fit (e.g.
-NuFIT — version and consultation date to be sourced when this record's `TODO_VERIFY` values are
-resolved). This is not implementable against a model whose light-neutrino sector has rank 1.
+NuFIT; the record uses NuFIT 6.0, arXiv:2410.05380v2, sourced in
+`anomalies/neutrino_mass/anomaly.yaml`). This is not implementable against a model whose light-neutrino sector has rank 1.
 
 ## Notes
 

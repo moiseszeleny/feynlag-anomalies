@@ -27,6 +27,7 @@ Importing this module is cheap (no model build).
 from __future__ import annotations
 
 import math
+from pathlib import Path
 
 import numpy as np
 import sympy as sp
@@ -307,6 +308,55 @@ def constrained_entries(tuning, rel=1e-2) -> list[str]:
     """Entries whose largest sensitivity is at least ``rel`` times the largest of all."""
     top = max(tuning["per_entry"].values())
     return [n for n, s in tuning["per_entry"].items() if s >= rel * top]
+
+
+# --- the stored reference point ---------------------------------------------------------------
+#: The Delta = 1 minimum-span point every reported number is computed at. The minimum *span* is
+#: unique (0.189), but the point reaching it is not: platforms can land on different points with the
+#: same span, so the quoted coupling and bound are pinned to this stored point instead.
+REFERENCE_POINT_FILE = Path(__file__).resolve().parent.parent / "reference_point_delta1.json"
+
+
+def make_reference_point(puzzle, commit, path=REFERENCE_POINT_FILE, seeds=DEFAULT_SEEDS) -> dict:
+    """Run :func:`run_p3` and write its Delta = 1 minimum-span point to ``path`` (full precision).
+
+    ``commit`` is the git sha of the code that produced it, recorded in the file.
+    """
+    import json
+    from datetime import date
+
+    r = run_p3(puzzle, seeds=seeds)
+    head = r["spans"][1.0]
+    data = {
+        "description": "Delta = 1 constrained-minimum-span point of froggatt_nielsen's quark fit "
+                       "(puzzles/flavor_puzzle, P3). Every reported coupling and bound is computed "
+                       "at this point.",
+        "generator": "puzzles.flavor_puzzle.solutions.step_3.make_reference_point: "
+                     f"run_p3(puzzle, seeds={list(seeds)})['spans'][1.0]",
+        "generated_with_commit": commit,
+        "generated_on": date.today().isoformat(),
+        "delta": 1.0,
+        "chi2_min": float(r["fit"]["chi2"]),
+        "chi2": float(head["chi2"]),
+        "span": float(head["span"]),
+        "eps": float(head["eps"]),
+        "abs_c": {n: float(v) for n, v in zip(ENTRIES, head["abs_c"])},
+        "arg_c": {n: float(v) for n, v in zip(ENTRIES, head["args"])},
+    }
+    path.write_text(json.dumps(data, indent=1) + "\n")
+    return data
+
+
+def load_reference_point(path=REFERENCE_POINT_FILE) -> dict:
+    """The stored point as a P3 point dict (``eps``, ``abs_c``, ``args``, ``span``, ``chi2``,
+    ``limit = chi2_min + delta``) plus the file's metadata."""
+    import json
+
+    data = json.loads(Path(path).read_text())
+    return {**data,
+            "abs_c": np.array([data["abs_c"][n] for n in ENTRIES]),
+            "args": np.array([data["arg_c"][n] for n in ENTRIES]),
+            "limit": data["chi2_min"] + data["delta"]}
 
 
 # --- everything P3 reports ------------------------------------------------------------------------
