@@ -9,7 +9,7 @@ guesses for triage only -- to be confirmed (or corrected) when each record is ac
 | id | sector | sm_failure_type (preliminary) | status (preliminary) | maturity | notes |
 |---|---|---|---|---|---|
 | `neutrino_mass` | neutrinos | structural | established | **A3** | pilot record. Step 6: stage-1 $\chi^2$ of `seesaw_type1_2n` against NuFIT 6.0 (2026-09-25). Step 7: confronted with DESI DR2, KamLAND-Zen and KATRIN (2026-09-26); passes the collaboration bounds and sits at the NO minimum of $`\Sigma m_\nu`$. |
-| `higgs_95gev` | collider | resonance | hint | **A0** | stub, this session. Needs literature pass. |
+| `higgs_95gev` | collider | resonance | hint | **A0** | literature pass 2026-10-15. CMS diphoton 2.9σ local (1.3σ global) at 95.4 GeV, ATLAS 1.7σ, CMS ditau 2.6σ at 95 GeV, LEP bb̄ 2.3σ near 98 GeV. Signal strengths not yet recorded. |
 | `emu_146gev` | collider | resonance | hint | **A0** | stub, this session. Needs literature pass. |
 | `muon_g_minus_2` | collider (precision) | quantitative | — | — | planned. Needs verification of Fermilab 2025 final result vs. the 2025 lattice White Paper (see `CLAUDE.md`). |
 | `r_d_star` | flavor | quantitative | — | — | planned (R(D*), charged-current lepton universality). |
