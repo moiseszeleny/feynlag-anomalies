@@ -24,9 +24,20 @@
     result on this excess. Absence from a search is not proof, so this is not claimed as a fact
     about the experiments. `[decision]`
 - **2026-10-15 — what stays open.**
-  - The best-fit signal strengths $`\mu`$ for the diphoton and bb̄ channels were not read, so the
-    record has no signal-strength observable for them. The diphoton significances sit in
-    `significance:`, which holds one channel. `[decision, needs approval]`
+  - *Signal strengths $`\mu`$ for the diphoton and bb̄ channels, looked for on 2026-10-15 and not
+    found in a primary source.* `[decision, needs approval]`
+    - CMS (arXiv:2405.18149) and ATLAS (arXiv:2407.07546) print p-values and 95% CL upper limits in
+      the paper text, not a best-fit $`\mu`$. The CMS maximum observed limit is 73 fb at 95.4 GeV.
+      `[cited]` The CMS results are tabulated in HEPData (doi:10.17182/hepdata.150508), which blocked
+      automated access (HTTP 403), so those tables are the next place to look.
+    - The LEP paper (hep-ex/0306033) gives no $`\mu`$. The value $`0.117 \pm 0.057`$ appears only
+      in Janot (arXiv:2407.10948), as inferred from a phenomenology paper, and Janot argues it is
+      internally inconsistent. It is second-hand, so it is not recorded.
+    - A CMS diphoton $`\mu`$ near 0.3 turned up in a web-search summary of a secondary source. It
+      was not checked against a collaboration document, so it is not recorded.
+    - The record therefore carries two `observables[]` rows at `TODO_VERIFY`, which A0 allows, so
+      the gap is explicit. The diphoton significances sit in `significance:`, which holds one
+      channel.
   - The ditau $`\sigma B`$ is given in pb for a generic $`\phi`$, not as a ratio to an SM-like
     Higgs cross section, so it cannot be compared with the diphoton channel yet. A comparison needs
     a cross-section ratio at 95 GeV, which is A1 work.
