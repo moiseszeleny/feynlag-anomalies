@@ -28,8 +28,13 @@
     found in a primary source.* `[decision, needs approval]`
     - CMS (arXiv:2405.18149) and ATLAS (arXiv:2407.07546) print p-values and 95% CL upper limits in
       the paper text, not a best-fit $`\mu`$. The CMS maximum observed limit is 73 fb at 95.4 GeV.
-      `[cited]` The CMS results are tabulated in HEPData (doi:10.17182/hepdata.150508), which blocked
-      automated access (HTTP 403), so those tables are the next place to look.
+      `[cited]` The CMS results are tabulated in HEPData (doi:10.17182/hepdata.150508). It blocked
+      automated access (HTTP 403), so the user downloaded Figures 5a, 5b and 6a to 6d, kept locally
+      in the untracked `anomalies/higgs_95gev/data/`. They hold observed and expected 95% CL limits
+      only: at 95.4 GeV, 0.0734 pb observed vs 0.0279 pb expected (0.593 vs 0.224 normalised to the
+      SM-like Higgs cross section). The 73.4 fb matches the paper's 73 fb. `[cited]` No best-fit
+      $`\mu`$ is in them. A fit table, if CMS tabulated one (for example the local p-value figure),
+      was not among the downloads.
     - The LEP paper (hep-ex/0306033) gives no $`\mu`$. The value $`0.117 \pm 0.057`$ appears only
       in Janot (arXiv:2407.10948), as inferred from a phenomenology paper, and Janot argues it is
       internally inconsistent. It is second-hand, so it is not recorded.
