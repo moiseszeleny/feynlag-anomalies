@@ -15,13 +15,17 @@ observables:
     stat_uncertainty: 3.5
     sys_uncertainty: null
     units: "pb"
-  # The next two rows are open gaps, kept as TODO_VERIFY on purpose (see decisions.md). Neither CMS
-  # nor ATLAS diphoton prints a best-fit signal strength in the paper text. The CMS HEPData tables
-  # downloaded for Figures 5a, 5b and 6a-6d hold observed and expected limits only. The LEP
-  # collaboration paper gives no signal strength either.
+  # CMS diphoton signal strength: printed on CMS's own supplementary figure (CMS-HIG-20-002
+  # Additional Figures 14 and 15), not in the paper text or the HEPData tables, which hold limits
+  # only. The figure prints mu_combined = 0.33 +0.19 -0.12 at m_H = 95.4 GeV, 132 fb^-1, with the
+  # line mu = mu_SM drawn for reference. The value was read off the rendered figure. CMS prints it
+  # asymmetric, as a total fit error; stat_uncertainty holds the mean of the two, 0.155, a stage-1
+  # symmetrisation, and sys_uncertainty is null because CMS gives no stat/sys split. The
+  # LEP row below is an open gap, kept as TODO_VERIFY on purpose (see decisions.md): the LEP
+  # collaboration paper gives no signal strength.
   - name: "signal strength mu at 95.4 GeV (CMS diphoton, best fit)"
-    value: TODO_VERIFY
-    stat_uncertainty: TODO_VERIFY
+    value: 0.33                   # +0.19 -0.12
+    stat_uncertainty: 0.155
     sys_uncertainty: null
     units: "ratio to SM-like Higgs cross section"
   - name: "signal strength mu near 98 GeV (LEP bb-bar, best fit)"
@@ -59,6 +63,7 @@ experiments:
 sources:
   - {kind: arxiv, identifier: "arXiv:2405.18149", consulted_on: 2026-10-15}
   - {kind: hepdata, identifier: "doi:10.17182/hepdata.150508 (ins2791038, Figures 5a, 5b, 6a-6d)", consulted_on: 2026-10-15}
+  - {kind: other, identifier: "CMS public results page CMS-HIG-20-002, Additional Figures 14, 15 and 32 (cms-results.web.cern.ch/cms-results/public-results/publications/HIG-20-002/index.html)", consulted_on: 2026-10-16}
   - {kind: arxiv, identifier: "arXiv:2407.07546", consulted_on: 2026-10-15}
   - {kind: arxiv, identifier: "arXiv:2208.02717", consulted_on: 2026-10-15}
   - {kind: arxiv, identifier: "arXiv:hep-ex/0306033", consulted_on: 2026-10-15}
@@ -102,4 +107,9 @@ changelog:
     note: "A0 literature pass: CMS diphoton, ATLAS diphoton, CMS ditau and the LEP bb-bar excess
       read from the papers, with local and global significances recorded. Status set to hint,
       dated. Best-fit signal strengths for diphoton and bb-bar not recorded. Maturity stays A0."
+    author: "Moises Zeleny (with Claude)"
+  - date: "2026-10-16"
+    note: "CMS diphoton signal strength recorded: mu = 0.33 +0.19 -0.12 at 95.4 GeV, read from CMS
+      supplementary Additional Figures 14 and 15 (CMS-HIG-20-002). HEPData limits added (Figures 5a,
+      5b). LEP bb-bar signal strength stays TODO_VERIFY. Maturity stays A0."
     author: "Moises Zeleny (with Claude)"
