@@ -6,9 +6,9 @@ sector: collider
 # best fit printed by CMS for gg -> phi -> tau tau at m_phi = 95 GeV; CMS prints it asymmetric
 # (+3.9 -3.1 pb) as a total error. stat_uncertainty holds the mean of the two, 3.5, a stage-1
 # symmetrisation of that total error, not a statistical error, and sys_uncertainty is null because
-# CMS gives no stat/sys split. The diphoton and bb-bar channels have no
-# cross-section or signal-strength entry yet: significances are recorded under significance: and in
-# the experiments[] notes, and the best-fit signal strengths were not read (see decisions.md).
+# CMS gives no stat/sys split. The CMS diphoton signal strength has its own row below. The LEP bb-bar
+# signal strength is an open gap (TODO_VERIFY). Significances are recorded under significance: and in
+# the experiments[] notes (see decisions.md).
 observables:
   - name: "sigma(gg -> phi) x B(phi -> tau tau) at m_phi = 95 GeV (CMS ditau)"
     value: 7.8                    # +3.9 -3.1 [pb]
@@ -63,7 +63,7 @@ experiments:
 sources:
   - {kind: arxiv, identifier: "arXiv:2405.18149", consulted_on: 2026-10-15}
   - {kind: hepdata, identifier: "doi:10.17182/hepdata.150508 (ins2791038, Figures 5a, 5b, 6a-6d)", consulted_on: 2026-10-15}
-  - {kind: other, identifier: "CMS public results page CMS-HIG-20-002, Additional Figures 14, 15 and 32 (cms-results.web.cern.ch/cms-results/public-results/publications/HIG-20-002/index.html)", consulted_on: 2026-10-16}
+  - {kind: other, identifier: "CMS public results page CMS-HIG-20-002, Additional Figures 14, 15 and 32, files CMS-HIG-20-002_Figure-aux_014.pdf, _015.pdf and _032.pdf (cms-results.web.cern.ch/cms-results/public-results/publications/HIG-20-002/index.html)", consulted_on: 2026-10-16}
   - {kind: arxiv, identifier: "arXiv:2407.07546", consulted_on: 2026-10-15}
   - {kind: arxiv, identifier: "arXiv:2208.02717", consulted_on: 2026-10-15}
   - {kind: arxiv, identifier: "arXiv:hep-ex/0306033", consulted_on: 2026-10-15}
