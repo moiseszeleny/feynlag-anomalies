@@ -32,7 +32,10 @@
       automated access (HTTP 403), so the user downloaded Figures 5a, 5b and 6a to 6d, kept locally
       in the untracked `anomalies/higgs_95gev/data/`. They hold observed and expected 95% CL limits
       only: at 95.4 GeV, 0.0734 pb observed vs 0.0279 pb expected (0.593 vs 0.224 normalised to the
-      SM-like Higgs cross section). The 73.4 fb matches the paper's 73 fb. `[cited]` No best-fit
+      SM-like Higgs cross section). The 73.4 fb, the maximum of the observed curve, is reached at 95.3 to 95.4 GeV in the table
+      and matches the paper's 73 fb at 95.4 GeV. `[cited]` The DOI is printed as Ref. [49] of
+      arXiv:2405.18149. The INSPIRE id `ins2791038` comes from the doi.org redirect to the HEPData
+      record page and from the downloaded filenames, since the files carry no metadata. No best-fit
       $`\mu`$ is in them. A fit table, if CMS tabulated one (for example the local p-value figure),
       was not among the downloads.
     - The LEP paper (hep-ex/0306033) gives no $`\mu`$. The value $`0.117 \pm 0.057`$ appears only
