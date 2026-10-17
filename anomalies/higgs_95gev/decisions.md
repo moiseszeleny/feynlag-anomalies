@@ -24,9 +24,51 @@
     result on this excess. Absence from a search is not proof, so this is not claimed as a fact
     about the experiments. `[decision]`
 - **2026-10-15 — what stays open.**
-  - The best-fit signal strengths $`\mu`$ for the diphoton and bb̄ channels were not read, so the
-    record has no signal-strength observable for them. The diphoton significances sit in
-    `significance:`, which holds one channel. `[decision, needs approval]`
+  - *Signal strengths $`\mu`$ for the diphoton and bb̄ channels.* The diphoton value was found on
+    2026-10-16 in a CMS collaboration source (below). The bb̄ value was not found in a primary
+    source. `[decision, needs approval]`
+    - CMS (arXiv:2405.18149) and ATLAS (arXiv:2407.07546) print p-values and 95% CL upper limits in
+      the paper text, not a best-fit $`\mu`$. The CMS maximum observed limit is 73 fb at 95.4 GeV.
+      `[cited]` The CMS results are tabulated in HEPData (doi:10.17182/hepdata.150508). It blocked
+      automated access (HTTP 403), so the user downloaded Figures 5a, 5b and 6a to 6d, kept locally
+      in the untracked `anomalies/higgs_95gev/data/`. They hold observed and expected 95% CL limits
+      only: at 95.4 GeV, 0.0734 pb observed vs 0.0279 pb expected (0.593 vs 0.224 normalised to the
+      SM-like Higgs cross section). The 73.4 fb, the maximum of the observed curve, is reached at 95.3 to 95.4 GeV in the table
+      and matches the paper's 73 fb at 95.4 GeV. `[cited]` The DOI is printed as Ref. [49] of
+      arXiv:2405.18149. The INSPIRE id `ins2791038` comes from the doi.org redirect to the HEPData
+      record page and from the downloaded filenames, since the files carry no metadata. No best-fit
+      $`\mu`$ is in them. A fit table, if CMS tabulated one (for example the local p-value figure),
+      was not among the downloads.
+    - The LEP paper (hep-ex/0306033) gives no $`\mu`$. The value $`0.117 \pm 0.057`$ appears only
+      in Janot (arXiv:2407.10948), as inferred from a phenomenology paper, and Janot argues it is
+      internally inconsistent. It is second-hand, so it is not recorded.
+    - *CMS diphoton $`\mu`$, found on 2026-10-16.* The CMS public page for CMS-HIG-20-002
+      carries supplementary figures. Additional Figures 14 and 15 (downloaded by the user as
+      `CMS-HIG-20-002_Figure-aux_014.pdf` and `_015.pdf`, kept in the untracked
+      `anomalies/higgs_95gev/data/cms_additional_figures/`) print
+      $`\hat\mu_{\rm combined} = 0.33\,^{+0.19}_{-0.12}`$ at $`m_H = 95.4`$ GeV with 132 fb⁻¹, with the
+      line $`\mu = \mu_{\rm SM}`$ drawn. The number is in the figure, not in the page text. I read it
+      from the rendered plot and from the PDF text, and a reviewer checked it against both. It
+      matches a value quoted earlier by a phenomenology paper, which I had not recorded because I
+      had not seen it in a CMS document. `[cited]`
+    - *Normalisation.* The paper defines its limits "relative to the expected value for an SM-like
+      Higgs boson" (arXiv:2405.18149). That $`\hat\mu = 1`$ means an SM-like Higgs boson of the same
+      mass is an inference from the figure's $`\mu = \mu_{\rm SM}`$ line. No caption states it.
+    - *Caption text, which the PDFs do not carry.* The figure PDFs have no captions. The captions
+      are on the CMS page (`cms-results.web.cern.ch/cms-results/public-results/publications/HIG-20-002/`),
+      whose raw HTML I downloaded and searched on 2026-10-16. `[cited]`
+      - Additional Figure 14: "The χ² probability of the values for the eleven event classes being
+        compatible with the overall best-fit signal strength is 68%." The plot has eleven rows.
+      - Additional Figure 15: the same sentence for the three years, with probability 6%, so the
+        per-year values (2016: 0.77 +0.27/−0.24, 2017: 0.01 ±0.22, 2018: 0.35 +0.18/−0.17, read from
+        the figure) are not comfortably consistent.
+      - Additional Figure 32: "The best-fit result is ($`\mu_{ggH}`$, $`\mu_{VBF}`$) = (0.47, 0.05)" at
+        $`m_H = 95.4`$ GeV, for ggH and VBF production only. The 68% and 95% contours are only in the
+        image. This is a two-parameter fit point, not the overall $`\mu`$, and is context only.
+    - *Uncertainty.* CMS prints $`+0.19/-0.12`$, a total fit error. The 0.155 in `stat_uncertainty` is
+      its mean, a stage-1 symmetrisation, not a statistical error. The schema field name is kept.
+    - The LEP bb̄ row stays at `TODO_VERIFY`, which A0 allows, so the gap is explicit. The diphoton
+      significances sit in `significance:`, which holds one channel.
   - The ditau $`\sigma B`$ is given in pb for a generic $`\phi`$, not as a ratio to an SM-like
     Higgs cross section, so it cannot be compared with the diphoton channel yet. A comparison needs
     a cross-section ratio at 95 GeV, which is A1 work.
