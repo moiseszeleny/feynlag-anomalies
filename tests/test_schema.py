@@ -107,3 +107,15 @@ def test_bad_constraint_quantity_rejected(valid_anomaly_dict):
     valid_anomaly_dict["constraints"] = [bad]
     with pytest.raises(Exception):
         Anomaly.model_validate(valid_anomaly_dict)
+
+
+def test_sm_prediction_reference_values(valid_anomaly_dict):
+    """``sm_prediction.sm_reference_values`` defaults to empty, takes floats or the sentinel,
+    and rejects anything else (mirrors ``Quantifier.sm_reference_values``)."""
+    assert Anomaly.model_validate(valid_anomaly_dict).sm_prediction.sm_reference_values == {}
+    valid_anomaly_dict["sm_prediction"]["sm_reference_values"] = {"x": 1.5, "y": "TODO_VERIFY"}
+    sm = Anomaly.model_validate(valid_anomaly_dict).sm_prediction
+    assert sm.sm_reference_values == {"x": 1.5, "y": "TODO_VERIFY"}
+    valid_anomaly_dict["sm_prediction"]["sm_reference_values"] = {"x": "not a number"}
+    with pytest.raises(Exception):
+        Anomaly.model_validate(valid_anomaly_dict)

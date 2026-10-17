@@ -6,9 +6,10 @@ sector: collider
 # best fit printed by CMS for gg -> phi -> tau tau at m_phi = 95 GeV; CMS prints it asymmetric
 # (+3.9 -3.1 pb) as a total error. stat_uncertainty holds the mean of the two, 3.5, a stage-1
 # symmetrisation of that total error, not a statistical error, and sys_uncertainty is null because
-# CMS gives no stat/sys split. The CMS diphoton signal strength has its own row below. The LEP bb-bar
-# signal strength is an open gap (TODO_VERIFY). Significances are recorded under significance: and in
-# the experiments[] notes (see decisions.md).
+# CMS gives no stat/sys split. The CMS diphoton signal strength has its own row below, and the ditau
+# number converted to a signal strength (step 2) has its own row after it. The LEP bb-bar signal
+# strength is an open gap (TODO_VERIFY). Significances are recorded under significance: and in the
+# experiments[] notes (see decisions.md).
 observables:
   - name: "sigma(gg -> phi) x B(phi -> tau tau) at m_phi = 95 GeV (CMS ditau)"
     value: 7.8                    # +3.9 -3.1 [pb]
@@ -28,20 +29,48 @@ observables:
     stat_uncertainty: 0.155
     sys_uncertainty: null
     units: "ratio to SM-like Higgs cross section"
+  # Derived, not measured: the CMS ditau sigma x B above divided by sigma_ggF x B(tau tau) of an
+  # SM-like Higgs boson at 95 GeV, 13 TeV (sm_prediction.sm_reference_values, LHC Higgs WG). The
+  # value is computed by solutions/step_2.py::mu_tautau and pinned against it by
+  # tests/test_step2_mu_tautau.py. stat_uncertainty is the symmetrised CMS error (3.5 pb)
+  # propagated linearly; sys_uncertainty is the theory normalisation error (ggF scale, ggF
+  # PDF+alpha_s and B(tau tau), symmetrised and added in quadrature), kept apart (decisions.md).
+  # Production differs from the diphoton row: gg -> phi only here, all modes there.
+  - name: "signal strength mu_tautau at 95 GeV (CMS ditau, normalised to SM-like ggF x B)"
+    value: 1.374
+    stat_uncertainty: 0.616
+    sys_uncertainty: 0.159
+    units: "ratio to SM-like Higgs ggF cross section x B(tau tau)"
   - name: "signal strength mu near 98 GeV (LEP bb-bar, best fit)"
     value: TODO_VERIFY
     stat_uncertainty: TODO_VERIFY
     sys_uncertainty: null
     units: "ratio to SM Higgs cross section"
 
-# The SM has no scalar near 95 GeV. 0.0 is a convention, not a number a paper states: the
-# background-only expectation of the cited searches, so the new-resonance signal is zero by
-# construction. provenance is a closed vocabulary, so it stays cited. A real SM statement is A1 work.
+# The SM predicts no resonant signal near 95 GeV: computed in step 1 from feynlag-models' sm,
+# which has exactly one physical scalar after EWSB, with m_h^2 = 2 lambda v^2; at the model's
+# benchmark input MH = 125.0 GeV nothing lies in 90-100 GeV. The value 0.0 is that zero signal (the background-only hypothesis of the cited
+# searches). sm_reference_values are cited SM-like Higgs numbers at 95 GeV, 13 TeV, used only to
+# convert the ditau sigma x B to a signal strength (step 2):
+#   sigma_ggF_*: LHC Higgs WG, BSM Higgs production at 13 TeV (CERN Report 4), ggF
+#     "quark-loop induced interaction" table (SM-like top and bottom loops), NNLO+NNLL QCD,
+#     PDF4LHC15_nnlo_30, no EW correction below 100 GeV; scale error +8.6/-8.9 %, PDF+alpha_s 3.3 %.
+#   BR_tautau_*: LHC Higgs WG, SM Higgs branching ratios, CERN Report 3 (2013 update) table, the
+#     only LHCHWG table with an SM-like BR at 95 GeV (the CERN Report 4 BR table starts at 120 GeV);
+#     8.32e-2, +6.94/-6.77 %.
 sm_prediction:
   value: 0.0
   uncertainty: 0.0
-  provenance: cited
-  reference: "Background-only (SM) hypothesis of CMS diphoton, arXiv:2405.18149, Fig. 7; no SM-like Higgs boson other than the 125 GeV state is predicted near 95 GeV. Convention, see decisions.md."
+  provenance: computed
+  reference: "anomalies/higgs_95gev/tests/test_sm_structural.py::test_single_physical_scalar and ::test_no_sm_scalar_near_95gev (step 1: feynlag-models sm via the registry; one physical neutral scalar after EWSB, m_h^2 = 2 lambda v^2, none in 90-100 GeV)"
+  sm_reference_values:
+    sigma_ggF_95GeV_13TeV_pb: 68.25
+    sigma_ggF_95GeV_13TeV_scale_up_pct: 8.6
+    sigma_ggF_95GeV_13TeV_scale_down_pct: 8.9
+    sigma_ggF_95GeV_13TeV_pdf_alphas_pct: 3.3
+    BR_tautau_95GeV: 0.0832
+    BR_tautau_95GeV_up_pct: 6.94
+    BR_tautau_95GeV_down_pct: 6.77
 
 # Diphoton channel, CMS full Run 2 (the largest deviation of that search). The ditau and bb-bar
 # significances are in experiments[].notes because Significance holds one channel.
@@ -68,6 +97,8 @@ sources:
   - {kind: arxiv, identifier: "arXiv:2208.02717", consulted_on: 2026-10-15}
   - {kind: arxiv, identifier: "arXiv:hep-ex/0306033", consulted_on: 2026-10-15}
   - {kind: arxiv, identifier: "arXiv:2407.10948", consulted_on: 2026-10-15}
+  - {kind: other, identifier: "LHC Higgs WG twiki LHCPhysics/CERNYellowReportPageBSMAt13TeV (BSM Higgs production cross sections at 13 TeV, update in CERN Report 4, arXiv:1610.07922), ggF quark-loop induced table, m_H = 95 GeV; same row in Higgs_XSBR_YR4_update.xlsx, sheet YR4 BSM 13TeV", consulted_on: 2026-10-16}
+  - {kind: other, identifier: "LHC Higgs WG twiki LHCPhysics/CERNYellowReportPageBR2014 (SM Higgs branching ratios, CERN Report 3, CERN-2013-004, arXiv:1307.1347, 2013 update), H -> 2 fermions table, m_H = 95.0 GeV", consulted_on: 2026-10-16}
 
 status: hint
 status_date: 2026-10-15
@@ -86,12 +117,13 @@ tensions_with_other_data:
   - "Mass: the CMS ditau excess is largest at 100 GeV (3.1 sigma local), not at 95 GeV (2.6 sigma local), and the LEP bb-bar minimum is at about 98 GeV. CMS itself notes the ditau excess coincides, within mass resolution, with the diphoton one."
 
 sm_failure_type: resonance
-sm_protection: []
+sm_protection:
+  - field_content
 
 eft_operators: []
 candidate_models: []
 
-maturity: A0
+maturity: A1
 
 falsifiers:
   - "A Run 3 CMS or ATLAS low-mass diphoton search at 13.6 TeV that rules out the CMS 95.4 GeV signal."
@@ -112,4 +144,12 @@ changelog:
     note: "CMS diphoton signal strength recorded: mu = 0.33 +0.19 -0.12 at 95.4 GeV, read from CMS
       supplementary Additional Figures 14 and 15 (CMS-HIG-20-002). HEPData limits added (Figures 5a,
       5b). LEP bb-bar signal strength stays TODO_VERIFY. Maturity stays A0."
+    author: "Moises Zeleny (with Claude)"
+  - date: "2026-10-16"
+    note: "A1. Step 1 (computed): feynlag-models sm, via the registry, has one physical neutral
+      scalar after EWSB, m_h^2 = 2 lambda v^2, none in 90-100 GeV; sm_prediction provenance is
+      computed and sm_protection is field_content. Step 2: the CMS ditau sigma x B divided by
+      the SM-like ggF x B(tau tau) at 95 GeV (LHC Higgs WG, cited) gives mu_tautau = 1.37
+      +- 0.62 (exp) +- 0.16 (theory), a new observables row. Ladder notebook sections 0-2 and
+      Recap. No chi^2; the LEP bb-bar row stays TODO_VERIFY."
     author: "Moises Zeleny (with Claude)"

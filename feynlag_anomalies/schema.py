@@ -66,10 +66,20 @@ class Observable(_Strict):
 
 
 class SMPrediction(_Strict):
+    """The SM's value for the anomaly's headline quantity.
+
+    ``sm_reference_values`` holds further SM numbers the record needs on the way, keyed by name,
+    e.g. the cross section and branching ratio of an SM-like Higgs boson at the mass of a
+    resonance excess, used to turn a measured cross section into a signal strength. They are
+    cited inputs (each needs its source in ``sources[]``), and code that consumes one must reject
+    the ``TODO_VERIFY`` sentinel. Mirrors ``Quantifier.sm_reference_values``.
+    """
+
     value: Verifiable
     uncertainty: Verifiable | None = None
     provenance: PROVENANCES
     reference: str | None = None
+    sm_reference_values: dict[str, Verifiable] = Field(default_factory=dict)
 
 
 class Significance(_Strict):
