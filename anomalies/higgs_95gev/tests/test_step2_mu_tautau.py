@@ -33,13 +33,23 @@ def test_theory_error_is_the_quadrature_sum(anomaly):
     """Larger than each symmetrised component, smaller than their linear sum."""
     ref = anomaly.sm_prediction.sm_reference_values
     parts = [(ref[step_2.SIGMA_SCALE_UP] + ref[step_2.SIGMA_SCALE_DOWN]) / 2,
-             ref[step_2.SIGMA_PDF], (ref[step_2.BR_UP] + ref[step_2.BR_DOWN]) / 2]
+             ref[step_2.SIGMA_PDF], (ref[step_2.BR_UP] + ref[step_2.BR_DOWN]) / 2,
+             (ref[step_2.EW_100] - 1) * 100]
+    assert list(step_2.theory_components_pct(anomaly).values()) == pytest.approx(parts)
     rel = step_2.theory_rel_uncertainty(anomaly)
     assert max(parts) / 100 < rel < sum(parts) / 100
     assert rel == pytest.approx(sum(x**2 for x in parts) ** 0.5 / 100, rel=1e-12)
 
 
-@pytest.mark.parametrize("key", [step_2.SIGMA, step_2.BR])
+def test_derived_row_is_exclusive_with_the_ditau_row(anomaly):
+    """The derived mu_tautau row and the sigma x B row are one measurement: both exist, and the
+    pair is recorded so that a fit never takes both."""
+    names = {o.name for o in anomaly.observables}
+    assert step_2.EXCLUSIVE_WITH == {step_2.MU_TAUTAU_ROW: step_2.DITAU_ROW}
+    assert set(step_2.EXCLUSIVE_WITH) | set(step_2.EXCLUSIVE_WITH.values()) <= names
+
+
+@pytest.mark.parametrize("key", [step_2.SIGMA, step_2.BR, step_2.EW_100])
 def test_sentinel_rejected(anomaly, key):
     broken = anomaly.model_copy(deep=True)
     broken.sm_prediction.sm_reference_values[key] = "TODO_VERIFY"

@@ -71,7 +71,8 @@ class SMPrediction(_Strict):
     ``sm_reference_values`` holds further SM numbers the record needs on the way, keyed by name,
     e.g. the cross section and branching ratio of an SM-like Higgs boson at the mass of a
     resonance excess, used to turn a measured cross section into a signal strength. They are
-    cited inputs (each needs its source in ``sources[]``), and code that consumes one must reject
+    cited inputs: their sources go in ``sources[]`` and the yaml comment names which source each
+    key comes from (no loader check links a key to a source). Code that consumes one must reject
     the ``TODO_VERIFY`` sentinel. Mirrors ``Quantifier.sm_reference_values``.
     """
 

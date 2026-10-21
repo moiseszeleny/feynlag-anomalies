@@ -9,8 +9,9 @@ the neutral block in the ``(h, G0)`` basis is ``diag(2 lambda v^2, 0)`` and the 
 ``::test_goldstone_count`` in feynlag-models).
 
 The numeric mass uses the model's benchmark input ``MH`` (a round input, not a measurement):
-the SM fixes the *number* of scalars, while their mass is an input; with one scalar, the input
-that reproduces the observed boson leaves nothing for 95 GeV.
+the SM fixes the *number* of scalars, while their mass is an input. The one scalar is the
+observed Higgs boson, whose measured mass (``sm_prediction.sm_reference_values``, PDG 2024) is
+checked against the window and against the benchmark (:func:`measured_higgs_mass`).
 """
 
 from __future__ import annotations
@@ -78,6 +79,15 @@ def sm_scalar_masses_gev(bundle) -> list[float]:
     """Masses (GeV) of every physical SM scalar at the model benchmark."""
     values = bundle.values()
     return [math.sqrt(float(m2.subs(values))) for m2 in scalar_spectrum(bundle)["neutral_mass_squared"]]
+
+
+def measured_higgs_mass(anomaly) -> tuple[float, float]:
+    """The measured Higgs mass and its error (GeV), from the record; raises on ``TODO_VERIFY``."""
+    from fit.stage1 import _reject_sentinel
+
+    ref = anomaly.sm_prediction.sm_reference_values
+    return tuple(_reject_sentinel(f"sm_prediction.sm_reference_values.{k}", ref[k])
+                 for k in ("m_H_measured_GeV", "m_H_measured_unc_GeV"))
 
 
 def scalars_in_window(bundle, window=WINDOW_GEV) -> list[float]:

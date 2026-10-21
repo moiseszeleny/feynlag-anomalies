@@ -140,3 +140,24 @@
     `candidate_models` are A2 work: `sm_singlet_z2` and `thdm_type2`, both L3. `[decision]`
   - **Maturity A1.** An executable structural test via feynlag-models and `sm_protection` are
     in place (`docs/maturity.md`).
+- **2026-10-20 — review of PR #18, folded in.** These changes supersede the 2026-10-16 entry
+  where the two differ.
+  - *Measured Higgs mass.* The "none in 90 to 100 GeV" claim used to rest on the model benchmark
+    $`M_H = 125.0`$ GeV, a round input. It now also uses the measured mass, PDG 2024
+    $`m_H = 125.20 \pm 0.11`$ GeV ("OUR AVERAGE", read from the Higgs boson listing and the
+    summary table on 2026-10-20), stored as `sm_reference_values.m_H_measured_*`. The test
+    checks that the benchmark agrees with it to within 1 GeV and that it lies far above the window.
+    `[cited]`
+  - *Missing NLO EW.* The ggF quark-loop table gives $`1+\delta_{\rm EW}`$ only from 100 GeV up,
+    1.0418 at 100 GeV. It is not applied at 95 GeV. Its size, 4.2 %, is added in quadrature to the
+    theory error as a symmetric missing-EW term. The theory error grows from 0.16 to 0.17 and
+    $`\mu_{\tau\tau}`$ = 1.37 is unchanged. Applying the factor instead would give about 1.32.
+    `[decision]`
+  - *No double counting.* The derived $`\mu_{\tau\tau}`$ row and the ditau $`\sigma B`$ row are
+    the same measurement. `solutions/step_2.py::EXCLUSIVE_WITH` records the pair, and a test
+    checks it. The A3 fit must select rows by name and take at most one of the pair. `[decision]`
+  - *References checked.* Landau, Dokl. Akad. Nauk SSSR 60 (1948) 207, and Yang, Phys. Rev. 77
+    (1950) 242, were checked on INSPIRE on 2026-10-20. `[cited]`
+  - *Schema docstring.* `SMPrediction.sm_reference_values` no longer claims a source check. The
+    sources are in `sources[]` and the yaml comment names them, but no loader check links a key
+    to a source.
