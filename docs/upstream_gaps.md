@@ -6,6 +6,53 @@ user to act on (or not) in those repos directly.
 
 ## Open
 
+### UG-4 — an inverted CP-even hierarchy swaps `thdm_type2`'s h/H labels and breaks a `sm_singlet_z2` key result (`feynlag-models`)
+
+**Repo**: `feynlag-models`. **Discovered**: 2026-10-22, in the A2 work on
+`anomalies/higgs_95gev` (a 95 GeV CP-even scalar below the 125 GeV Higgs boson). Line references
+are at the pinned `cb0678a`.
+
+**Symptom (`thdm_type2`)**: `model.py` diagonalises the CP-even block with
+`diagonalize_orthogonal_2x2`, whose angle is the principal branch,
+$`\alpha = \tfrac12 \arctan[2M_{12}/(M_{11}-M_{22})]`$, and labels the states
+$`(H, h) = R(\alpha)(
+ho_1, 
+ho_2)`$. That agrees with Gunion–Haber's branch, fixed by
+$`m_H \ge m_h`$ (hep-ph/0207010 Eqs. (14)–(17)), only when $`M_{11} > M_{22}`$, as the model's own
+`metadata.yaml` says in the `gunion2003` conventions_map. When $`M_{11} < M_{22}`$, i.e.
+$`\alpha_{
+m GH} > \pi/4`$, the model's `H` (`MHH`) is the *lighter* state and `h` (`MH0`)
+the heavier one. The couplings stay attached to the right eigenvectors, but every statement that
+names $h$ and $H$ (the `m_H ≥ m_h` literature check, hVV $`= \sin(\beta-\alpha)`$ as "the
+light state's" coupling, the UFO PDG code 25 for `h`) then refers to the swapped states. For an
+exactly aligned 125 GeV $H$ this happens at every $`\tan\beta > 1`$.
+
+**Evidence**: `anomalies/higgs_95gev/tests/test_step4_candidates.py::test_thdm_inverted_hierarchy_labels`
+(strict xfail). At $`\tan\beta = 2`$, $`\sin(\beta-\alpha_{
+m GH}) = 0.3`$, $`m_A = 300`$ GeV,
+$`m_{H^\pm} = 600`$ GeV and $`m_{12}^2 = 6000`$ GeV², with the $`\lambda_i`$ from Gunion–Haber
+Eqs. (10)–(13), the bundle returns `MHH` = 95.0 GeV and `MH0` = 125.2 GeV, with
+$`\alpha = \alpha_{
+m GH} - \pi/2`$.
+
+**Related (`sm_singlet_z2`, documentation only)**: the key result
+"$`m^2_{1,2} = \lambda v^2 + \lambda_S v_S^2 \mp \sqrt{\ldots}`$" (`metadata.yaml`,
+`test_mixing_angle_eq11_eq12`) assumes $`M_{11} < M_{22}`$, as at the benchmark. With the singlet
+lighter, the principal-branch $`\theta`$ keeps $`h_1`$ $h$-like, so `MH1` is the *heavier*
+eigenvalue. The labels are self-consistent; only the $`\mp`$ ordering and the benchmark
+description ("h1 is the lighter, SM-like state") stop holding. Evidence:
+`anomalies/higgs_95gev/tests/test_step4_candidates.py::test_singlet_h2_is_the_singlet_like_state`.
+
+**Proposal**: (1) in `thdm_type2`, fix the branch by mass ordering (or by
+$`\cos 2\alpha`$ sign), or document the valid regime next to the rotation and add a test of an
+inverted point; a physical-basis input (`thdm_type2/NEXT_STEPS.md` §4) would make that test
+direct. (2) In `sm_singlet_z2`, qualify the $`\mp`$ key result and the benchmark description as
+holding for $`M_{11} < M_{22}`$, or state that $`h_1`$ is the $h$-like state whatever the
+ordering.
+
+**Status**: open. Filed with the user's approval on 2026-10-22; not acted on in `feynlag-models`
+from here (hard rule 4).
+
 ### UG-3 — `froggatt_nielsen` calls the flavon phase an exact massless Goldstone (`feynlag-models`)
 
 **Repo**: `feynlag-models`. **Discovered**: 2026-10-13, in the physics review of
