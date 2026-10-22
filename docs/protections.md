@@ -7,7 +7,7 @@ deferred to the session that builds the corresponding anomaly record.
 | protection | mechanism (one line) | example anomaly | status |
 |---|---|---|---|
 | `accidental_symmetry` | A global symmetry ($B$, $`L_e`$, $`L_\mu`$, $`L_\tau`$, or total $L$) that is not imposed but emerges from the SM's gauge symmetry and field content at the renormalizable level. | `neutrino_mass` (accidental lepton number forbids a dim-4 Majorana mass) | seeded |
-| `field_content` | The SM simply lacks a field needed to write the term (e.g. no $`\nu_R`$, no dark-matter candidate). | `neutrino_mass` (no $`\nu_R`$, so no dim-4 Dirac mass either) | seeded |
+| `field_content` | The SM simply lacks a field needed to write the term (e.g. no $`\nu_R`$, no dark-matter candidate). | `neutrino_mass` (no $`\nu_R`$, so no dim-4 Dirac mass either); `higgs_95gev` (one Higgs doublet gives one physical scalar, so no second resonance) | seeded |
 | `gim` | GIM mechanism: flavor-changing neutral currents cancel between up-type (or down-type) quark loops in the limit of degenerate masses, suppressed by mass splittings/CKM factors otherwise. | (flavor anomalies, not yet built) | placeholder |
 | `chiral_helicity_suppression` | An amplitude requires a chirality flip, suppressing it by a light fermion mass over the relevant scale. | (not yet built) | placeholder |
 | `custodial_symmetry` | An approximate $`SU(2)_{\rm custodial}`$ protects $`\rho = M_W^2/(M_Z^2 \cos^2\theta_W) \approx 1`$ against large corrections. | ($`M_W`$ tension, not yet built) | placeholder |

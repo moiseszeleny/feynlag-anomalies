@@ -81,3 +81,83 @@
   - Not read and therefore not cited: combined ATLAS+CMS significances quoted in phenomenology
     papers. They are not collaboration numbers.
 - **Maturity stays A0.** `sm_protection`, `eft_operators` and `candidate_models` are untouched.
+- **2026-10-16 — A1: the SM argument and the ditau signal strength.**
+  - *Step 1, SM structural test.* `solutions/step_1.py` builds feynlag-models' `sm` (L3) through
+    `feynlag_models.registry.build` and reads its scalar mass matrices after EWSB. The neutral
+    block in the $`(h, G^0)`$ basis is $`{\rm diag}(2\lambda v^2, 0)`$ and the charged block
+    $`(G^+)`$ is zero. Four real doublet fields minus three Goldstones leaves one physical neutral
+    scalar, with $`m_h^2 = 2\lambda v^2`$, the model's key result
+    `test_tadpole_and_higgs_mass`. At the model benchmark the only scalar mass is its input
+    $`M_H = 125.0`$ GeV, outside 90 to 100 GeV. Tests:
+    `tests/test_sm_structural.py::test_single_physical_scalar`,
+    `::test_higgs_mass_is_two_lambda_v_squared` and `::test_no_sm_scalar_near_95gev`. `[computed]`
+  - *The SM prediction.* `sm_prediction` keeps the value 0.0 (no resonant signal) and is now
+    `provenance: computed`, with the step-1 tests as `reference`. The zero follows from the count,
+    not from a parameter choice, so `sm_protection` is `field_content`: a second scalar needs a
+    new field. `[computed]`
+  - *The Z boson is in the window.* $`m_Z`$ = 91.19 GeV at the model benchmark lies in 90 to 100 GeV.
+    It is spin 1, so Landau–Yang forbids $`Z \to \gamma\gamma`$, and it is part of the SM
+    background in the ditau and $`b\bar b`$ searches. The window test counts scalars only, and
+    the notebook says why. `[physics judgment]`
+  - *Step 2 inputs.* Both read on 2026-10-16 from LHC Higgs WG primary tables, not from memory or
+    a phenomenology paper. `[cited]`
+    - $`\sigma_{\rm ggF}`$ at 95 GeV, 13 TeV: 68.25 pb, scale $`+8.6/-8.9`$ %, PDF+$`\alpha_s`$
+      ±3.3 %. Source: the twiki `CERNYellowReportPageBSMAt13TeV` (CERN Report 4 update), table
+      "Quark-loop induced interaction" (a scalar coupling to gluons through top and bottom loops
+      like the SM Higgs), NNLO+NNLL QCD, PDF4LHC15_nnlo_30. The EW correction column is 0 below
+      100 GeV (not provided). The same row is in `Higgs_XSBR_YR4_update.xlsx`, sheet
+      `YR4 BSM 13TeV`, as 68.25, +8.59/−8.91, 3.25; the twiki's rounded values are recorded.
+    - *Why this table.* The same page has a "point-like effective interaction" table, N3LO but in
+      the heavy-top limit without a bottom loop, which gives 76.30 pb at 95 GeV. The quark-loop
+      table is the one defined as SM-like, so it is the normalisation. `[decision]`
+    - $`B(H \to \tau\tau)`$ at 95 GeV: $`8.32 \times 10^{-2}`$, $`+6.94/-6.77`$ %. Source: the
+      twiki `CERNYellowReportPageBR2014` (CERN Report 3, 2013 update), "Higgs → 2 fermions"
+      table at $`M_H`$ = 95.0 GeV. The CERN Report 4 BR table covers 120 to 130 GeV only.
+    - *Cross-check.* The Report 4 xlsx sheet `YR4 BSM Width` lists partial widths at 95 GeV
+      without NLO EW corrections and without $`s\bar s`$. Their ratio gives
+      $`B(\tau\tau)`$ = 0.0824 and a summed width of $`2.38 \times 10^{-3}`$ GeV, against 0.0832
+      and $`2.32 \times 10^{-3}`$ GeV in Report 3. The 1 % difference is well inside the 6.9 % BR
+      error. `[computed]`
+  - *Storage.* The inputs sit in a new optional field, `sm_prediction.sm_reference_values`
+    (schema test `tests/test_schema.py::test_sm_prediction_reference_values`), which mirrors
+    `Quantifier.sm_reference_values`. Code reads them from the loaded `Anomaly` and rejects
+    `TODO_VERIFY` (`tests/test_step2_mu_tautau.py::test_sentinel_rejected`). `[decision]`
+  - *Result.* $`\mu_{\tau\tau} = 7.8 / (68.25 \times 0.0832) = 1.37 \pm 0.62\,({\rm exp}) \pm 0.16\,({\rm theory})`$,
+    a new `observables[]` row pinned to `solutions/step_2.py::mu_tautau` by
+    `tests/test_step2_mu_tautau.py`. `[computed]`
+  - *Errors.* The experimental error is the stage-1 symmetrised 3.5 pb, propagated linearly. The
+    theory error adds three relative errors in quadrature: the symmetrised ggF scale error, the
+    PDF+$`\alpha_s`$ error and the symmetrised BR error. It is stored in `sys_uncertainty` and
+    kept apart from the experimental error, not combined, so that a fit can treat it as a
+    correlated normalisation nuisance. The two reports are treated as uncorrelated, which is an
+    approximation. `[decision]`
+  - *What is not claimed.* The notebook shows $`\mu_{\gamma\gamma}`$ and $`\mu_{\tau\tau}`$
+    side by side, with no $`\chi^2`$ (that is A3), and does not say they agree. Ditau is
+    $`gg \to \phi`$ only, while the diphoton $`\mu`$ covers all production modes. The ditau
+    excess peaks at 100 GeV, not 95 GeV. The cross section and the BR come from two different
+    reports. `[decision]`
+  - *Still open.* The LEP $`b\bar b`$ signal strength stays `TODO_VERIFY`. `eft_operators` and
+    `candidate_models` are A2 work: `sm_singlet_z2` and `thdm_type2`, both L3. `[decision]`
+  - **Maturity A1.** An executable structural test via feynlag-models and `sm_protection` are
+    in place (`docs/maturity.md`).
+- **2026-10-20 — review of PR #18, folded in.** These changes supersede the 2026-10-16 entry
+  where the two differ.
+  - *Measured Higgs mass.* The "none in 90 to 100 GeV" claim used to rest on the model benchmark
+    $`M_H = 125.0`$ GeV, a round input. It now also uses the measured mass, PDG 2024
+    $`m_H = 125.20 \pm 0.11`$ GeV ("OUR AVERAGE", read from the Higgs boson listing and the
+    summary table on 2026-10-20), stored as `sm_reference_values.m_H_measured_*`. The test
+    checks that the benchmark agrees with it to within 1 GeV and that it lies far above the window.
+    `[cited]`
+  - *Missing NLO EW.* The ggF quark-loop table gives $`1+\delta_{\rm EW}`$ only from 100 GeV up,
+    1.0418 at 100 GeV. It is not applied at 95 GeV. Its size, 4.2 %, is added in quadrature to the
+    theory error as a symmetric missing-EW term. The theory error grows from 0.16 to 0.17 and
+    $`\mu_{\tau\tau}`$ = 1.37 is unchanged. Applying the factor instead would give about 1.32.
+    `[decision]`
+  - *No double counting.* The derived $`\mu_{\tau\tau}`$ row and the ditau $`\sigma B`$ row are
+    the same measurement. `solutions/step_2.py::EXCLUSIVE_WITH` records the pair, and a test
+    checks it. The A3 fit must select rows by name and take at most one of the pair. `[decision]`
+  - *References checked.* Landau, Dokl. Akad. Nauk SSSR 60 (1948) 207, and Yang, Phys. Rev. 77
+    (1950) 242, were checked on INSPIRE on 2026-10-20. `[cited]`
+  - *Schema docstring.* `SMPrediction.sm_reference_values` no longer claims a source check. The
+    sources are in `sources[]` and the yaml comment names them, but no loader check links a key
+    to a source.
