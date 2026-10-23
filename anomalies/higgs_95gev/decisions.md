@@ -161,3 +161,70 @@
   - *Schema docstring.* `SMPrediction.sm_reference_values` no longer claims a source check. The
     sources are in `sources[]` and the yaml comment names them, but no loader check links a key
     to a source.
+- **2026-10-22 — A2: lowest operators and two candidate models.**
+  - *Fields from the model.* Step 3 takes $H$ and $S$ from the `sm_singlet_z2` bundle
+    (`registry.build`), so no field is declared here. feynlag's `suggest_potential` gives, up to
+    dimension 4, the portals $`S H^\dagger H`$ (dim 3) and $`S^2 H^\dagger H`$ (dim 4). With the
+    model's $`Z_2`$ only $`S^2 H^\dagger H`$ is left, and with $`S = v_S + s`$ it gives the
+    trilinear $`2 v_S\, s\, H^\dagger H`$. `suggest_yukawa` gives no $`S \bar\psi \psi`$ term.
+    `[computed]`
+  - *Dimension-5 operators.* The $`S G G`$ and $`S F F`$ operators are copied from
+    arXiv:1512.04933v3 (Eq. (10); the photon operator from $`S B B`$ and $`S W W`$ in
+    Eqs. (13)–(14); loops of heavy states in Eqs. (20)–(21)), read on 2026-10-22. The minimal singlet model has neither; it reaches photons and gluons only through
+    its mixing with $h$. `[cited]`
+  - *Which singlet state is at 95 GeV.* `sm_singlet_z2` labels its states by mixing, not by
+    mass. Its $`\theta`$ is the principal branch of $`\tan 2\theta`$, so $`h_1`$ is always the
+    $h$-like state. With the singlet lighter, the 95 GeV state is $`h_2`$, not $`h_1`$ as the A2
+    plan said. The model's labels are self-consistent: the $`h_2`$ eigenvector is 96 % singlet at
+    $`\sin\theta = 0.2`$ (`test_singlet_h2_is_the_singlet_like_state`). Only its closed-form
+    key result $`m^2_{1,2} = \ldots \mp \sqrt{\ldots}`$ assumes $`M_{11} < M_{22}`$; that is
+    noted in UG-4. `[computed]`
+  - *The singlet benchmark.* The input `MH` fixes the $`(h,h)`$ entry $`2\lambda v^2`$, not an
+    eigenvalue. The override is solved from
+    $`M = R^T {\rm diag}(m_{125}^2, m_{95}^2) R`$ with the measured $`m_H`$ = 125.20 GeV, which
+    gives `MH` = 124.13 GeV. $`\sin\theta = 0.2`$ is illustrative, not fitted. `[decision]`
+  - *Universal signal strength.* Every $`h_2`$ coupling is $`-\sin\theta`$ times the SM one,
+    because the model substitutes $`h = \cos\theta\, h_1 - \sin\theta\, h_2`$ into every SM
+    coupling of $h$. The model's key result `test_coupling_rescaling` pins this for $`h_2 WW`$
+    and $`h_2 f\bar f`$ ($t$, $b$, $\tau$). The $`h_2 ZZ`$ coupling is pinned here
+    (`test_h2_zz_scales_with_sin_theta`). So $`\mu_{\gamma\gamma} = \mu_{\tau\tau} =
+    \mu_{b\bar b} = \sin^2\theta`$. The notebook shows this next to the recorded values, with no
+    verdict; that comparison is A3. `[computed]`
+  - *Why a CP-even state in the 2HDM, not the CP-odd one.* LEP's $`e^+e^- \to Z\phi`$ needs a
+    $`\phi Z Z`$ coupling, and $A$ has none. `[physics judgment]`
+  - *The 2HDM labels (UG-4).* The model's $`\alpha`$ is the principal branch, which agrees
+    with Gunion–Haber's $`m_H \ge m_h`$ only when $`M_{11} > M_{22}`$. At the inverted point
+    ($`\tan\beta = 2`$, $`\sin(\beta-\alpha) = 0.3`$ for the 95 GeV state,
+    $`m_A = 300`$ GeV, $`m_{H^\pm} = 600`$ GeV, $`m_{12}^2 = 6000`$ GeV²),
+    $`\alpha_{\rm GH} = 0.80 > \pi/4`$, and the model returns its $H$ at 95 GeV and its $h$ at
+    125 GeV. A strict xfail (`test_thdm_inverted_hierarchy_labels`) holds the evidence. The
+    swap happens when $`\alpha_{\rm GH} > \pi/4`$, which for an exactly aligned 125 GeV state
+    means every $`\tan\beta > 1`$. No workaround is used here. `[computed]`
+  - *A usable 2HDM point.* At $`\tan\beta = 1.5`$ with the same $`\sin(\beta-\alpha) = 0.3`$,
+    $`\alpha_{\rm GH} < \pi/4`$ and the model keeps its labels. The point
+    `step_4.THDM_ALIGNED_POINT` ($`m_A = 100`$ GeV, $`m_{H^\pm} = 580`$ GeV,
+    $`m_{12}^2 = 8500`$ GeV²) is the minimum of $`\max\lvert\lambda_i\rvert`$ over the scan
+    below at that $`(\tan\beta, \sin(\beta-\alpha))`$. It is illustrative, not fitted. The bundle
+    re-derives $`m_h = 95`$, $`m_H = 125.20`$, $`m_A`$, $`m_{H^\pm}`$ and
+    $`\sin(\beta-\alpha)`$ under its own labels (`test_thdm_aligned_point_keeps_its_labels`).
+    `thdm_type2` therefore has a usable point; UG-4 stays open for the inverted-label regime.
+    `[computed]`
+  - *Couplings near $`4\pi`$ (A3 caveat).* With $`m_{H^\pm} > 580`$ GeV (Misiak–Steinhauser, as
+    cited in feynlag-models' `thdm_type2/NEXT_STEPS.md`), `step_4.thdm_coupling_scan` inverts
+    the spectrum on a grid at $`m_{H^\pm}`$ = 580 GeV. The grid is
+    $`\tan\beta \in \{1, 1.5, 2, 3, 5\}`$, $`\sin(\beta-\alpha) \in \{0.1, 0.3, 0.5\}`$,
+    $`m_A`$ from 100 to 800 GeV in steps of 10 and $`m_{12}^2`$ from −20000 to 60000 GeV² in steps
+    of 500. It finds no bounded-from-below point with $`\max\lvert\lambda_i\rvert`$ below 10.8
+    (`test_thdm_coupling_scan`; an independent review scan found 10.85). The usable point needs
+    10.9 and the UG-4 point 11.8, both close to $`4\pi \approx 12.6`$. Recorded for A3, not
+    judged here. `[computed]`
+  - **Maturity A2.** The lowest-dimension operator is identified, and `sm_singlet_z2` and
+    `thdm_type2` are candidates by `model_id`, each with a computed spectrum (`docs/maturity.md`). No $`\chi^2`$, and
+    the LEP $`b\bar b`$ row stays `TODO_VERIFY`.
+- **2026-10-22 — review of PR #19, folded in.** The entry above already carries these changes.
+  - The UG-4 text had lost every `\r` of its LaTeX (`\rho`, `\rm`) to line breaks. It is
+    retyped and now cites `CONVENTIONS.md:82`.
+  - The $`S B B`$ / $`S W W`$ split ($`1/\Lambda_\gamma = 1/\Lambda_B + 1/\Lambda_W`$) is cited to
+    Eqs. (13)–(14) of arXiv:1512.04933v3, not Eq. (10).
+  - The coupling scan is now code with a test. The rescaling sentence names what the model pins.
+  - `thdm_type2` gained the $`\tan\beta = 1.5`$ point. `[decision]`

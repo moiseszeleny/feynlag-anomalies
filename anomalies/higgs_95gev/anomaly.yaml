@@ -108,6 +108,7 @@ sources:
   - {kind: arxiv, identifier: "arXiv:2407.10948", consulted_on: 2026-10-15}
   - {kind: other, identifier: "LHC Higgs WG twiki LHCPhysics/CERNYellowReportPageBSMAt13TeV (BSM Higgs production cross sections at 13 TeV, update in CERN Report 4, arXiv:1610.07922), ggF quark-loop induced table, m_H = 95 GeV; same row in Higgs_XSBR_YR4_update.xlsx, sheet YR4 BSM 13TeV", consulted_on: 2026-10-16}
   - {kind: pdg, identifier: "PDG 2024, Review of Particle Physics, Phys. Rev. D 110 (2024) 030001: H mass, OUR AVERAGE 125.20 +- 0.11 GeV (Higgs boson listing rpp2024-list-higgs-boson.pdf and gauge and Higgs boson summary table)", consulted_on: 2026-10-20}
+  - {kind: arxiv, identifier: "arXiv:1512.04933v3 (Franceschini et al., JHEP 03 (2016) 144), Sec. 2.3 Eqs. (10), (13)-(14) and Sec. 3 Eqs. (20)-(21)", consulted_on: 2026-10-22}
   - {kind: other, identifier: "LHC Higgs WG twiki LHCPhysics/CERNYellowReportPageBR2014 (SM Higgs branching ratios, CERN Report 3, CERN-2013-004, arXiv:1307.1347, 2013 update), H -> 2 fermions table, m_H = 95.0 GeV", consulted_on: 2026-10-16}
 
 status: hint
@@ -130,10 +131,47 @@ sm_failure_type: resonance
 sm_protection:
   - field_content
 
-eft_operators: []
-candidate_models: []
+# Step 3. The first two are computed: feynlag's suggest_potential on the H and S fields of
+# feynlag-models' sm_singlet_z2 (solutions/step_3.py, tests/test_step3_operators.py), and
+# suggest_yukawa gives no S psi-bar psi at dim <= 4. With the model's Z2 only S^2 H^dag H stays. The
+# dim-5 couplings to gauge bosons are cited from arXiv:1512.04933v3: Eq. (10) for the S G G and
+# S F F operators, Eqs. (13)-(14) for the photon one from S B B and S W W
+# (1/Lambda_gamma = 1/Lambda_B + 1/Lambda_W), and Eqs. (20)-(21) for their generation by loops of
+# heavy charged or coloured states. In the minimal singlet model they are absent at tree level, and
+# S reaches photons and gluons only through its mixing with h.
+eft_operators:
+  - name: "Higgs portal, trilinear (computed, feynlag suggest_potential; Z2-odd)"
+    dimension: 3
+    expression: "S H^dag H"
+  - name: "Higgs portal, quartic (computed, feynlag suggest_potential; Z2-even)"
+    dimension: 4
+    expression: "S^2 H^dag H"
+  - name: "singlet to gluons, loop-induced (cited, arXiv:1512.04933v3 Eq. (10))"
+    dimension: 5
+    expression: "g_3^2 S G_{mu nu} G^{mu nu} / (2 Lambda_g)"
+  - name: "singlet to photons, loop-induced, from S B B and S W W (cited, arXiv:1512.04933v3
+      Eqs. (10), (13)-(14))"
+    dimension: 5
+    expression: "e^2 S F_{mu nu} F^{mu nu} / (2 Lambda_gamma)"
 
-maturity: A1
+# Step 4 (computed spectra, no fit; solutions/step_4.py, tests/test_step4_candidates.py).
+candidate_models:
+  - model_id: sm_singlet_z2
+    notes: "Singlet-like h2 at 95 GeV under an h-like h1 at the measured m_H (125.20 GeV), sin theta
+      = 0.2 (illustrative, not fitted), via registry.build with MH = 124.13, lamS and lamHS solved
+      from the 2x2 mass matrix; the bundle re-derives both masses. The model labels its states by
+      mixing (h1 = cos theta h + sin theta s is the h-like one), so the 95 GeV state is h2. Every h2
+      signal strength is sin^2 theta, the same number in every channel: h = cos theta h1 - sin theta
+      h2 in every SM coupling (the model pins h2 W W and h2 f f-bar, step 4 pins h2 Z Z)."
+  - model_id: thdm_type2
+    notes: "Usable point: a 95 GeV h under a 125.20 GeV H, inverted with Gunion-Haber Eqs. (10)-(13)
+      at tan beta = 1.5, sin(beta - alpha) = 0.3, m_A = 100, m_H+- = 580 GeV, m12^2 = 8500 GeV^2
+      (illustrative, not fitted); the bundle re-derives it with its labels kept (MH0 = 95, MHH =
+      125.2). A3 caveat: it needs max |lambda_i| = 10.9, near 4 pi, and a scan finds no bounded-
+      from-below point below 10.8 once m_H+- >= 580 GeV. UG-4 stays open: when alpha_GH > pi/4
+      (here tan beta = 2, m_A = 300, m_H+- = 600 GeV) the model swaps h and H; strict xfail."
+
+maturity: A2
 
 falsifiers:
   - "A Run 3 CMS or ATLAS low-mass diphoton search at 13.6 TeV that rules out the CMS 95.4 GeV signal."
@@ -168,4 +206,18 @@ changelog:
       checked against the window; missing NLO EW (4.2 %) added to the mu_tautau theory error,
       now +- 0.17; the derived mu_tautau row is marked exclusive with the ditau sigma x B row.
       Maturity stays A1."
+    author: "Moises Zeleny (with Claude)"
+  - date: "2026-10-22"
+    note: "A2. Step 3 (computed): feynlag's suggest_potential on the sm_singlet_z2 fields gives the
+      Higgs portals S H^dag H (dim 3) and S^2 H^dag H (dim 4), and suggest_yukawa no S psi-bar psi;
+      the dim-5 S G G and S F F operators are cited (arXiv:1512.04933). Step 4: sm_singlet_z2 puts a
+      singlet-like h2 at 95 GeV (sin theta = 0.2, illustrative), with the universal mu = sin^2
+      theta shown without a verdict; thdm_type2 is recorded as blocked on UG-4 (h/H label swap when
+      M11 < M22). No chi^2; the LEP bb-bar row stays TODO_VERIFY."
+    author: "Moises Zeleny (with Claude)"
+  - date: "2026-10-22"
+    note: "PR #19 review folded in: the S F F citation now names arXiv:1512.04933v3 Eqs. (13)-(14)
+      for the S B B / S W W split; the h2 Z Z rescaling is pinned here; the 2HDM coupling scan is
+      code with a test. thdm_type2 gains a usable point (tan beta = 1.5, labels kept, max
+      |lambda_i| = 10.9); UG-4 stays open for alpha_GH > pi/4. Maturity stays A2."
     author: "Moises Zeleny (with Claude)"
