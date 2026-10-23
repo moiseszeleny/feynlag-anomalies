@@ -30,3 +30,11 @@ def singlet_candidate(anomaly):
     from anomalies.higgs_95gev.solutions import step_4
 
     return step_4.build_singlet_candidate(anomaly)
+
+
+@pytest.fixture(scope="session")
+def thdm_aligned(anomaly):
+    """thdm_type2 at the tan beta = 1.5 point whose labels the model keeps, and its inversion."""
+    from anomalies.higgs_95gev.solutions import step_4
+
+    return step_4.build_thdm_candidate(anomaly, step_4.THDM_ALIGNED_POINT)

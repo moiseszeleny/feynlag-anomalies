@@ -2,9 +2,9 @@
 
 Builds ``check_1`` from a live feynlag-models ``sm`` bundle (``make_check_1``), ``check_2``
 from the loaded ``Anomaly`` (``make_check_2``), ``check_3`` from the ``sm_singlet_z2`` fields
-(``make_check_3``) and ``check_4`` from the singlet candidate at its override (``make_check_4``), with :mod:`checkpoints.core` and
-:mod:`anomalies.higgs_95gev.solutions`. ``ladder.ipynb`` imports from this module only, never
-from ``solutions/`` directly. Every expected value comes from a solution function or from
+(``make_check_3``) and ``check_4`` from the singlet candidate at its override (``make_check_4``),
+with :mod:`checkpoints.core` and :mod:`anomalies.higgs_95gev.solutions`. ``ladder.ipynb``
+imports from this module only, never from ``solutions/`` directly. Every expected value comes from a solution function or from
 ``anomaly.yaml``; none is typed here.
 """
 
@@ -69,8 +69,8 @@ def make_check_3(bundle) -> Checkpoint:
             "Which is the lowest-dimension one?",
             "H†H has dimension 2. Multiply it by S, then by S S, and keep the dimension <= 4. "
             "Can S pair with two SM fermions instead?",
-            f"{expected}: S H†H (dim 3) and S S H†H (dim 4). No SM fermion pair is a gauge singlet, "
-            "so suggest_yukawa gives no S psi-bar psi term.",
+            f"{expected}: S H†H (dim 3) and S S H†H (dim 4). No SM fermion pair is a gauge "
+            "singlet, so suggest_yukawa gives no S psi-bar psi term.",
         ],
     )
 
