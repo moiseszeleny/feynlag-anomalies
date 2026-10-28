@@ -78,7 +78,8 @@ def higgs_mass_squared(bundle) -> sp.Expr:
 def sm_scalar_masses_gev(bundle) -> list[float]:
     """Masses (GeV) of every physical SM scalar at the model benchmark."""
     values = bundle.values()
-    return [math.sqrt(float(m2.subs(values))) for m2 in scalar_spectrum(bundle)["neutral_mass_squared"]]
+    masses_squared = scalar_spectrum(bundle)["neutral_mass_squared"]
+    return [math.sqrt(float(m2.subs(values))) for m2 in masses_squared]
 
 
 def measured_higgs_mass(anomaly) -> tuple[float, float]:

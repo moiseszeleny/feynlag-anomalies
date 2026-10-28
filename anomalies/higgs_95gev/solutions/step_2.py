@@ -5,7 +5,8 @@ scalar ``phi``. CMS diphoton reports a signal strength ``mu``, a ratio to an SM-
 the same mass. To put the two on one scale, divide the ditau number by the same product for an
 SM-like Higgs boson at 95 GeV:
 
-    mu_tautau = [sigma x B]_obs / (sigma_ggF,SM-like(95 GeV, 13 TeV) x B_SM-like(H -> tau tau, 95 GeV)).
+    mu_tautau = [sigma x B]_obs
+                / (sigma_ggF,SM-like(95 GeV, 13 TeV) x B_SM-like(H -> tau tau, 95 GeV)).
 
 Both SM-like inputs are cited from the LHC Higgs Working Group tables and stored in
 ``anomaly.yaml`` ``sm_prediction.sm_reference_values`` (keys below); the ratio is computed here.
