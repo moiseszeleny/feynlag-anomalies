@@ -228,3 +228,28 @@
     Eqs. (13)–(14) of arXiv:1512.04933v3, not Eq. (10).
   - The coupling scan is now code with a test. The rescaling sentence names what the model pins.
   - `thdm_type2` gained the $`\tan\beta = 1.5`$ point. `[decision]`
+- **2026-10-28 — the UG-4 gap, taught in the ladder (§5).** Maturity stays A2; no claim about the
+  data changes.
+  - *A section, not a §4 subsection.* The lesson holds for any $`2\times 2`$ rotation, so §5
+    derives it on a plain symmetric matrix $`[[a, b], [b, d]]`$ (`solutions/step_5.py`; no model
+    or Lagrangian is declared). It then applies the same functions to both candidates' blocks.
+    `[decision]`
+  - *The lesson.* $`\tan 2\alpha = 2b/(a-d)`$ fixes $`\alpha`$ only modulo $`\pi/2`$. The
+    principal branch ($`\lvert\alpha\rvert \le \pi/4`$) puts first the state closest to the first
+    basis state, whose eigenvalue is the larger one when $`a > d`$ and the smaller one when
+    $`a < d`$. Shifting $`\alpha`$ by $`\pm\pi/2`$ swaps them. `[computed]`
+  - *The candidates.*
+    - The singlet override has $`M_{11} > M_{22}`$, so $`h_1`$ is the heavier state there, and the
+      model key result's $`\mp`$ form (with $`h_1`$ on the minus root) gives $`h_2`$.
+    - The $`\tan\beta = 2`$ 2HDM block has $`M_{11} < M_{22}`$, and Gunion–Haber's $`\alpha`$ is
+      the principal one plus $`\pi/2`$ (`check_5`).
+    - The $`\tan\beta = 1.5`$ block needs no shift.
+    - `test_step5_branches.py` pins all three against the bundles. `[computed]`
+  - *The Gunion–Haber citation.* hep-ph/0207010 (Phys. Rev. D 67 (2003) 075019), read on
+    2026-10-28: Eqs. (14)–(17) fix $`\alpha`$ from $`\sin 2\alpha`$ and $`\cos 2\alpha`$ with
+    $`m_H \ge m_h`$, and the text below Eq. (17) takes $`-\pi/2 \le \alpha \le \pi/2`$. Footnote 10
+    notes that $`\alpha \to \alpha \pm \pi`$ is $`h \to -h`$, $`H \to -H`$. `[cited]`
+  - *Pinned to `cb0678a` on purpose.* models-fn is working on UG-4 at the time of writing, and this
+    record does not predict its choice. The asserts in §4 and §5 pin today's labels, so the pin
+    bump that brings the fix will fail them. §5 lists what to update then: the §4 cells, the
+    strict xfail, the `candidate_models` notes, this file and the Recap. `[decision]`
