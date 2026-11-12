@@ -2,17 +2,20 @@
 
 Builds ``check_1`` from a live feynlag-models ``sm`` bundle (``make_check_1``), ``check_2``
 from the loaded ``Anomaly`` (``make_check_2``), ``check_3`` from the ``sm_singlet_z2`` fields
-(``make_check_3``) and ``check_4`` from the singlet candidate at its override (``make_check_4``),
-with :mod:`checkpoints.core` and :mod:`anomalies.higgs_95gev.solutions`. ``ladder.ipynb``
-imports from this module only, never from ``solutions/`` directly. Every expected value comes from a solution function or from
+(``make_check_3``), ``check_4`` from the singlet candidate at its override (``make_check_4``) and
+``check_5`` from a CP-even block of ``thdm_type2`` (``make_check_5``), with :mod:`checkpoints.core`
+and :mod:`anomalies.higgs_95gev.solutions`. ``ladder.ipynb`` imports from this module only, never
+from ``solutions/`` directly. Every expected value comes from a solution function or from
 ``anomaly.yaml``; none is typed here.
 """
 
 from __future__ import annotations
 
+import math
+
 from checkpoints import Checkpoint, exact_match, numeric_tolerance
 
-from anomalies.higgs_95gev.solutions import step_1, step_2, step_3, step_4
+from anomalies.higgs_95gev.solutions import step_1, step_2, step_3, step_4, step_5
 
 #: the mass window of the excesses (GeV), for the notebook's step-1 check
 WINDOW_GEV = step_1.WINDOW_GEV
@@ -89,5 +92,24 @@ def make_check_4(bundle) -> Checkpoint:
             "With the singlet lighter than the Higgs boson, which of MH1, MH2 is singlet-like? "
             "Read it from the bundle: bundle.values()[bundle.extra['MH2'].s].",
             f"MH2 = {expected:.4g} GeV, the singlet-like h2.",
+        ],
+    )
+
+
+# --- step 5: the branch of a mixing angle -------------------------------------------------------
+def make_check_5(M) -> Checkpoint:
+    """Step 5 asks what to add to the principal alpha to put the heavier state of ``M`` first."""
+    expected = step_5.mass_ordered_shift(M, first="heavier")
+    return numeric_tolerance(
+        "step_5",
+        expected=expected,
+        rel_tol=1e-9,
+        hints=[
+            "Compare M11 with M22. On the principal branch, the first state takes the larger "
+            "eigenvalue only when M11 > M22.",
+            "The principal alpha has |alpha| <= pi/4, so cos 2alpha > 0. Shifting alpha by "
+            "pi/2 swaps the two diagonal entries; pick the sign that stays in [-pi/2, pi/2].",
+            f"{expected:.4f} (= {expected / math.pi:+.2f} pi): here M11 < M22 and the principal "
+            "alpha is negative.",
         ],
     )

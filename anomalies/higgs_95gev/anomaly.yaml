@@ -109,6 +109,7 @@ sources:
   - {kind: other, identifier: "LHC Higgs WG twiki LHCPhysics/CERNYellowReportPageBSMAt13TeV (BSM Higgs production cross sections at 13 TeV, update in CERN Report 4, arXiv:1610.07922), ggF quark-loop induced table, m_H = 95 GeV; same row in Higgs_XSBR_YR4_update.xlsx, sheet YR4 BSM 13TeV", consulted_on: 2026-10-16}
   - {kind: pdg, identifier: "PDG 2024, Review of Particle Physics, Phys. Rev. D 110 (2024) 030001: H mass, OUR AVERAGE 125.20 +- 0.11 GeV (Higgs boson listing rpp2024-list-higgs-boson.pdf and gauge and Higgs boson summary table)", consulted_on: 2026-10-20}
   - {kind: arxiv, identifier: "arXiv:1512.04933v3 (Franceschini et al., JHEP 03 (2016) 144), Sec. 2.3 Eqs. (10), (13)-(14) and Sec. 3 Eqs. (20)-(21)", consulted_on: 2026-10-22}
+  - {kind: arxiv, identifier: "arXiv:hep-ph/0207010 (Gunion and Haber, Phys. Rev. D 67 (2003) 075019), Eqs. (14)-(17), the alpha range below Eq. (17) and footnote 10", consulted_on: 2026-10-28}
   - {kind: other, identifier: "LHC Higgs WG twiki LHCPhysics/CERNYellowReportPageBR2014 (SM Higgs branching ratios, CERN Report 3, CERN-2013-004, arXiv:1307.1347, 2013 update), H -> 2 fermions table, m_H = 95.0 GeV", consulted_on: 2026-10-16}
 
 status: hint
@@ -220,4 +221,12 @@ changelog:
       for the S B B / S W W split; the h2 Z Z rescaling is pinned here; the 2HDM coupling scan is
       code with a test. thdm_type2 gains a usable point (tan beta = 1.5, labels kept, max
       |lambda_i| = 10.9); UG-4 stays open for alpha_GH > pi/4. Maturity stays A2."
+    author: "Moises Zeleny (with Claude)"
+  - date: "2026-10-28"
+    note: "Ladder section 5 (computed, on a plain symmetric 2x2 matrix): tan 2 alpha fixes a mixing
+      angle only modulo pi/2, and the principal branch labels by mixing, not by mass. This is the
+      mechanism behind UG-4. Applied to both candidates: the singlet override has M11 > M22 (h1
+      heavier); thdm_type2 needs alpha_principal + pi/2 = alpha_GH at tan beta = 2 and no shift at
+      1.5 (Gunion-Haber hep-ph/0207010 Eqs. (14)-(17), cited). The UG-4 xfail is unchanged.
+      Maturity stays A2."
     author: "Moises Zeleny (with Claude)"
