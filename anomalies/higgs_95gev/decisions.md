@@ -253,3 +253,34 @@
     record does not predict its choice. The asserts in §4 and §5 pin today's labels, so the pin
     bump that brings the fix will fail them. §5 lists what to update then: the §4 cells, the
     strict xfail, the `candidate_models` notes, this file and the Recap. `[decision]`
+- **2026-11-15 — pin bump to feynlag-models `4157b6b` (PR #17); UG-4 resolved.** feynlag stays
+  at 0.3.0, the pin feynlag-models uses. Maturity stays A2; no claim about the data changes.
+  - *What feynlag-models chose.* `thdm_type2` now labels its CP-even states by mass. It adds
+    $`k\pi/2`$ to feynlag's principal angle (`model.alpha_branch`), so
+    $`\alpha = \tfrac12\,\mathrm{atan2}(2M_{12}, M_{11} - M_{22})`$, Gunion–Haber's branch, and $h$ is
+    the lighter state at every point. `sm_singlet_z2` keeps the principal branch: its labels follow
+    mixing ($`h_1`$ is $h$-like), and its $`\mp`$ key result is qualified to $`M_{11} < M_{22}`$
+    (feynlag-models `CONVENTIONS.md`, both models' `metadata.yaml`). `[cited]`
+  - *What failed, as planned on 2026-10-28.* Under the new pin `uv run pytest -q` failed exactly
+    two tests: the UG-4 strict xfail (now passing) and
+    `test_step5_branches.py::test_thdm_blocks_against_the_bundles`, which compared the model's
+    $`\alpha`$ with the principal one. At $`\tan\beta = 2`$ the bundle now returns
+    $`m_h = 95.00`$ GeV, $`m_H = 125.20`$ GeV and $`\alpha = \alpha_{\rm GH} = 0.8025`$, which is
+    the principal $`-0.7683`$ plus $`\pi/2`$, exactly `step_5.mass_ordered_shift`. At
+    $`\tan\beta = 1.5`$ nothing changes. `[computed]`
+  - *Updated.* The strict xfail is now the plain test
+    `test_thdm_inverted_point_labels_follow_mass`, which also checks $`\alpha = \alpha_{\rm GH}`$,
+    $`\sin(\beta-\alpha) = 0.3`$, $`m_A`$ and $`m_{H^\pm}`$. The §5 test now checks that the model's
+    $`\alpha`$ is the principal one plus the mass-ordering shift at both points. The ladder's §4 peek
+    and trap cells, §5 (the conventions cell, the candidates check, "Read it", and "How UG-4 was
+    fixed" in place of the update list), the Recap, the `thdm_type2` candidate note,
+    `anomalies/INDEX.md` and `docs/upstream_gaps.md` (UG-4 moved to Resolved) follow. The §5
+    teaching on the plain matrix $`[[a, b], [b, d]]`$ is unchanged. `check_5` keeps its expected
+    value ($`+\pi/2`$), because it is computed from the block, not from the model. `[decision]`
+  - *The singlet, confirmed.* At the override the bundle gives $`h_1`$ = 125.20 GeV,
+    $`h_2`$ = 95.00 GeV and $`\theta = 0.2014`$, as at `cb0678a`. The 95 GeV state is still
+    $`h_2`$, and in this regime ($`M_{11} > M_{22}`$) it is the minus root of the closed form,
+    which the qualified key result now states. `[computed]`
+  - *Both 2HDM points are usable now.* The $`\tan\beta = 2`$ point needs
+    $`\max\lvert\lambda_i\rvert = 11.8`$, the $`\tan\beta = 1.5`$ one 10.9. The A3 caveat on quartics
+    near $`4\pi`$ applies to both. `[computed]`

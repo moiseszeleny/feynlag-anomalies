@@ -16,6 +16,9 @@ so ``R M R^T`` is the mass matrix of the rotated states.
   ``cos 2alpha`` with ``m_H >= m_h`` and take ``-pi/2 <= alpha <= pi/2``; that is the principal
   branch only when ``M11 > M22``. Their footnote 10: ``alpha -> alpha +- pi`` is ``h -> -h``,
   ``H -> -H``, so the branch left after mass ordering is a field sign.
+- Since feynlag-models 4157b6b (#17, UG-4), ``thdm_type2`` adds to the principal alpha exactly
+  :func:`mass_ordered_shift` (its ``model.alpha_branch``), so its labels follow mass;
+  ``sm_singlet_z2`` keeps the principal branch, so its labels follow mixing.
 
 The adapters at the end hand the candidates' CP-even blocks to these functions; they reuse
 :mod:`step_4` and add no physics.

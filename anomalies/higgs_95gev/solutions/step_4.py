@@ -19,13 +19,14 @@ h2 at 95 GeV cannot decay to h1 pairs, so every h2 signal strength is the same n
 
 ``thdm_type2`` (L3). The CP-even block is inverted numerically from the physical basis with
 Gunion--Haber Eqs. (10)--(13) (lambda6 = lambda7 = 0, the model's potential). The model labels
-``(H, h) = R(alpha) (rho1, rho2)`` with the principal-branch alpha, which coincides with
-Gunion--Haber's ``m_H >= m_h`` branch only when ``M11 > M22`` (the model's own conventions_map).
-For a 95 GeV ``h`` under a 125 GeV ``H`` with ``alpha_GH > pi/4`` the model swaps the labels: its
-``H`` gets 95 GeV. That is UG-4 (``docs/upstream_gaps.md``); :data:`THDM_POINT` stays here as its
-evidence, and nothing works around it. With ``alpha_GH < pi/4`` the labels are kept:
-:data:`THDM_ALIGNED_POINT` is such a point (tan beta = 1.5), a usable 2HDM spectrum. Both points
-need quartics near ``4 pi`` once ``m_H+- >= 580`` GeV (:func:`thdm_coupling_scan`).
+``(H, h) = R(alpha) (rho1, rho2)`` with Gunion--Haber's ``m_H >= m_h`` branch,
+``alpha = atan2(2 M12, M11 - M22)/2``, so ``h`` is always the lighter state (feynlag-models #17,
+merge 4157b6b, and its CONVENTIONS.md). Up to cb0678a it took the principal branch, which swapped
+the labels when ``M11 < M22`` (``alpha_GH > pi/4``): that was UG-4, now resolved
+(``docs/upstream_gaps.md``). :data:`THDM_POINT` (tan beta = 2) is such an inverted point and now
+keeps its labels; :data:`THDM_ALIGNED_POINT` (tan beta = 1.5, ``alpha_GH < pi/4``) needs no branch
+shift and has the smaller quartics. Both need quartics near ``4 pi`` once ``m_H+- >= 580`` GeV
+(:func:`thdm_coupling_scan`).
 """
 
 from __future__ import annotations
@@ -46,10 +47,11 @@ SIN_THETA = 0.2
 #: lower bound on m_H+- in the type-II 2HDM (GeV): 95% CL from B -> X_s gamma, Misiak--Steinhauser
 #: arXiv:1702.04571, as cited in feynlag-models' thdm_type2/NEXT_STEPS.md section 2
 MHP_MIN_GEV = 580.0
-#: the 2HDM point used as UG-4 evidence: tan beta, sin(beta - alpha_GH) of the 95 GeV state, m_A,
-#: m_H+- (GeV) and m12^2 (GeV^2). alpha_GH > pi/4, bounded from below, max |lambda_i| = 11.8.
+#: the inverted 2HDM point (M11 < M22), once UG-4's evidence: tan beta, sin(beta - alpha_GH) of the
+#: 95 GeV state, m_A, m_H+- (GeV) and m12^2 (GeV^2). alpha_GH > pi/4, bounded from below,
+#: max |lambda_i| = 11.8. Its labels are kept since feynlag-models 4157b6b.
 THDM_POINT = {"tanb": 2.0, "sin_bma": 0.3, "mA": 300.0, "mHp": 600.0, "m12sq": 6000.0}
-#: a 2HDM point whose labels the model keeps (alpha_GH < pi/4): the minimum of max |lambda_i| over
+#: a 2HDM point that needs no branch shift (alpha_GH < pi/4): the minimum of max |lambda_i| over
 #: m_A and m12^2 in :data:`SCAN_RANGES` at tan beta = 1.5, sin(beta - alpha) = 0.3, m_H+- = 580 GeV.
 #: Bounded from below, max |lambda_i| = 10.9 (illustrative, not fitted).
 THDM_ALIGNED_POINT = {"tanb": 1.5, "sin_bma": 0.3, "mA": 100.0, "mHp": MHP_MIN_GEV,

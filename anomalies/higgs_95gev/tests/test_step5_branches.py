@@ -50,20 +50,23 @@ def test_singlet_block_is_in_the_a_gt_d_regime(anomaly, singlet_candidate):
     assert M[0, 0] > M[1, 1] and not r["first_is_lighter"]
     assert r["alpha"] == pytest.approx(s["theta"], rel=1e-9)
     assert math.sqrt(r["first"]) == pytest.approx(s["MH1"], rel=1e-9)
-    # the pinned key result's minus root for h1 is the 95 GeV state, not MH1, in this regime
+    # labels follow mixing (feynlag-models CONVENTIONS.md): in this regime (M11 > M22) h1 takes
+    # the plus root, as the model's qualified key result says, and the minus root is h2 (95 GeV)
     minus, plus = step_5.closed_form_roots(M)
     assert math.sqrt(minus) == pytest.approx(s["MH2"], rel=1e-9)
     assert math.sqrt(plus) == pytest.approx(s["MH1"], rel=1e-9)
 
 
 def test_thdm_blocks_against_the_bundles(anomaly, thdm_aligned):
-    swapped = step_4.build_thdm_candidate(anomaly)
-    for (bundle, inv), shift in ((swapped, math.pi / 2), (thdm_aligned, 0.0)):
+    inverted = step_4.build_thdm_candidate(anomaly)
+    for (bundle, inv), shift in ((inverted, math.pi / 2), (thdm_aligned, 0.0)):
         r = step_5.branch_report(inv["M"])
         t = step_4.thdm_spectrum(bundle)
-        # the model's alpha is the principal branch on the same block
-        assert r["alpha"] == pytest.approx(t["alpha"], rel=1e-9)
-        assert math.sqrt(r["first"]) == pytest.approx(t["MHH"], rel=1e-6)
         assert step_5.mass_ordered_shift(inv["M"], first="heavier") == pytest.approx(shift)
         assert r["alpha"] + shift == pytest.approx(inv["alpha_GH"], rel=1e-9)
-    assert step_5.thdm_block(anomaly)["M"] == pytest.approx(swapped[1]["M"])
+        # since feynlag-models 4157b6b (#17, UG-4) the model's alpha is the principal branch plus
+        # exactly this shift, so its first slot (H) is the heavier state at both points
+        assert t["alpha"] == pytest.approx(r["alpha"] + shift, rel=1e-9)
+        assert t["MHH"] == pytest.approx(math.sqrt(max(r["first"], r["second"])), rel=1e-6)
+        assert t["MH0"] == pytest.approx(math.sqrt(min(r["first"], r["second"])), rel=1e-6)
+    assert step_5.thdm_block(anomaly)["M"] == pytest.approx(inverted[1]["M"])
