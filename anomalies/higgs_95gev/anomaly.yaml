@@ -169,8 +169,11 @@ candidate_models:
       at tan beta = 1.5, sin(beta - alpha) = 0.3, m_A = 100, m_H+- = 580 GeV, m12^2 = 8500 GeV^2
       (illustrative, not fitted); the bundle re-derives it with its labels kept (MH0 = 95, MHH =
       125.2). A3 caveat: it needs max |lambda_i| = 10.9, near 4 pi, and a scan finds no bounded-
-      from-below point below 10.8 once m_H+- >= 580 GeV. UG-4 stays open: when alpha_GH > pi/4
-      (here tan beta = 2, m_A = 300, m_H+- = 600 GeV) the model swaps h and H; strict xfail."
+      from-below point below 10.8 once m_H+- >= 580 GeV. Since feynlag-models 4157b6b (#17, UG-4
+      resolved) the model labels its CP-even states by mass (alpha = 1/2 atan2(2 M12, M11 - M22)),
+      so the inverted point with alpha_GH > pi/4 (tan beta = 2, m_A = 300, m_H+- = 600 GeV,
+      m12^2 = 6000 GeV^2) is also re-derived with its labels kept (MH0 = 95, MHH = 125.2,
+      alpha = alpha_GH), at max |lambda_i| = 11.8."
 
 maturity: A2
 
@@ -229,4 +232,12 @@ changelog:
       heavier); thdm_type2 needs alpha_principal + pi/2 = alpha_GH at tan beta = 2 and no shift at
       1.5 (Gunion-Haber hep-ph/0207010 Eqs. (14)-(17), cited). The UG-4 xfail is unchanged.
       Maturity stays A2."
+    author: "Moises Zeleny (with Claude)"
+  - date: "2026-11-15"
+    note: "Pin bump: feynlag-models cb0678a -> 4157b6b (PR #17), feynlag stays 0.3.0. UG-4 resolved:
+      thdm_type2 now takes Gunion-Haber's mass-ordered branch, the principal alpha plus exactly
+      step_5.mass_ordered_shift, so the tan beta = 2 point keeps its labels (h = 95, H = 125.2 GeV,
+      computed). The strict xfail is now the plain test test_thdm_inverted_point_labels_follow_mass.
+      sm_singlet_z2 keeps its mixing labels (h2 = 95 GeV state, unchanged, computed). Ladder
+      sections 4-6 updated. Maturity stays A2."
     author: "Moises Zeleny (with Claude)"

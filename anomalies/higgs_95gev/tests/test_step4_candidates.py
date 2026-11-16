@@ -48,18 +48,24 @@ def test_thdm_inversion_is_consistent():
                                    p["mA"], p["mHp"], p["m12sq"])
     assert sorted(np.sqrt(np.linalg.eigvalsh(inv["M"]))) == pytest.approx([95.0, 125.2])
     assert step_4.thdm_bounded_from_below(inv)
-    # the regime of UG-4: M11 < M22, i.e. alpha_GH > pi/4
+    # the regime UG-4 was about: M11 < M22, i.e. alpha_GH > pi/4
     assert inv["M"][0, 0] < inv["M"][1, 1] and inv["alpha_GH"] > math.pi / 4
 
 
-@pytest.mark.xfail(strict=True, reason="UG-4: thdm_type2 puts the lighter CP-even state in the H "
-                   "slot when M11 < M22 (principal-branch alpha)")
-def test_thdm_inverted_hierarchy_labels(anomaly):
-    bundle, _ = step_4.build_thdm_candidate(anomaly)
+def test_thdm_inverted_point_labels_follow_mass(anomaly):
+    # UG-4, resolved in feynlag-models #17 (4157b6b): thdm_type2 takes Gunion-Haber's branch,
+    # alpha = 1/2 atan2(2 M12, M11 - M22), so h is the lighter CP-even state also for M11 < M22
+    # (feynlag-models CONVENTIONS.md; its test_labels_follow_mass_at_an_inverted_point)
+    bundle, inv = step_4.build_thdm_candidate(anomaly)
+    p = step_4.THDM_POINT
     s = step_4.thdm_spectrum(bundle)
-    # Gunion-Haber labelling: m_H >= m_h, so H is the 125 GeV state and h the 95 GeV one
+    assert inv["M"][0, 0] < inv["M"][1, 1] and inv["alpha_GH"] > math.pi / 4
     assert s["MHH"] == pytest.approx(step_4.heavy_mass(anomaly), rel=1e-6)
     assert s["MH0"] == pytest.approx(step_4.TARGET_MASS_GEV, rel=1e-6)
+    assert s["MA0"] == pytest.approx(p["mA"], rel=1e-6)
+    assert s["MHp"] == pytest.approx(p["mHp"], rel=1e-6)
+    assert s["alpha"] == pytest.approx(inv["alpha_GH"], rel=1e-9)
+    assert math.sin(math.atan(p["tanb"]) - s["alpha"]) == pytest.approx(p["sin_bma"], rel=1e-6)
 
 
 def test_h2_zz_scales_with_sin_theta(singlet_bundle):
@@ -81,7 +87,8 @@ def test_thdm_aligned_point_keeps_its_labels(thdm_aligned, anomaly):
     bundle, inv = thdm_aligned
     p = step_4.THDM_ALIGNED_POINT
     s = step_4.thdm_spectrum(bundle)
-    # alpha_GH < pi/4 (M11 > M22): the model's h is the 95 GeV state and its H the 125 GeV one
+    # alpha_GH < pi/4 (M11 > M22): no branch shift is needed here; the model's h is the 95 GeV
+    # state and its H the 125 GeV one (the labels follow mass at both points since 4157b6b)
     assert inv["alpha_GH"] < math.pi / 4 and inv["M"][0, 0] > inv["M"][1, 1]
     assert s["MH0"] == pytest.approx(step_4.TARGET_MASS_GEV, rel=1e-6)
     assert s["MHH"] == pytest.approx(step_4.heavy_mass(anomaly), rel=1e-6)

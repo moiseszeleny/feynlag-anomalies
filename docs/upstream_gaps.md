@@ -6,6 +6,38 @@ user to act on (or not) in those repos directly.
 
 ## Open
 
+### UG-3 — `froggatt_nielsen` calls the flavon phase an exact massless Goldstone (`feynlag-models`)
+
+**Repo**: `feynlag-models`. **Discovered**: 2026-10-13, in the physics review of
+`feynlag-anomalies` PR #15 (the familon bound on $`v_\phi`$ for `puzzles/flavor_puzzle`).
+
+**Symptom**: `froggatt_nielsen` describes the flavon phase $a$ as an exact massless Goldstone, at
+`models/froggatt_nielsen/README.md:56` ("an exactly massless Goldstone"), `model.py:24` ("U(1)_FN
+is exact in the Lagrangian, so the flavon phase `a` is a massless Goldstone") and `metadata.yaml:26`
+(`broken_by`: "an exact massless Goldstone") and `:131` (key result "four massless real
+scalars … and the U(1)_FN Goldstone a"). Line numbers are at the pinned `cb0678a`.
+
+**Why it is not exact**: with the benchmark (LNS) charges, $`U(1)_{\rm FN}`$ has a colour
+anomaly. The $`U(1)_{\rm FN}`$–$`SU(3)_c^2`$ coefficient
+$`\sum_{\rm gen}(2q_Q - q_u - q_d)`$ is 21, computed here from the model's charges
+(`puzzles/flavor_puzzle/tests/test_step4_familon.py::test_u1_fn_is_qcd_anomalous_with_the_model_charges`).
+So $a$ is massless only at tree level; once QCD is included it is an axiflavon with a QCD-induced
+mass. This does not change the tree-level spectrum or the Yukawa results the model's tests check,
+and here it does not change the $`K^+ \to \pi^+ a`$ bound (the mass is far below
+$`m_K - m_\pi`$). It does change how the state should be described, and it brings in the axion
+constraints from stars and dark matter.
+
+**Proposal**: (1) qualify the wording in those four places as "massless at tree level (an
+axiflavon once QCD is included, when the charges are colour-anomalous)"; (2) add a test or key
+result that computes the $`U(1)_{\rm FN}`$–$`SU(3)_c^2`$ anomaly coefficient from the charges,
+because feynlag's `check_anomalies` skips global groups by design; (3) optionally, note the axion
+bounds (stellar cooling, dark matter) in `NEXT_STEPS.md`.
+
+**Status**: open. Filed with the user's approval on 2026-10-13; not acted on in `feynlag-models`
+from here (hard rule 4).
+
+## Resolved
+
 ### UG-4 — an inverted CP-even hierarchy swaps `thdm_type2`'s h/H labels and breaks a `sm_singlet_z2` key result (`feynlag-models`)
 
 **Repo**: `feynlag-models`. **Discovered**: 2026-10-22, in the A2 work on
@@ -52,40 +84,23 @@ ordering and the benchmark description ("h1 is the lighter, SM-like state"). Evi
 2. In `sm_singlet_z2`, qualify the $`\mp`$ key result and the benchmark description as holding
    for $`M_{11} < M_{22}`$, or state that $`h_1`$ is the $h$-like state whatever the ordering.
 
-**Status**: open. Filed with the user's approval on 2026-10-22; not acted on in `feynlag-models`
-from here (hard rule 4).
+**Resolution**: feynlag-models PR #17 (merge `4157b6b29983fb5539c640fb959e4f7fab82094f`, branch
+`ug4-cp-even-labels`) took both halves of the proposal:
+1. `thdm_type2` fixes the branch by mass ordering. `model.alpha_branch` adds $`k\pi/2`$ to
+   feynlag's principal angle, so $`\alpha = \tfrac12\,\mathrm{atan2}(2M_{12}, M_{11} - M_{22})`$
+   (Gunion–Haber's branch), and $h$ is the lighter state at every point. This is in
+   `CONVENTIONS.md`, with the key result `tests/test_l0_l1.py::test_labels_follow_mass_at_an_inverted_point`.
+2. `sm_singlet_z2` keeps the principal branch and documents that its labels follow mixing. The
+   $`\mp`$ key result and the benchmark description are qualified to $`M_{11} < M_{22}`$, with the
+   key result `tests/test_l0_l1.py::test_labels_follow_mixing_with_a_light_singlet`.
 
-### UG-3 — `froggatt_nielsen` calls the flavon phase an exact massless Goldstone (`feynlag-models`)
+Picked up here by feynlag-anomalies PR #21 (pin bump to `4157b6b`, feynlag stays 0.3.0). The strict
+xfail is now the plain test
+`anomalies/higgs_95gev/tests/test_step4_candidates.py::test_thdm_inverted_point_labels_follow_mass`.
+At the evidence point the bundle returns `MH0` = 95.0 GeV, `MHH` = 125.2 GeV and
+$`\alpha = \alpha_{\rm GH}`$. The singlet's labels are unchanged ($`h_2`$ is the 95 GeV state).
 
-**Repo**: `feynlag-models`. **Discovered**: 2026-10-13, in the physics review of
-`feynlag-anomalies` PR #15 (the familon bound on $`v_\phi`$ for `puzzles/flavor_puzzle`).
-
-**Symptom**: `froggatt_nielsen` describes the flavon phase $a$ as an exact massless Goldstone, at
-`models/froggatt_nielsen/README.md:56` ("an exactly massless Goldstone"), `model.py:24` ("U(1)_FN
-is exact in the Lagrangian, so the flavon phase `a` is a massless Goldstone") and `metadata.yaml:26`
-(`broken_by`: "an exact massless Goldstone") and `:131` (key result "four massless real
-scalars … and the U(1)_FN Goldstone a"). Line numbers are at the pinned `cb0678a`.
-
-**Why it is not exact**: with the benchmark (LNS) charges, $`U(1)_{\rm FN}`$ has a colour
-anomaly. The $`U(1)_{\rm FN}`$–$`SU(3)_c^2`$ coefficient
-$`\sum_{\rm gen}(2q_Q - q_u - q_d)`$ is 21, computed here from the model's charges
-(`puzzles/flavor_puzzle/tests/test_step4_familon.py::test_u1_fn_is_qcd_anomalous_with_the_model_charges`).
-So $a$ is massless only at tree level; once QCD is included it is an axiflavon with a QCD-induced
-mass. This does not change the tree-level spectrum or the Yukawa results the model's tests check,
-and here it does not change the $`K^+ \to \pi^+ a`$ bound (the mass is far below
-$`m_K - m_\pi`$). It does change how the state should be described, and it brings in the axion
-constraints from stars and dark matter.
-
-**Proposal**: (1) qualify the wording in those four places as "massless at tree level (an
-axiflavon once QCD is included, when the charges are colour-anomalous)"; (2) add a test or key
-result that computes the $`U(1)_{\rm FN}`$–$`SU(3)_c^2`$ anomaly coefficient from the charges,
-because feynlag's `check_anomalies` skips global groups by design; (3) optionally, note the axion
-bounds (stellar cooling, dark matter) in `NEXT_STEPS.md`.
-
-**Status**: open. Filed with the user's approval on 2026-10-13; not acted on in `feynlag-models`
-from here (hard rule 4).
-
-## Resolved
+**Status**: resolved on 2026-11-15.
 
 ### UG-2 — no per-component LaTeX names for field components (`feynlag`)
 
