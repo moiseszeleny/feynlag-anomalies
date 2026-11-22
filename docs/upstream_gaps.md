@@ -13,9 +13,11 @@ user to act on (or not) in those repos directly.
 
 **Symptom**: `froggatt_nielsen` describes the flavon phase $a$ as an exact massless Goldstone, at
 `models/froggatt_nielsen/README.md:56` ("an exactly massless Goldstone"), `model.py:24` ("U(1)_FN
-is exact in the Lagrangian, so the flavon phase `a` is a massless Goldstone") and `metadata.yaml:26`
-(`broken_by`: "an exact massless Goldstone") and `:131` (key result "four massless real
-scalars … and the U(1)_FN Goldstone a"). Line numbers are at the pinned `cb0678a`.
+is exact in the Lagrangian, so the flavon phase `a` is a massless Goldstone") and `:109` ("the
+massless Goldstone of the *global* U(1)_FN", added in the feynlag-models API migration), and
+`metadata.yaml:26` (`broken_by`: "an exact massless Goldstone") and `:131` (key result "four
+massless real scalars … and the U(1)_FN Goldstone a"). Line numbers are at the pinned `6408c88`
+(re-checked on 2026-11-21; first filed at `cb0678a`).
 
 **Why it is not exact**: with the benchmark (LNS) charges, $`U(1)_{\rm FN}`$ has a colour
 anomaly. The $`U(1)_{\rm FN}`$–$`SU(3)_c^2`$ coefficient
@@ -27,7 +29,7 @@ and here it does not change the $`K^+ \to \pi^+ a`$ bound (the mass is far below
 $`m_K - m_\pi`$). It does change how the state should be described, and it brings in the axion
 constraints from stars and dark matter.
 
-**Proposal**: (1) qualify the wording in those four places as "massless at tree level (an
+**Proposal**: (1) qualify the wording in those five places as "massless at tree level (an
 axiflavon once QCD is included, when the charges are colour-anomalous)"; (2) add a test or key
 result that computes the $`U(1)_{\rm FN}`$–$`SU(3)_c^2`$ anomaly coefficient from the charges,
 because feynlag's `check_anomalies` skips global groups by design; (3) optionally, note the axion

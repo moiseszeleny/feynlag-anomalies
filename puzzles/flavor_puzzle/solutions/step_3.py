@@ -145,8 +145,12 @@ class FNQuarkPredictor:
 
 
 def flat_direction(predictor, eps, abs_c, k):
-    """``(eps / k, |c_ij| k^n_ij)``: the exact symmetry of every prediction (n_ij = a_i + b_j)."""
-    return eps / k, np.asarray(abs_c) * k ** predictor.n
+    """``(eps / k, |c_ij| k^|n_ij|)``: the exact symmetry of every prediction (n_ij = a_i + b_j).
+
+    The model builds ``Y_ij = c_ij eps^|n_ij|`` (``(phi*)^|n|`` for n < 0), so the scaling uses
+    ``|n_ij|``; with the signed power it would break for a charge set with a negative n_ij.
+    """
+    return eps / k, np.asarray(abs_c) * k ** np.abs(predictor.n)
 
 
 # --- recomputation with the model's own functions ------------------------------------------------
