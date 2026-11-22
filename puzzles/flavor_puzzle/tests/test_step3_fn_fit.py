@@ -42,7 +42,7 @@ def test_numpy_path_matches_model_dps60(predictor):
 
 
 def test_eps_flat_direction_is_exact(predictor):
-    """eps -> eps/k, |c_ij| -> |c_ij| k^n_ij leaves every prediction unchanged (n_ij = a_i + b_j),
+    """eps -> eps/k, |c_ij| -> |c_ij| k^|n_ij| leaves every prediction unchanged (n_ij = a_i + b_j),
     so the data cannot fix eps."""
     eps, abs_c, args = _random_point()
     base = predictor(eps, abs_c, args)
