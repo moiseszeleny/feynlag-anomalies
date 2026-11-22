@@ -245,6 +245,15 @@ One dated line per ladder step, tagged as in `anomalies/neutrino_mass/decisions.
   $\Delta = 1$ point (point dependent; see the caveat on tuned alignment). `maturity: P3` is set in
   `puzzle.yaml` in this PR, pending the code and physics reviews before merge.
   `[decision, approved by the user]`
+- **2026-11-21 — `flat_direction` scales by $`k^{\lvert n_{ij}\rvert}`$** (pin bump to feynlag 0.5.1 and
+  feynlag-models `6408c88`). The physics review of feynlag-models PR #27 noted that
+  `step_3.flat_direction` scaled $`\lvert c_{ij}\rvert`$ by $`k^{n_{ij}}`$ with the signed power.
+  The model builds $`Y_{ij} = c_{ij}\,\epsilon^{\lvert n_{ij}\rvert}`$, using $`(\phi^*)^{\lvert n\rvert}`$
+  for $`n < 0`$ (`froggatt_nielsen/model.py`), so the signed form is a symmetry only while every
+  $`n_{ij} \geq 0`$. That holds for the LNS charges used here, so no result changes. A charge set
+  with a negative power (for example `qd1 = 4`) would have broken it. The fix is
+  $`k^{\lvert n_{ij}\rvert}`$, pinned by `test_flat_direction_uses_abs_powers` on a signed $n$.
+  `[computed]`
 - **Next (P4)**: real likelihoods (stage-2 tools, not approved), the lepton sector once its FN
   charges are more than placeholders, $B \to K a$ for the tuned-alignment region, and the axion
   bounds from stars and dark matter.

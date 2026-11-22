@@ -105,7 +105,7 @@ eft_operators: []
 candidate_models:
   - model_id: froggatt_nielsen
     model_request: model_requests/froggatt_nielsen.md
-    notes: "U(1)_FN flavon; Yukawas y_ij = c_ij eps^n_ij with O(1) complex c_ij (feynlag-models
+    notes: "U(1)_FN flavon; Yukawas y_ij = c_ij eps^|n_ij| with O(1) complex c_ij (feynlag-models
       PR #14, maturity L2), built from model_requests/froggatt_nielsen.md. Integer FN charges are
       benchmark inputs (LNS master model at the benchmark); P3 fits (eps, c_ij), quarks only.
       Build with v = v_F = 246 GeV (the model default is 246.22 GeV), as sm_benchmark does.

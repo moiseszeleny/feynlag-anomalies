@@ -42,7 +42,7 @@ def test_numpy_path_matches_model_dps60(predictor):
 
 
 def test_eps_flat_direction_is_exact(predictor):
-    """eps -> eps/k, |c_ij| -> |c_ij| k^n_ij leaves every prediction unchanged (n_ij = a_i + b_j),
+    """eps -> eps/k, |c_ij| -> |c_ij| k^|n_ij| leaves every prediction unchanged (n_ij = a_i + b_j),
     so the data cannot fix eps."""
     eps, abs_c, args = _random_point()
     base = predictor(eps, abs_c, args)
@@ -50,6 +50,27 @@ def test_eps_flat_direction_is_exact(predictor):
         moved = predictor(*step_3.flat_direction(predictor, eps, abs_c, k), args)
         for name in step_3.OBSERVABLES:
             assert moved[name] == pytest.approx(base[name], rel=1e-10)
+
+
+def test_flat_direction_uses_abs_powers():
+    """The model's entries are c_ij eps^|n_ij| ((phi*)^|n| for n < 0, froggatt_nielsen model.py),
+    so flat_direction must scale |c_ij| by k^|n_ij|. A signed n (as a charge like qd1 = 4 gives)
+    breaks the signed form; today's charges have every n >= 0 (#27 physics review)."""
+
+    class _Signed:
+        n = np.array([3, -2, 0, -1, 4, 1, -3, 2, 0] * 2)
+
+    rng = np.random.default_rng(3)
+    eps, abs_c = 0.2, np.exp(rng.uniform(-1, 1, 18))
+
+    def entries(e, c):
+        return c * e ** np.abs(_Signed.n)
+
+    for k in (0.5, 1.9):
+        e_k, c_k = step_3.flat_direction(_Signed, eps, abs_c, k)
+        assert entries(e_k, c_k) == pytest.approx(entries(eps, abs_c), rel=1e-12)
+        # the old signed scaling is not a symmetry once some n_ij < 0
+        assert not np.allclose(entries(eps / k, abs_c * k ** _Signed.n), entries(eps, abs_c))
 
 
 def test_eight_fixed_phases_are_a_rephasing_gauge(predictor):

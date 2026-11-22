@@ -3,7 +3,7 @@ constrained-minimum span of its O(1) coefficients.
 
 The model is imported through the registry; nothing here declares a Lagrangian. It is built at
 its metadata benchmark with ``v = v_F = 246 GeV`` (``puzzle.yaml``), and its symbolic quark
-Yukawas ``extra["Yu"]``, ``extra["Yd"]`` (``Y_ij = |c_ij| e^{i arg c_ij} eps^n_ij``) are
+Yukawas ``extra["Yu"]``, ``extra["Yd"]`` (``Y_ij = |c_ij| e^{i arg c_ij} eps^|n_ij|``) are
 lambdified once. The fit loop diagonalises them with numpy's SVD (~0.1 ms a point); every
 reported point is recomputed with the model's own ``mass_basis`` / ``ckm`` (feynlag's numeric
 ``diagonalize_svd``) at ``dps=60`` (:func:`recompute_with_model`).
@@ -12,7 +12,7 @@ Decisions this follows are in ``decisions.md`` (2026-10-08):
 
 * quarks only; 10 observables: the six quark masses at M_Z and the PDG CKM sines plus delta;
 * eps is free and outside the span. Because every power has the form ``n_ij = a_i + b_j``, the
-  map ``eps -> eps/k, |c_ij| -> |c_ij| k^n_ij`` leaves every prediction unchanged
+  map ``eps -> eps/k, |c_ij| -> |c_ij| k^|n_ij|`` leaves every prediction unchanged
   (:func:`flat_direction`): the data cannot fix eps, so the fit holds it at :data:`EPS_REF` and
   only the span minimisation moves it;
 * 8 of the 18 phases are removed by field rephasings (:data:`FIXED_PHASES`), leaving 10;
@@ -145,8 +145,12 @@ class FNQuarkPredictor:
 
 
 def flat_direction(predictor, eps, abs_c, k):
-    """``(eps / k, |c_ij| k^n_ij)``: the exact symmetry of every prediction (n_ij = a_i + b_j)."""
-    return eps / k, np.asarray(abs_c) * k ** predictor.n
+    """``(eps / k, |c_ij| k^|n_ij|)``: the exact symmetry of every prediction (n_ij = a_i + b_j).
+
+    The model builds ``Y_ij = c_ij eps^|n_ij|`` (``(phi*)^|n|`` for n < 0), so the scaling uses
+    ``|n_ij|``; with the signed power it would break for a charge set with a negative n_ij.
+    """
+    return eps / k, np.asarray(abs_c) * k ** np.abs(predictor.n)
 
 
 # --- recomputation with the model's own functions ------------------------------------------------
