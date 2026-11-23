@@ -16,8 +16,8 @@ user to act on (or not) in those repos directly.
 is exact in the Lagrangian, so the flavon phase `a` is a massless Goldstone") and `:109` ("the
 massless Goldstone of the *global* U(1)_FN", added in the feynlag-models API migration), and
 `metadata.yaml:26` (`broken_by`: "an exact massless Goldstone") and `:131` (key result "four
-massless real scalars … and the U(1)_FN Goldstone a"). Line numbers are at the pinned `00252df`
-(re-checked on 2026-11-22; first filed at `cb0678a`).
+massless real scalars … and the U(1)_FN Goldstone a"). Line numbers are at the pinned `e8fee27`
+(re-checked on 2026-11-23; first filed at `cb0678a`).
 
 **Why it is not exact**: with the benchmark (LNS) charges, $`U(1)_{\rm FN}`$ has a colour
 anomaly. The $`U(1)_{\rm FN}`$–$`SU(3)_c^2`$ coefficient
