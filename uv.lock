@@ -285,7 +285,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "feynlag", specifier = "==0.5.2" },
-    { name = "feynlag-models", git = "https://github.com/moiseszeleny/feynlag-models.git?rev=00252df72c15cd6ad147191982f8326443151bb0" },
+    { name = "feynlag-models", git = "https://github.com/moiseszeleny/feynlag-models.git?rev=e8fee27b2fdeed9b8198f48cf9671da087c36029" },
     { name = "nbconvert", marker = "extra == 'dev'" },
     { name = "nbmake", marker = "extra == 'dev'" },
     { name = "numpy" },
@@ -301,7 +301,7 @@ provides-extras = ["dev"]
 [[package]]
 name = "feynlag-models"
 version = "0.1.0"
-source = { git = "https://github.com/moiseszeleny/feynlag-models.git?rev=00252df72c15cd6ad147191982f8326443151bb0#00252df72c15cd6ad147191982f8326443151bb0" }
+source = { git = "https://github.com/moiseszeleny/feynlag-models.git?rev=e8fee27b2fdeed9b8198f48cf9671da087c36029#e8fee27b2fdeed9b8198f48cf9671da087c36029" }
 dependencies = [
     { name = "feynlag" },
     { name = "jsonschema" },
