@@ -96,3 +96,41 @@ def test_u1_fn_is_qcd_anomalous_with_the_model_charges():
     bench = metadata("froggatt_nielsen")["benchmark"]["inputs"]
     coeff = step_4.colour_anomaly_coefficient(bench)
     assert coeff == int(coeff) and coeff != 0
+
+
+def test_colour_anomaly_matches_the_model(p3):
+    """The puzzle's coefficient equals feynlag-models' ``extra["colour_anomaly"]`` (models PR #30,
+    UG-3), which is the domain-wall number N_DW = 2N (N = 21/2 in the E/N convention), so the
+    puzzle reads the model's value rather than only recomputing it."""
+    bundle = p3["predictor"].bundle
+    model_value = bundle.extra["colour_anomaly"]  # a SymPy number; SymPy >= 1.13 has Float != Integer
+    assert model_value.is_Integer
+    assert step_4.colour_anomaly_coefficient(bundle.benchmark) == int(model_value) == 21
+
+
+def test_axiflavon_mass_uses_v_phi_over_n_dw(p3, bounds):
+    """f_a(QCD) = v_phi / N_DW and arXiv:2002.04623 Eq. (3), with v_phi the computed Delta = 1 bound
+    and N_DW the model's extra["colour_anomaly"]: the axiflavon is ~1e-3 eV, far below
+    m_K - m_pi, so the massless K -> pi a rate applies."""
+    v_phi = bounds["delta1"]["v_phi_min"]
+    n_dw = int(p3["predictor"].bundle.extra["colour_anomaly"])
+    # the expected inputs, pinned so that drift in either is caught
+    assert v_phi == pytest.approx(1.318e11, rel=1e-3) and n_dw == 21
+    assert step_4.qcd_decay_constant(v_phi, n_dw) == pytest.approx(v_phi / n_dw, rel=1e-15)
+    m_a = step_4.axiflavon_mass_eV(v_phi, n_dw)
+    assert m_a == pytest.approx(5.691e-6 * 1e12 * n_dw / v_phi, rel=1e-12)
+    assert m_a < 1e-2
+
+
+def test_axiflavon_mass_lo_chiral_cross_check(puzzle, p3, bounds):
+    """Independent check of the Eq. (3) value: the leading-order chiral formula
+    m_a = sqrt(z)/(1+z) m_pi0 f_pi / f_a (arXiv:1511.02867 Eq. (19) at tree level), with
+    z = m_u/m_d = 0.465(24) (FLAG 2024 Eq. (43)), m_pi0 (PDG 2024) and f_pi = f_pi+ / sqrt2
+    (PDG 2024 Eq. (72.14)), all from puzzle.yaml. The two agree within 5%: the gap (about 1.6%)
+    is the NLO - LO correction plus the different z (0.48 in arXiv:1511.02867)."""
+    v_phi = bounds["delta1"]["v_phi_min"]
+    n_dw = int(p3["predictor"].bundle.extra["colour_anomaly"])
+    lo = step_4.axiflavon_mass_lo_eV(v_phi, n_dw, **step_4.chiral_inputs(puzzle))
+    nlo = step_4.axiflavon_mass_eV(v_phi, n_dw)
+    assert lo == pytest.approx(nlo, rel=0.05)
+    assert lo != pytest.approx(nlo, rel=1e-3)  # a genuinely independent number, not a copy
