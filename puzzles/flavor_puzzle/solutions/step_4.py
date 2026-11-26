@@ -23,6 +23,11 @@ The rate is Martin Camalich, Pospelov, Vuong, Ziegler, Zupan, arXiv:2002.04623 (
 * Eq. (17) the same interaction after the field redefinition (18):
   ``-i a / (2 f_a) fbar_i [(m_i - m_j) c^V_ij + (m_i + m_j) c^A_ij gamma_5] f_j``.
 
+The ``f_a`` in Eqs. (1), (2) and (17) only normalises the ``c_ij``: the rate depends on
+``F^V_ij = 2 f_a / c^V_ij``, which is matched to the model directly, so no value of ``f_a`` is used
+for the bound. The QCD decay constant ``f_a = v_phi / N_DW`` (:func:`qcd_decay_constant`) enters
+only the axiflavon mass, Eq. (3).
+
 Matching the scalar s-bar d term of Eq. (17) to the model's gives the conversion
 
     1 / |F^V_sd| = |G_sd + G_ds^*| / (2 (m_s - m_d)).
@@ -118,9 +123,34 @@ def colour_anomaly_coefficient(benchmark) -> float:
     Each quark doublet holds two colour triplets of charge ``q_Q``; ``u_R``, ``d_R`` enter as
     left-handed conjugates with charge ``-q``. Nonzero means U(1)_FN is QCD-anomalous, so ``a`` is
     an axiflavon. feynlag's ``check_anomalies`` skips global groups by design, hence this check.
+
+    Normalisation (feynlag-models ``froggatt_nielsen``, which exposes the same number as
+    ``extra["colour_anomaly"]``; a test pins the equality): this is ``2 sum_LH q T(R)`` with
+    ``T(3) = 1/2``, the domain-wall number ``N_DW = 2N``. It is **not** the ``N`` of the ``E/N``
+    convention, which is half of it (21/2 at the benchmark). For the flavon of charge 1 the QCD
+    axion decay constant is ``f_a = v_phi / N_DW`` (:func:`qcd_decay_constant`). LNS-2
+    (hep-ph/9310320) Eq. (4.9) counts each doublet once and gives 16; feynlag-models records that
+    as discrepancy D-2.
     """
     q = {f: [float(benchmark[f"q{f}{i}"]) for i in (1, 2, 3)] for f in ("Q", "u", "d")}
     return 2 * sum(q["Q"]) - sum(q["u"]) - sum(q["d"])
+
+
+# arXiv:2002.04623 Eq. (3): m_a = 5.691 micro-eV x (1e12 GeV / f_a), f_a the QCD axion decay constant
+QCD_AXION_MASS_EV_AT_1E12 = 5.691e-6
+
+
+def qcd_decay_constant(v_phi, n_dw) -> float:
+    """The QCD axion decay constant ``f_a = v_phi / N_DW`` of the flavon phase (charge 1), in the
+    normalisation of feynlag-models ``froggatt_nielsen`` (``N_DW = extra["colour_anomaly"]``). This
+    is the ``f_a`` of the mass formula, Eq. (3); the ``f_a`` of Eqs. (1)-(2) only normalises the
+    ``c_ij`` there and drops out of ``F^V_ij = 2 f_a / c^V_ij``, the one combination used here."""
+    return v_phi / n_dw
+
+
+def axiflavon_mass_eV(v_phi, n_dw) -> float:
+    """The QCD-induced mass of ``a``, arXiv:2002.04623 Eq. (3) at ``f_a = v_phi / N_DW``."""
+    return QCD_AXION_MASS_EV_AT_1E12 * 1e12 / qcd_decay_constant(v_phi, n_dw)
 
 
 # --- the rate and the bound -----------------------------------------------------------------------

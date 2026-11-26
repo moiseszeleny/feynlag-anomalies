@@ -96,3 +96,23 @@ def test_u1_fn_is_qcd_anomalous_with_the_model_charges():
     bench = metadata("froggatt_nielsen")["benchmark"]["inputs"]
     coeff = step_4.colour_anomaly_coefficient(bench)
     assert coeff == int(coeff) and coeff != 0
+
+
+def test_colour_anomaly_matches_the_model(p3):
+    """The puzzle's coefficient equals feynlag-models' ``extra["colour_anomaly"]`` (models PR #30,
+    UG-3), which is the domain-wall number N_DW = 2N (N = 21/2 in the E/N convention), so the
+    puzzle reads the model's value rather than only recomputing it."""
+    bundle = p3["predictor"].bundle
+    model_value = bundle.extra["colour_anomaly"]  # a SymPy number; SymPy >= 1.13 has Float != Integer
+    assert model_value.is_Integer
+    assert step_4.colour_anomaly_coefficient(bundle.benchmark) == int(model_value) == 21
+
+
+def test_axiflavon_mass_uses_v_phi_over_n_dw():
+    """f_a(QCD) = v_phi / N_DW and arXiv:2002.04623 Eq. (3): at the Delta = 1 bound the axiflavon
+    is ~1e-3 eV, far below m_K - m_pi, so the massless K -> pi a rate applies."""
+    n_dw = 21
+    assert step_4.qcd_decay_constant(V_PHI_MIN_DELTA1, n_dw) == pytest.approx(V_PHI_MIN_DELTA1 / 21)
+    m_a = step_4.axiflavon_mass_eV(V_PHI_MIN_DELTA1, n_dw)
+    assert m_a == pytest.approx(5.691e-6 * 1e12 * 21 / V_PHI_MIN_DELTA1, rel=1e-12)
+    assert m_a < 1e-2

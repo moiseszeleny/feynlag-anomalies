@@ -6,18 +6,22 @@ user to act on (or not) in those repos directly.
 
 ## Open
 
-### UG-3 — `froggatt_nielsen` calls the flavon phase an exact massless Goldstone (`feynlag-models`)
+(none)
+
+## Resolved
+
+### UG-3 — `froggatt_nielsen` called the flavon phase an exact massless Goldstone (`feynlag-models`)
 
 **Repo**: `feynlag-models`. **Discovered**: 2026-10-13, in the physics review of
 `feynlag-anomalies` PR #15 (the familon bound on $`v_\phi`$ for `puzzles/flavor_puzzle`).
 
-**Symptom**: `froggatt_nielsen` describes the flavon phase $a$ as an exact massless Goldstone, at
+**Symptom**: `froggatt_nielsen` described the flavon phase $a$ as an exact massless Goldstone, at
 `models/froggatt_nielsen/README.md:56` ("an exactly massless Goldstone"), `model.py:24` ("U(1)_FN
 is exact in the Lagrangian, so the flavon phase `a` is a massless Goldstone") and `:109` ("the
 massless Goldstone of the *global* U(1)_FN", added in the feynlag-models API migration), and
 `metadata.yaml:26` (`broken_by`: "an exact massless Goldstone") and `:131` (key result "four
-massless real scalars … and the U(1)_FN Goldstone a"). Line numbers are at the pinned `e8fee27`
-(re-checked on 2026-11-23; first filed at `cb0678a`).
+massless real scalars … and the U(1)_FN Goldstone a"). Line numbers are at `e8fee27`, the last pin
+before the fix (first filed at `cb0678a`).
 
 **Why it is not exact**: with the benchmark (LNS) charges, $`U(1)_{\rm FN}`$ has a colour
 anomaly. The $`U(1)_{\rm FN}`$–$`SU(3)_c^2`$ coefficient
@@ -35,10 +39,26 @@ result that computes the $`U(1)_{\rm FN}`$–$`SU(3)_c^2`$ anomaly coefficient f
 because feynlag's `check_anomalies` skips global groups by design; (3) optionally, note the axion
 bounds (stellar cooling, dark matter) in `NEXT_STEPS.md`.
 
-**Status**: open. Filed with the user's approval on 2026-10-13; not acted on in `feynlag-models`
-from here (hard rule 4).
+**Status**: resolved on 2026-11-25. Fulfilled in feynlag-models #30 (`5f44563`), picked up here
+by the pin bump to `5f44563`. All three proposals are done:
+(1) the five places now say "a Goldstone, massless at tree level (an axiflavon once QCD is
+included)", or "four real scalars massless at tree level";
+(2) `model.py` computes the coefficient from the declared `GlobalU1`, exposes it as
+`extra["colour_anomaly"]` (= 21), and pins it with `test_u1_fn_colour_anomaly_coefficient`. The
+model gives its normalisation as $`2\sum_{\rm LH} q\,T(R)`$, the domain-wall number
+$`N_{\rm DW} = 2N`$, with $N = 21/2$ in the $E/N$ convention and the QCD decay constant
+$`f_a = v_\phi/N_{\rm DW}`$;
+(3) `NEXT_STEPS.md` lists the axiflavon constraints (stellar cooling, axion dark matter).
 
-## Resolved
+Upstream also checks shift invariance
+(`test_colour_anomaly_is_shift_invariant_lns_eq_4_9_is_not`): $`2q_Q - q_u - q_d`$ stays 21 when
+every charge is shifted by hypercharge or by baryon number, both QCD-anomaly-free. LNS-2
+(hep-ph/9310320) Eq. (4.9) as printed counts each doublet once, which gives 16 and is not shift
+invariant. feynlag-models records this as discrepancy D-2.
+
+Here, `puzzles/flavor_puzzle/tests/test_step4_familon.py::test_colour_anomaly_matches_the_model`
+pins `step_4.colour_anomaly_coefficient` to the model's `extra["colour_anomaly"]`. The axiflavon
+mass in the flavor-puzzle ladder now uses $`f_a = v_\phi/N_{\rm DW}`$.
 
 ### UG-4 — an inverted CP-even hierarchy swaps `thdm_type2`'s h/H labels and breaks a `sm_singlet_z2` key result (`feynlag-models`)
 

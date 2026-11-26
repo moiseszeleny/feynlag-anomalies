@@ -254,6 +254,24 @@ One dated line per ladder step, tagged as in `anomalies/neutrino_mass/decisions.
   with a negative power (for example `qd1 = 4`) would have broken it. The fix is
   $`k^{\lvert n_{ij}\rvert}`$, pinned by `test_flat_direction_uses_abs_powers` on a signed $n$.
   `[computed]`
+- **2026-11-25 — the colour anomaly is read from the model; two $`f_a`$ conventions** (pin bump to
+  feynlag-models `5f44563`, PR #30, which fulfils UG-3). The model now exposes
+  `extra["colour_anomaly"]` = 21. `test_colour_anomaly_matches_the_model` pins
+  `step_4.colour_anomaly_coefficient` to it. Its normalisation is the model's:
+  $`\sum_{\rm gen}(2q_Q - q_u - q_d) = 2\sum_{\rm LH} q\,T(R) = N_{\rm DW}`$, the domain-wall number.
+  It is not the $E/N$-convention $N$, which is $21/2$. Two different $`f_a`$ appear in step 4:
+  - arXiv:2002.04623 Eqs. (1), (2) and (17): there $`f_a`$ only normalises the $`c_{ij}`$. The
+    rate uses $`F^V_{sd} = 2f_a/c^V_{sd}`$, which is matched to the model's coupling directly, so
+    the bound needs no value of $`f_a`$.
+  - Eq. (3), the axiflavon mass: here $`f_a`$ is the QCD decay constant
+    $`f_a = v_\phi/N_{\rm DW}`$ (`step_4.qcd_decay_constant`). At the $\Delta = 1$ bound,
+    $`v_\phi = 1.32\times10^{11}`$ GeV, this gives $`f_a = 6.3\times10^{9}`$ GeV and
+    $`m_a = 9\times10^{-4}`$ eV `[computed]`.
+
+  This fixes the "μeV to meV depending on the $`f_a`$ normalisation" of the 2026-10-13 scope note,
+  which stays as written. LNS-2 Eq. (4.9) counts each doublet once and gives 16. feynlag-models
+  records that as D-2 and shows the coefficient of 21 is shift invariant (hypercharge, baryon
+  number) while the once-counted one is not. `[cited: feynlag-models PR #30]`
 - **Next (P4)**: real likelihoods (stage-2 tools, not approved), the lepton sector once its FN
   charges are more than placeholders, $B \to K a$ for the tuned-alignment region, and the axion
   bounds from stars and dark matter.

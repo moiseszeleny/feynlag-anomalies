@@ -10,7 +10,7 @@ requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [{ name = "Moises Zeleny", email = "moiseszeleny@gmail.com" }]
 dependencies = [
-    "feynlag-models @ git+https://github.com/moiseszeleny/feynlag-models.git@e8fee27b2fdeed9b8198f48cf9671da087c36029",
+    "feynlag-models @ git+https://github.com/moiseszeleny/feynlag-models.git@5f4456330a957aaf5f9977cecef16a1c00cf3655",
     "feynlag==0.5.2",
     "sympy==1.14.0",
     "pyyaml==6.0.2",
