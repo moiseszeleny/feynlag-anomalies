@@ -266,7 +266,14 @@ One dated line per ladder step, tagged as in `anomalies/neutrino_mass/decisions.
   - Eq. (3), the axiflavon mass: here $`f_a`$ is the QCD decay constant
     $`f_a = v_\phi/N_{\rm DW}`$ (`step_4.qcd_decay_constant`). At the $\Delta = 1$ bound,
     $`v_\phi = 1.32\times10^{11}`$ GeV, this gives $`f_a = 6.3\times10^{9}`$ GeV and
-    $`m_a = 9\times10^{-4}`$ eV `[computed]`.
+    $`m_a = 9\times10^{-4}`$ eV `[computed]`. An independent check uses the leading-order chiral
+    formula $`m_a = \frac{\sqrt z}{1+z}\,m_{\pi^0} f_\pi/f_a`$ (arXiv:1511.02867 Eq. (19) at tree
+    level, with $`f_\pi = f_{\pi^+}/\sqrt2 \approx 92`$ MeV). Its inputs are sourced in
+    `puzzle.yaml`: $z = 0.465(24)$ (FLAG 2024 Eq. (43)), $`m_{\pi^0}`$ (PDG 2024) and
+    $`f_{\pi^+} = 130.2(1.2)`$ MeV (PDG 2024 Eq. (72.14)). It gives $5.78\,\mu{\rm eV}$
+    $`\times\,10^{12}\,{\rm GeV}/f_a`$, 1.6% above Eq. (3). That gap is the NLO − LO correction
+    plus the different $z$ (0.48 in arXiv:1511.02867), and
+    `test_axiflavon_mass_lo_chiral_cross_check` asserts agreement within 5% `[computed]`.
 
   This fixes the "μeV to meV depending on the $`f_a`$ normalisation" of the 2026-10-13 scope note,
   which stays as written. LNS-2 Eq. (4.9) counts each doublet once and gives 16. feynlag-models

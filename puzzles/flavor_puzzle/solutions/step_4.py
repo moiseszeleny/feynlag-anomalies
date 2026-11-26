@@ -153,6 +153,26 @@ def axiflavon_mass_eV(v_phi, n_dw) -> float:
     return QCD_AXION_MASS_EV_AT_1E12 * 1e12 / qcd_decay_constant(v_phi, n_dw)
 
 
+#: ``puzzle.yaml`` ``sm_quantities[].name`` of the leading-order chiral inputs
+CHIRAL_INPUTS = {"z": "m_u/m_d", "m_pi0": "m_pi0", "f_pi_plus": "f_pi+"}
+
+
+def chiral_inputs(puzzle) -> dict:
+    """``z = m_u/m_d``, ``m_pi0`` (GeV) and ``f_pi_plus`` (GeV, ~130 MeV normalisation) from
+    ``sm_quantities``; sentinel-guarded."""
+    by_name = {q.name: q for q in puzzle.sm_quantities}
+    return {key: _reject_sentinel(name, by_name[name].value) for key, name in CHIRAL_INPUTS.items()}
+
+
+def axiflavon_mass_lo_eV(v_phi, n_dw, z, m_pi0, f_pi_plus) -> float:
+    """Leading-order chiral axion mass ``m_a = sqrt(z)/(1+z) m_pi f_pi / f_a`` at
+    ``f_a = v_phi / N_DW``: the tree-level factor of arXiv:1511.02867 Eq. (19), with the neutral
+    pion mass and ``f_pi = f_pi+ / sqrt2`` (that paper's ~92 MeV normalisation; PDG quotes
+    ``f_pi+`` ~ 130 MeV). An independent cross-check of the NLO value :func:`axiflavon_mass_eV`."""
+    f_pi = f_pi_plus / math.sqrt(2)
+    return math.sqrt(z) / (1 + z) * m_pi0 * f_pi / qcd_decay_constant(v_phi, n_dw) * 1e9
+
+
 # --- the rate and the bound -----------------------------------------------------------------------
 def kappa(m_K, m_pi) -> float:
     """arXiv:2002.04623 Eq. (6), in GeV^3."""

@@ -40,6 +40,14 @@ sm_quantities:
   - {name: "tau_K+", value: 1.2380e-8, uncertainty: 0.0020e-8, units: "s", source: "PDG2024:list-K-plus-minus"}
   - {name: "m_pi+", value: 0.13957039, uncertainty: 0.00000018, units: "GeV", source: "PDG2024:list-pi-plus-minus"}
   - {name: "f_+(0) K->pi", value: 0.9698, uncertainty: 0.0017, units: "1", source: "arXiv:2411.04268"}
+  # Inputs to the leading-order chiral cross-check of the axiflavon mass (solutions/step_4.py,
+  # axiflavon_mass_lo_eV), not hierarchy parameters. z = m_u/m_d: FLAG 2024 Eq. (43), N_f = 2+1+1
+  # (scale independent up to alpha_em and Yukawa corrections). m_pi0: PDG 2024 listing, OUR FIT.
+  # f_pi+: PDG 2024 review 72, Eq. (72.14), in the ~130 MeV normalisation (f_pi+ / sqrt2 ~ 92 MeV
+  # is the normalisation of arXiv:1511.02867).
+  - {name: "m_u/m_d", value: 0.465, uncertainty: 0.024, units: "1", source: "arXiv:2411.04268"}
+  - {name: "m_pi0", value: 0.1349768, uncertainty: 0.0000005, units: "GeV", source: "PDG2024:list-pi-zero"}
+  - {name: "f_pi+", value: 0.1302, uncertainty: 0.0012, units: "GeV", source: "PDG2024:rev-pseudoscalar-meson-decay-cons"}
 
 quantifier:
   name: "free_parameter_log10_span"
@@ -85,8 +93,15 @@ sources:
   - {kind: hepdata, identifier: "10.17182/hepdata.106641.v1/t1", consulted_on: 2026-10-13}
   - {kind: pdg, identifier: "PDG2024:list-K-plus-minus", consulted_on: 2026-10-13}
   - {kind: pdg, identifier: "PDG2024:list-pi-plus-minus", consulted_on: 2026-10-13}
-  # FLAG Review 2024, Eq. (72): f_+(0) = 0.9698(17).
-  - {kind: arxiv, identifier: "arXiv:2411.04268", consulted_on: 2026-10-13}
+  # FLAG Review 2024, Eq. (72): f_+(0) = 0.9698(17); Eq. (43), m_u/m_d = 0.465(24) (N_f = 2+1+1),
+  # read on 2026-11-25.
+  - {kind: arxiv, identifier: "arXiv:2411.04268", consulted_on: 2026-11-25}
+  - {kind: pdg, identifier: "PDG2024:list-pi-zero", consulted_on: 2026-11-25}
+  - {kind: pdg, identifier: "PDG2024:rev-pseudoscalar-meson-decay-cons", consulted_on: 2026-11-25}
+  # Grilli di Cortona, Hardy, Pardo Vega, Villadoro, JHEP 01 (2016) 034 (v2): the axion mass,
+  # Eq. (19), whose tree-level factor is m_a^2 = m_u m_d m_pi^2 f_pi^2 / ((m_u + m_d)^2 f_a^2), with
+  # the neutral pion mass and f_pi ~ 92 MeV; NLO result 5.70(7) micro-eV (1e12 GeV / f_a), Eq. (23).
+  - {kind: arxiv, identifier: "arXiv:1511.02867", consulted_on: 2026-11-25}
   # Martin Camalich, Pospelov, Vuong, Ziegler, Zupan, PRD 102 (2020) 015023: Gamma(K -> pi a),
   # Eqs. (1), (2), (5), (6), (17); worked number F^V_sd > 6.8e11 GeV (Table III, E949 limit).
   - {kind: arxiv, identifier: "arXiv:2002.04623", consulted_on: 2026-10-13}
